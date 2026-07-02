@@ -1,0 +1,49 @@
+# Virtual environments
+.venv/
+venv/
+
+# Secrets and credentials
+.env
+.env.*
+
+# Python cache and packaging
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.eggs/
+build/
+dist/
+*.egg
+*.whl
+
+# Test and coverage output
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+nosetests.xml
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Database and local data
+*.db
+*.sqlite3
+data/
+
+# Miscellaneous
+*.log
+*.tmp
+*.bak
+*.orig
+.ipynb_checkpoints/
+.mypy_cache/

@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+seaborn
+fastapi
+
+langchain-groq
+langchain
+langchain-community
+langchain-google-genai
+
+pgvector
+lxml

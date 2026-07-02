@@ -1,0 +1,17 @@
+TASK: Medical Research paper RAG
+
+func:
+
+0 zero hallu
+validation metric
+priv skip
+data-extr
+
+non func:
+recomm
+
+
+pipeline
+
+query -> result
+data -> pii -> chuckking -> chromaDB (USERtable) -> query -> simliraty + BMG -> LLM 
