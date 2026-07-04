@@ -13,4 +13,4 @@ pgvector
 lxml
 sentence-transformers
 tqdm
-
+chromadb
