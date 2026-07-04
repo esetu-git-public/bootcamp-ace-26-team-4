@@ -1,122 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-
+import "./App.css";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
+    <div className="home-container">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <h1>Medical Research Paper Assistant</h1>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            Upload research papers, search important medical information, and
+            chat with an AI assistant to understand clinical guidelines and
+            research findings easily.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+          <div className="hero-buttons">
+            <button className="btn primary-btn">Upload Papers</button>
+            <button className="btn secondary-btn">Search Papers</button>
+          </div>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Features Section */}
+      <section className="features-section">
+        <h2>Key Features</h2>
+        <div className="features-grid">
+          <div className="feature-card">
+            <h3>Upload Papers</h3>
+            <p>
+              Upload medical research papers, journals, and clinical documents
+              in one place for easy access.
+            </p>
+          </div>
+
+          <div className="feature-card">
+            <h3>Hybrid Search</h3>
+            <p>
+              Search across uploaded documents using keywords and semantic
+              search to find the most relevant information quickly.
+            </p>
+          </div>
+
+          <div className="feature-card">
+            <h3>AI Assistant</h3>
+            <p>
+              Ask questions about research papers and clinical guidelines and
+              get instant AI-generated answers.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      <section className="workflow-section">
+        <h2>How It Works</h2>
+        <div className="workflow-steps">
+          <div className="step-card">
+            <div className="step-number">1</div>
+            <h3>Upload</h3>
+            <p>Upload research papers, PDFs, and medical guidelines.</p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-number">2</div>
+            <h3>Index</h3>
+            <p>The system processes and organizes the uploaded documents.</p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-number">3</div>
+            <h3>Retrieve</h3>
+            <p>
+              Search and retrieve the most relevant content from your document
+              collection.
+            </p>
+          </div>
+
+          <div className="step-card">
+            <div className="step-number">4</div>
+            <h3>Generate</h3>
+            <p>
+              Get AI-powered responses and summaries based on the retrieved
+              research information.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }
 
-export default App
+export default App;
