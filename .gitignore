@@ -1,51 +1,78 @@
-# Virtual environments
-/.venv/
-/venv/
+# Python environment
+.venv/
+venv/
+env/
+ENV/
 
-# Secrets and credentials
-/.env
+# Environment and secrets
+.env
+.env.*
+*.env
 
-# Python cache and packaging
+# Python bytecode and caches
 __pycache__/
 **/__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.pdb
-
-# Packaging and distribution
-*.egg-info/
-*.eggs/
-/build/
-/dist/
-*.egg
-*.whl
-
-# Test and coverage output
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 .coverage.*
 htmlcov/
 coverage.xml
 nosetests.xml
 
+# Packaging/build output
+build/
+dist/
+*.egg-info/
+*.eggs/
+*.egg
+*.whl
+
+# Project data and generated artifacts
+/data/
+/data*/
+rag/data/
+/models/
+/model/
+/checkpoints/
+/artifacts/
+/runs/
+/mlruns/
+outputs/
+results/
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.pt
+*.pth
+*.bin
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Databases
+*.db
+*.sqlite3
+*.sqlite
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.orig
+*.swp
+*.swo
+
 # Editor and OS files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
-
-# Database and local data
-*.db
-*.sqlite3
-/data/
-
-# Miscellaneous
-*.log
-*.tmp
-*.bak
-*.orig
-.ipynb_checkpoints/
-.mypy_cache/
