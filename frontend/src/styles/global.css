@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8fafc;
+}
+
+.page-container {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+  text-align: center;
+}
+
+.page-container h1 {
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.page-container p {
+  color: #475569;
+  max-width: 650px;
+  line-height: 1.7;
+}

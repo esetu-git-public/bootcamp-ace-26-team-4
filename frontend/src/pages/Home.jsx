@@ -1,33 +1,34 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "../styles/Home.css";
 
 function Home() {
-  const navigate = useNavigate();
-
   return (
     <div className="home-container">
       <section className="hero-section">
         <div className="hero-content">
+
           <h1>Medical Research Paper Assistant</h1>
-          <p>
-            Upload research papers, search important medical information, and
-            chat with an AI assistant.
+
+          <p className="hero-text">
+            Upload medical research papers, search clinical information,
+            and interact with an AI assistant to better understand
+            research findings and evidence-based guidelines.
           </p>
 
           <div className="hero-buttons">
-            <button
-              className="btn primary-btn"
-              onClick={() => navigate("/upload")}
-            >
-              Upload Papers
-            </button>
+            <Link to="/upload" className="hero-link">
+              <button className="btn primary-btn">
+                📤 Upload Papers
+              </button>
+            </Link>
 
-            <button
-              className="btn secondary-btn"
-              onClick={() => navigate("/search")}
-            >
-              Search Papers
-            </button>
+            <Link to="/search" className="hero-link">
+              <button className="btn secondary-btn">
+                🔍 Search Papers 
+              </button>
+            </Link>
           </div>
+
         </div>
       </section>
     </div>
