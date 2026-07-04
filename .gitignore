@@ -28,6 +28,8 @@ nosetests.xml
 # Packaging/build output
 build/
 dist/
+pip-wheel-metadata/
+__pypackages__/
 *.egg-info/
 *.eggs/
 *.egg
@@ -53,6 +55,10 @@ results/
 *.pt
 *.pth
 *.bin
+*.zip
+*.tar.gz
+*.tar
+*.gz
 
 # Jupyter / notebooks
 .ipynb_checkpoints/
