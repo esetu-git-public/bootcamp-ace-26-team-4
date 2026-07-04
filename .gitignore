@@ -49,3 +49,7 @@ Thumbs.db
 *.orig
 .ipynb_checkpoints/
 .mypy_cache/
+
+# Node.js / React
+frontend/node_modules/
+frontend/dist/
