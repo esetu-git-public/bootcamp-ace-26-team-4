@@ -9,7 +9,7 @@ ENV/
 .env.*
 *.env
 
-# Python bytecode and caches
+# Python bytecode and cache artifacts
 __pycache__/
 **/__pycache__/
 *.py[cod]
