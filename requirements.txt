@@ -11,3 +11,6 @@ langchain-google-genai
 
 pgvector
 lxml
+sentence-transformers
+tqdm
+

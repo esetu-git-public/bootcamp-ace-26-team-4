@@ -1,55 +1,87 @@
-# Virtual environments
-/.venv/
-/venv/
+# Python environment
+.venv/
+venv/
+env/
+ENV/
 
-# Secrets and credentials
-/.env
+# Environment and secrets
+.env
+.env.*
+*.env
 
-# Python cache and packaging
+# Python bytecode and cache artifacts
 __pycache__/
 **/__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.pdb
-
-# Packaging and distribution
-*.egg-info/
-*.eggs/
-/build/
-/dist/
-*.egg
-*.whl
-
-# Test and coverage output
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 .coverage.*
 htmlcov/
 coverage.xml
 nosetests.xml
 
-# Editor and OS files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
+# Packaging/build output
+build/
+dist/
+*.egg-info/
+*.eggs/
+*.egg
+*.whl
 
-# Database and local data
+# Project data and generated artifacts
+/data/
+/data*/
+rag/data/
+/models/
+/model/
+/checkpoints/
+/artifacts/
+/runs/
+/mlruns/
+outputs/
+results/
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.pt
+*.pth
+*.bin
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Databases
 *.db
 *.sqlite3
-/data/
+*.sqlite
 
-# Miscellaneous
+# Logs and temporary files
 *.log
 *.tmp
 *.bak
 *.orig
+<<<<<<< HEAD
 .ipynb_checkpoints/
 .mypy_cache/
 
 # Node.js / React
 frontend/node_modules/
 frontend/dist/
+=======
+*.swp
+*.swo
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+>>>>>>> 44bcddc37fc2eec20c0d0f19a0dc5866311e0de9
