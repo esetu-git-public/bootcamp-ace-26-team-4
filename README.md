@@ -220,7 +220,7 @@ The following activities have been completed during the project setup phase(03-0
 - Project divided into modules
 - Module responsibilities discussed and assigned
 
-The following activities have been completed during the project phase(04-07-26):
+The following activities have been completed during the project phase(03-07-26):
 - Document Parsing completed
 - Chunk Generation completed
 - Embedding Generation completed
@@ -235,7 +235,8 @@ The following activities have been completed during the project phase(04-07-26):
 
 The project foundation has been established, and the team is ready to begin the implementation phase.
 
-**Project Phase:** Designing UI and Understanding the RAG
+**Project Phase:** Designing UI and Understanding the RAG ✅
+
 The UI design of the project is finalized and completed the RAG Pipeline till embeddings.
 
 ---
