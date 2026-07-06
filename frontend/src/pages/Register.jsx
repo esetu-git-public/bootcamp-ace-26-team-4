@@ -34,7 +34,16 @@ function Register() {
       return;
     }
 
-    alert("Registration Successful!");
+    // save user details in localStorage
+    const userData = {
+      fullName,
+      email,
+      password,
+    };
+
+    localStorage.setItem("registeredUser", JSON.stringify(userData));
+
+    alert("Registration Successful! Please login.");
     navigate("/");
   };
 

@@ -11,11 +11,26 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (email && password) {
+    if (!email || !password) {
+      alert("Please enter email and password.");
+      return;
+    }
+
+    // get registered user from localStorage
+    const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
+    if (!savedUser) {
+      alert("No registered user found. Please register first.");
+      return;
+    }
+
+    // check login details
+    if (email === savedUser.email && password === savedUser.password) {
+      localStorage.setItem("isLoggedIn", "true");
       alert("Login Successful!");
       navigate("/home");
     } else {
-      alert("Please enter email and password.");
+      alert("Invalid email or password.");
     }
   };
 
