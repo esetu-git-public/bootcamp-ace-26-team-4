@@ -6,7 +6,6 @@ import "./App.css";
 function App() {
   const location = useLocation();
 
-  // Hide sidebar on Login and Register pages
   const hideSidebar =
     location.pathname === "/" ||
     location.pathname === "/register";
@@ -15,7 +14,13 @@ function App() {
     <div className="app">
       {!hideSidebar && <Sidebar />}
 
-      <main className={hideSidebar ? "main-content full-width" : "main-content"}>
+      <main
+        className={
+          hideSidebar
+            ? "main-content full-width"
+            : "main-content"
+        }
+      >
         <AppRoutes />
       </main>
     </div>

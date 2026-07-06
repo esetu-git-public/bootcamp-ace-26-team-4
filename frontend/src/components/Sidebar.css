@@ -1,71 +1,91 @@
-/* Sidebar */
+/* ==========================================
+   SIDEBAR
+========================================== */
 
 .sidebar {
-  width: 250px;
+  width: 260px;
+  height: 100vh;
   background: #0f172a;
   color: white;
+
   position: fixed;
-  left: 0;
   top: 0;
-  height: 100vh;
-  padding: 25px 20px;
+  left: 0;
 
   display: flex;
   flex-direction: column;
+
+  padding: 25px 20px;
 }
 
-/* Logo */
+/* ==========================================
+   LOGO
+========================================== */
 
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 40px;
 }
 
 .logo-icon {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
+
   background: #2563eb;
+  color: white;
+
   border-radius: 12px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .sidebar-logo h2 {
-  color: white;
-  font-size: 22px;
   margin: 0;
+  font-size: 24px;
+  color: white;
 }
 
 .sidebar-logo p {
+  margin-top: 4px;
   color: #94a3b8;
   font-size: 13px;
-  margin-top: 4px;
 }
 
-/* Navigation */
+/* ==========================================
+   NAVIGATION
+========================================== */
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .sidebar-link {
-  text-decoration: none;
-  color: #cbd5e1;
-  padding: 14px 16px;
-  border-radius: 10px;
-  transition: 0.3s;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 14px;
+
+  text-decoration: none;
+  color: #cbd5e1;
+
+  padding: 14px 16px;
+  border-radius: 10px;
+
+  transition: 0.3s ease;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.sidebar-link svg {
+  font-size: 18px;
 }
 
 .sidebar-link:hover {
@@ -78,22 +98,86 @@
   color: white;
 }
 
-/* Bottom */
+/* ==========================================
+   SPACER
+========================================== */
+
+.sidebar-spacer {
+  flex: 1;
+}
+
+/* ==========================================
+   LOGOUT
+========================================== */
 
 .sidebar-bottom {
   margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .logout-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
   text-decoration: none;
   color: #f87171;
+
   padding: 14px 16px;
   border-radius: 10px;
-  transition: 0.3s;
+
+  transition: 0.3s ease;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.logout-btn svg {
+  font-size: 18px;
 }
 
 .logout-btn:hover {
-  background: #7f1d1d;
+  background: rgba(239,68,68,0.15);
   color: white;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    width: 220px;
+    padding: 20px 15px;
+  }
+
+  .sidebar-logo h2 {
+    font-size: 20px;
+  }
+
+  .sidebar-logo p {
+    font-size: 12px;
+  }
+
+  .sidebar-link,
+  .logout-btn {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
 }
