@@ -4,77 +4,61 @@ function About() {
   return (
     <div className="about-container">
 
-      <section className="about-hero">
+      <div className="about-header">
         <h1>About Medical Research Paper Assistant</h1>
+
         <p>
-          An AI-powered platform that helps researchers, students, and healthcare
-          professionals upload, search, and understand medical research papers
-          efficiently using Retrieval-Augmented Generation (RAG).
+          A web application that helps healthcare professionals,
+          researchers, and students upload, search, and interact with
+          medical research papers using Artificial Intelligence.
         </p>
-      </section>
+      </div>
 
-      <section className="about-section">
-        <h2>Our Mission</h2>
-        <p>
-          Our mission is to simplify access to medical knowledge by combining
-          Artificial Intelligence with research literature, enabling users to
-          quickly retrieve accurate and relevant information.
-        </p>
-      </section>
+      <div className="about-grid">
 
-      <section className="about-section">
-        <h2>Key Features</h2>
+        <div className="about-card">
+          <h2>🎯 Our Mission</h2>
 
-        <div className="feature-grid">
-
-          <div className="feature-box">
-            <h3>📄 Upload Papers</h3>
-            <p>
-              Upload research papers, journals, and clinical guidelines securely.
-            </p>
-          </div>
-
-          <div className="feature-box">
-            <h3>🔍 Smart Search</h3>
-            <p>
-              Find relevant information quickly using keyword and semantic search.
-            </p>
-          </div>
-
-          <div className="feature-box">
-            <h3>🤖 AI Chat Assistant</h3>
-            <p>
-              Ask questions about uploaded papers and receive AI-generated
-              responses with contextual understanding.
-            </p>
-          </div>
-
-          <div className="feature-box">
-            <h3>📚 Research Support</h3>
-            <p>
-              Save time by retrieving summaries and important insights from
-              medical documents.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      <section className="about-section">
-        <h2>Technology Stack</h2>
-
-        <div className="tech-stack">
-
-          <span>React</span>
-          <span>FastAPI</span>
-          <span>Python</span>
-          <span>MongoDB</span>
-          <span>LangChain</span>
-          <span>RAG</span>
-
+          <p>
+            To simplify medical research by providing an intelligent
+            platform for document management and AI-powered knowledge
+            retrieval.
+          </p>
         </div>
 
-      </section>
+        <div className="about-card">
+          <h2>✨ Key Features</h2>
+
+          <ul>
+            <li>Upload PDF research papers</li>
+            <li>Search medical literature</li>
+            <li>AI-powered research assistant</li>
+            <li>Secure document management</li>
+          </ul>
+        </div>
+
+        <div className="about-card">
+          <h2>💻 Technology Stack</h2>
+
+          <ul>
+            <li>Frontend – React + Vite</li>
+            <li>Backend – Spring Boot</li>
+            <li>Database – PostgreSQL</li>
+            <li>AI – Retrieval-Augmented Generation (RAG)</li>
+          </ul>
+        </div>
+
+        <div className="about-card">
+          <h2>📌 Project Goal</h2>
+
+          <p>
+            Build an intelligent platform that enables users to
+            efficiently explore medical research papers and obtain
+            accurate, evidence-based insights.
+          </p>
+        </div>
+
+      </div>
 
     </div>
   );

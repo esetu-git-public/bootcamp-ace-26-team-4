@@ -1,24 +1,24 @@
 import { useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Sidebar from "./components/Sidebar";
 import AppRoutes from "./routes/AppRoutes";
 import "./App.css";
 
 function App() {
   const location = useLocation();
 
-  const hideNavbarFooter = location.pathname === "/";
+  // Hide sidebar on Login and Register pages
+  const hideSidebar =
+    location.pathname === "/" ||
+    location.pathname === "/register";
 
   return (
-    <>
-      {!hideNavbarFooter && <Navbar />}
+    <div className="app">
+      {!hideSidebar && <Sidebar />}
 
-      <main className="main-content">
+      <main className={hideSidebar ? "main-content full-width" : "main-content"}>
         <AppRoutes />
       </main>
-
-      {!hideNavbarFooter && <Footer />}
-    </>
+    </div>
   );
 }
 
