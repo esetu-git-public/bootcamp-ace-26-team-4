@@ -1,6 +1,159 @@
-.upload-page {
-  min-height: 70vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ===========================
+   UPLOAD PAGE
+=========================== */
+
+.upload-container {
+  padding: 35px;
+  background: #f4f7fb;
+  min-height: 100vh;
+}
+
+/* Header */
+
+.upload-header {
+  margin-bottom: 30px;
+}
+
+.upload-header h1 {
+  color: #1e3a8a;
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.upload-header p {
+  color: #64748b;
+  font-size: 17px;
+  max-width: 700px;
+  line-height: 1.7;
+}
+
+/* Upload Card */
+
+.upload-card {
+  background: white;
+  border-radius: 16px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  margin-bottom: 35px;
+}
+
+.upload-icon {
+  font-size: 65px;
+  margin-bottom: 15px;
+}
+
+.upload-card h2 {
+  color: #0f172a;
+  margin-bottom: 15px;
+}
+
+.upload-card p {
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+/* Buttons */
+
+.choose-btn,
+.upload-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.choose-btn {
+  background: white;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+}
+
+.choose-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.upload-btn {
+  margin-top: 25px;
+  background: #2563eb;
+  color: white;
+}
+
+.upload-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Upload Info */
+
+.upload-info {
+  margin-top: 25px;
+}
+
+.upload-info p {
+  margin: 8px 0;
+}
+
+/* Guidelines */
+
+.guidelines {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.guidelines h2 {
+  color: #1e3a8a;
+  margin-bottom: 18px;
+}
+
+.guidelines ul {
+  padding-left: 20px;
+}
+
+.guidelines li {
+  margin-bottom: 12px;
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* Responsive */
+
+@media (max-width:768px){
+
+.upload-container{
+padding:20px;
+}
+
+.upload-card{
+padding:30px 20px;
+}
+
+.upload-header h1{
+font-size:28px;
+}
+
+.choose-btn,
+.upload-btn{
+width:100%;
+}
+
+}
+.selected-file{
+    margin-top:20px;
+    background:#eef4ff;
+    border:1px solid #2563eb;
+    border-radius:10px;
+    padding:15px;
+    color:#1e3a8a;
+    font-weight:500;
+}
+
+.choose-btn{
+    display:inline-block;
+    text-decoration:none;
 }
