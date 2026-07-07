@@ -4,61 +4,79 @@ import "../styles/Upload.css";
 function Upload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
 
     if (!file) return;
 
-    // Allow only PDF
     if (file.type !== "application/pdf") {
       setMessage("❌ Please upload only PDF files.");
       setSelectedFile(null);
       return;
     }
 
-    // Max Size 20MB
     if (file.size > 20 * 1024 * 1024) {
-      setMessage("❌ File size must be less than 20 MB.");
+      setMessage("❌ File size should be less than 20 MB.");
       setSelectedFile(null);
       return;
     }
 
     setSelectedFile(file);
     setMessage("");
+    setProgress(0);
   };
 
   const removeFile = () => {
     setSelectedFile(null);
     setMessage("");
-    document.getElementById("fileInput").value = "";
+    setProgress(0);
+
+    const input = document.getElementById("fileInput");
+    if (input) input.value = "";
   };
 
   const handleUpload = () => {
     if (!selectedFile) {
-      setMessage("⚠ Please select a PDF file.");
+      setMessage("⚠ Please choose a PDF first.");
       return;
     }
 
-    // Backend will be connected later
-    setMessage("✅ Research paper is ready for backend upload.");
+    setUploading(true);
+
+    let value = 0;
+
+    const timer = setInterval(() => {
+      value += 10;
+      setProgress(value);
+
+      if (value >= 100) {
+        clearInterval(timer);
+
+        setUploading(false);
+
+        setMessage(
+          "✅ Upload completed successfully. Waiting for backend processing."
+        );
+      }
+    }, 250);
   };
 
   return (
     <div className="upload-container">
 
-      {/* Header */}
-
       <div className="upload-header">
+
         <h1>Upload Medical Research Paper</h1>
 
         <p>
-          Upload research papers in PDF format to make them searchable
-          through the AI-powered Medical Research Assistant.
+          Upload your medical research papers in PDF format. These documents
+          will be processed and indexed for AI-powered Search and Chat.
         </p>
-      </div>
 
-      {/* Upload Card */}
+      </div>
 
       <div className="upload-card">
 
@@ -71,13 +89,13 @@ function Upload() {
           <h2>Drag & Drop your PDF here</h2>
 
           <p className="upload-subtitle">
-            or click below to browse your files
+            or browse files from your computer
           </p>
 
           <input
+            id="fileInput"
             type="file"
             accept=".pdf"
-            id="fileInput"
             hidden
             onChange={handleFileChange}
           />
@@ -92,20 +110,25 @@ function Upload() {
 
           <div className="selected-file">
 
-            <h3>Selected File</h3>
+            <h3>Selected Document</h3>
+
+            <p><strong>Name:</strong> {selectedFile.name}</p>
 
             <p>
-              <strong>Name :</strong> {selectedFile.name}
-            </p>
-
-            <p>
-              <strong>Size :</strong>{" "}
+              <strong>Size:</strong>{" "}
               {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
             </p>
 
-            <p className="status ready">
-              Status : Ready to Upload
+            <p><strong>Type:</strong> PDF Document</p>
+
+            <p>
+              <strong>Last Modified:</strong>{" "}
+              {new Date(selectedFile.lastModified).toLocaleDateString()}
             </p>
+
+            <span className="status ready">
+              Ready to Upload
+            </span>
 
             <button
               className="remove-btn"
@@ -118,35 +141,110 @@ function Upload() {
 
         )}
 
+        {uploading && (
+
+          <div className="progress-section">
+
+            <div className="progress-bar">
+
+              <div
+                className="progress-fill"
+                style={{ width: `${progress}%` }}
+              ></div>
+
+            </div>
+
+            <p className="progress-text">
+              Uploading... {progress}%
+            </p>
+
+          </div>
+
+        )}
+
         <button
           className="upload-btn"
+          disabled={!selectedFile || uploading}
           onClick={handleUpload}
-          disabled={!selectedFile}
         >
-          Upload Paper
+          {uploading ? "Uploading..." : "Upload Paper"}
         </button>
 
         {message && (
-          <p className="upload-message">
+          <div className="upload-message">
             {message}
-          </p>
+          </div>
         )}
 
       </div>
-
-      {/* Guidelines */}
 
       <div className="guidelines">
 
         <h2>Upload Guidelines</h2>
 
         <ul>
-          <li>📄 Upload only medical research papers.</li>
-          <li>✅ PDF format (.pdf) only.</li>
-          <li>📦 Maximum file size: 20 MB.</li>
-          <li>🤖 Uploaded papers will be indexed for AI Search & Chat.</li>
-          <li>🔒 Your uploaded documents remain private and secure.</li>
+
+          <li>📄 Upload only Medical Research Papers.</li>
+
+          <li>📑 Accepted format: PDF (.pdf).</li>
+
+          <li>📦 Maximum upload size: 20 MB.</li>
+
+          <li>🤖 Documents will be processed for AI Search & Chat.</li>
+
+          <li>🔒 Uploaded files remain secure.</li>
+
         </ul>
+
+      </div>
+
+      <div className="workflow-card">
+
+        <h2>Document Processing Workflow</h2>
+
+        <div className="workflow">
+
+          <div className="workflow-step">
+            📄
+            <p>Upload PDF</p>
+          </div>
+
+          <div className="arrow">→</div>
+
+          <div className="workflow-step">
+            📝
+            <p>Extract Text</p>
+          </div>
+
+          <div className="arrow">→</div>
+
+          <div className="workflow-step">
+            ✂️
+            <p>Chunk Text</p>
+          </div>
+
+          <div className="arrow">→</div>
+
+          <div className="workflow-step">
+            🧠
+            <p>Create Embeddings</p>
+          </div>
+
+          <div className="arrow">→</div>
+
+          <div className="workflow-step">
+            💾
+            <p>Store in Vector DB</p>
+          </div>
+
+          <div className="arrow">→</div>
+
+          <div className="workflow-step">
+            🤖
+            <p>Ready for AI Chat</p>
+          </div>
+
+        </div>
 
       </div>
 
