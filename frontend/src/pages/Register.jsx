@@ -1,98 +1,129 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 
 function Register() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = (e) => {
     e.preventDefault();
 
-    const { fullName, email, password, confirmPassword } = formData;
+    setError("");
 
-    if (!fullName || !email || !password || !confirmPassword) {
-      alert("Please fill all fields.");
+    // Validation
+    if (!name.trim()) {
+      setError("Full Name is required.");
       return;
     }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+    if (!email.trim()) {
+      setError("Email is required.");
       return;
     }
 
-    // save user details in localStorage
-    const userData = {
-      fullName,
-      email,
-      password,
-    };
+    if (!password.trim()) {
+      setError("Password is required.");
+      return;
+    }
 
-    localStorage.setItem("registeredUser", JSON.stringify(userData));
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
-    alert("Registration Successful! Please login.");
-    navigate("/");
+    // Simulate API Call
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+
+      alert("Registration Successful!");
+
+      // Redirect to Login Page
+      navigate("/");
+    }, 1500);
   };
 
   return (
     <div className="register-container">
+
       <div className="register-card">
-        <h1>Medical Research Paper Assistant</h1>
-        <p>Create your account</p>
+
+        <h1>Create Account</h1>
+
+        <p>Join the Medical Research Assistant</p>
 
         <form onSubmit={handleRegister}>
+
           <input
             type="text"
-            name="fullName"
             placeholder="Full Name"
-            value={formData.fullName}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <input
             type="email"
-            name="email"
             placeholder="Email Address"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div className="password-box">
 
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          <button type="submit">Register</button>
+            <button
+              type="button"
+              className="toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+
+          </div>
+
+          <div className="password-hint">
+            <p>✔ Minimum 6 characters</p>
+            <p>✔ One uppercase letter (Recommended)</p>
+            <p>✔ One number (Recommended)</p>
+          </div>
+
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Creating Account..." : "Register"}
+          </button>
+
         </form>
 
-        <p className="register-link">
-          Already have an account? <Link to="/">Login</Link>
-        </p>
+        <div className="register-link">
+          Already have an account?{" "}
+          <Link to="/">Login</Link>
+        </div>
+
       </div>
+
     </div>
   );
 }

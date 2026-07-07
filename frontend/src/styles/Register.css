@@ -1,3 +1,7 @@
+/* ==========================================
+   REGISTER PAGE
+========================================== */
+
 .register-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #2563eb, #0f766e);
@@ -8,10 +12,10 @@
 }
 
 .register-card {
-  background: white;
-  width: 420px;
+  width: 430px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 40px;
-  border-radius: 15px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -19,12 +23,13 @@
   color: #2563eb;
   text-align: center;
   margin-bottom: 10px;
+  font-size: 32px;
 }
 
-.register-card p {
+.register-card > p {
   text-align: center;
-  margin-bottom: 25px;
   color: #64748b;
+  margin-bottom: 30px;
 }
 
 .register-card form {
@@ -32,37 +37,120 @@
   flex-direction: column;
 }
 
+/* ==========================
+   INPUTS
+========================== */
+
 .register-card input {
+  width: 100%;
   padding: 14px;
-  margin-bottom: 16px;
-  border-radius: 10px;
+  margin-bottom: 18px;
   border: 1px solid #cbd5e1;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
 }
 
 .register-card input:focus {
   outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
 }
 
-.register-card button {
+/* ==========================
+   PASSWORD FIELD
+========================== */
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 70px;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 40%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.toggle-btn:hover {
+  color: #1d4ed8;
+}
+
+/* ==========================
+   PASSWORD HINT
+========================== */
+
+.password-hint {
+  background: #eff6ff;
+  border-left: 4px solid #2563eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+
+.password-hint p {
+  margin: 4px 0;
+  color: #1e3a8a;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* ==========================
+   ERROR MESSAGE
+========================== */
+
+.error-message {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.register-card button[type="submit"] {
   background: #2563eb;
   color: white;
   border: none;
   padding: 14px;
   border-radius: 10px;
-  cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.register-card button:hover {
+.register-card button[type="submit"]:hover {
   background: #1d4ed8;
 }
 
+.register-card button[type="submit"]:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ==========================
+   LOGIN LINK
+========================== */
+
 .register-link {
-  margin-top: 18px;
-  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+  color: #64748b;
 }
 
 .register-link a {
@@ -73,4 +161,24 @@
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 500px) {
+  .register-card {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  .register-card h1 {
+    font-size: 28px;
+  }
+
+  .toggle-btn {
+    right: 12px;
+    font-size: 13px;
+  }
 }

@@ -1,3 +1,7 @@
+/* ==========================================
+   LOGIN PAGE
+========================================== */
+
 .login-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #2563eb, #0f766e);
@@ -8,10 +12,10 @@
 }
 
 .login-card {
-  background: white;
-  width: 400px;
+  width: 420px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 40px;
-  border-radius: 15px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -23,8 +27,8 @@
 
 .login-card p {
   text-align: center;
-  margin-bottom: 25px;
   color: #64748b;
+  margin-bottom: 25px;
 }
 
 .login-card form {
@@ -32,20 +36,60 @@
   flex-direction: column;
 }
 
+/* Inputs */
+
 .login-card input {
+  width: 100%;
   padding: 14px;
   margin-bottom: 18px;
-  border-radius: 10px;
   border: 1px solid #cbd5e1;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.3s;
 }
 
 .login-card input:focus {
   outline: none;
   border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
 }
 
-.login-card button {
+/* Password */
+
+.password-box {
+  position: relative;
+}
+
+.password-box input {
+  padding-right: 75px;
+}
+
+.toggle-btn {
+  position: absolute;
+  top: 38%;
+  right: 15px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Error */
+
+.error-message {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+/* Button */
+
+.login-card button[type="submit"] {
   background: #2563eb;
   color: white;
   border: none;
@@ -54,16 +98,23 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+  transition: .3s;
 }
 
-.login-card button:hover {
+.login-card button[type="submit"]:hover {
   background: #1d4ed8;
 }
 
+.login-card button[type="submit"]:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Footer */
+
 .login-link {
-  margin-top: 18px;
+  margin-top: 20px;
   text-align: center;
-  font-size: 14px;
   color: #64748b;
 }
 
@@ -75,4 +126,19 @@
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 500px) {
+
+  .login-card {
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  .login-card h1 {
+    font-size: 28px;
+  }
+
 }
