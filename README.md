@@ -231,6 +231,7 @@ The UI design of the project is finalized and completed the RAG Pipeline till em
 **Project Phase:** Frontend Phase is completed and Retrivel pipeline is completed ✅
 
 Vector Database is completed and Prompt Building is completed
+
 ---
 
 # 📅 Upcoming Work
