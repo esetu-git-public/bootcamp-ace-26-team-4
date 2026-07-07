@@ -20,7 +20,9 @@ RULES
 5. Write scientifically accurate responses.
 6. Merge evidence from multiple papers whenever possible.
 7. Keep the response clear and well structured.
-8. At the end, list every paper used.
+8. Do NOT generate citations, references, or paper lists.
+9. The backend will automatically attach references.
+10. Focus only on answering the user's question using the supplied context.
 
 ========================
 RESEARCH CONTEXT
