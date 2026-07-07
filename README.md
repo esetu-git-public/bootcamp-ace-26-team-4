@@ -205,27 +205,16 @@ Prepares the application for deployment and monitors system health.
 
   # ✅ Work Completed
 
-The following activities have been completed during the project setup phase(03-07-26):
+The following activities have been completed in the project:
 
-- Requirement analysis completed
-- Medical dataset analyzed
-- RAG + LLM architecture finalized
-- Project workflow designed
-- GitHub repository created
-- Development environment configured
-- Project folder structure created
-- XML dataset analysis completed
-- Initial XML to JSON conversion completed
-- Initial data preprocessing completed
-- Project divided into modules
-- Module responsibilities discussed and assigned
+Project Planning              ✅ Completed
+Documentation                 ✅ Completed
+Data Processing               ✅ Completed
+Vector Database               ✅ Completed
+Retrieval Pipeline            ✅ Completed
+Prompt Engineering            ✅ Completed
+Frontend Design               ✅ Completed
 
-The following activities have been completed during the project phase(03-07-26):
-- Document Parsing completed
-- Chunk Generation completed
-- Embedding Generation completed
-- installed all the dependencies for the frontend completed
-- UI design finalized and frontend project setup completed 
 
 ---
 
@@ -239,16 +228,19 @@ The project foundation has been established, and the team is ready to begin the 
 
 The UI design of the project is finalized and completed the RAG Pipeline till embeddings.
 
+**Project Phase:** Frontend Phase is completed and Retrivel pipeline is completed ✅
+
+Vector Database is completed and Prompt Building is completed
 ---
 
 # 📅 Upcoming Work
-- Vector Database Setup
-- Retrieval Pipeline
-- LLM Integration
-- Frontend Development
-- Testing & Evaluation
-- Deployment
-
+• LLM Integration
+• Response Generation
+• Citation Generation
+• FastAPI Backend
+• Database Integration
+• Deployment
+• Frontend-Backend Integration
 ---
 
 # 👥 Team Roles
