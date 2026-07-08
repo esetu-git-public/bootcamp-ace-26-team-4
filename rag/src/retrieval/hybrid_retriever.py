@@ -1,5 +1,5 @@
-from retrieval.dense_retriever import DenseRetriever
-from retrieval.bm25_retriever import BM25Retriever
+from rag.src.retrieval.dense_retriever import DenseRetriever
+from rag.src.retrieval.bm25_retriever import BM25Retriever
 
 
 class HybridRetriever:

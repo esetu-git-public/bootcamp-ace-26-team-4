@@ -26,16 +26,11 @@ Citation Generator
         ▼
 Final Response
 """
-
-from retrieval.hybrid_retriever import HybridRetriever
-
-from prompt.prompt_builder import PromptBuilder
-
-from llm.gemini_client import GeminiClient
-
-from response.response_validator import ResponseValidator
-
-from response.citation_generator import CitationGenerator
+from rag.src.retrieval.hybrid_retriever import HybridRetriever
+from rag.src.prompt.prompt_builder import PromptBuilder
+from rag.src.llm.gemini_client import GeminiClient
+from rag.src.response.response_validator import ResponseValidator
+from rag.src.response.citation_generator import CitationGenerator
 
 
 class ResponseGenerator:

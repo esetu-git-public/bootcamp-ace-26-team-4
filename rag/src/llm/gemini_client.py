@@ -9,7 +9,7 @@ import time
 from google import genai
 from google.genai import types
 
-from llm.llm_config import (
+from rag.src.llm.llm_config import (
     GOOGLE_API_KEY,
     MODEL_NAME,
     TEMPERATURE,

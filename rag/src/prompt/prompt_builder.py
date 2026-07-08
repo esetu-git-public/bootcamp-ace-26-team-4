@@ -1,10 +1,10 @@
-from prompt.templates import (
+from rag.src.prompt.templates import (
     CHAT_TEMPLATE,
     SUMMARY_TEMPLATE,
     COMPARE_TEMPLATE
 )
 
-from prompt.metadata_formatter import MetadataFormatter
+from rag.src.prompt.metadata_formatter import MetadataFormatter
 
 
 class PromptBuilder:
