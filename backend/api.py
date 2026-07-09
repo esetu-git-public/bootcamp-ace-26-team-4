@@ -1,13 +1,20 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from fastapi import  UploadFile, File
 from pathlib import Path
 import shutil
 
+from fastapi import APIRouter, HTTPException, UploadFile, File
+from pydantic import BaseModel
+
 from rag.src.response.response_generator import ResponseGenerator
+from rag.src.ingestion.upload_ingestor import UploadIngestor
+
 
 router = APIRouter()
+
 generator = ResponseGenerator()
+upload_ingestor = UploadIngestor()
+
+UPLOAD_DIR = Path("rag/data/uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 
 class AskRequest(BaseModel):
@@ -37,7 +44,10 @@ def ask(request: AskRequest):
     question = request.question.strip()
 
     if not question:
-        raise HTTPException(status_code=400, detail="Question is required")
+        raise HTTPException(
+            status_code=400,
+            detail="Question is required"
+        )
 
     if is_greeting(question):
         return {
@@ -62,22 +72,29 @@ def ask(request: AskRequest):
         return result
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-UPLOAD_DIR = Path("rag/data/uploads")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    allowed_extensions = {".pdf", ".xml", ".txt"}
+    allowed_extensions = {
+        ".pdf",
+        ".docx",
+        ".txt",
+        ".md",
+        ".csv",
+        ".xml",
+    }
 
     file_ext = Path(file.filename).suffix.lower()
 
     if file_ext not in allowed_extensions:
         raise HTTPException(
             status_code=400,
-            detail="Only PDF, XML, and TXT files are supported"
+            detail="Supported files: PDF, DOCX, TXT, MD, CSV, XML"
         )
 
     save_path = UPLOAD_DIR / file.filename
@@ -86,11 +103,19 @@ async def upload_file(file: UploadFile = File(...)):
         with save_path.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
+        ingestion_result = upload_ingestor.ingest(
+            str(save_path)
+        )
+
         return {
-            "message": "File uploaded successfully",
+            "message": "File uploaded and indexed successfully",
             "filename": file.filename,
-            "path": str(save_path)
+            "path": str(save_path),
+            "ingestion": ingestion_result
         }
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
