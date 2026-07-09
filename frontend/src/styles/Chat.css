@@ -100,6 +100,9 @@
   cursor: pointer;
   font-weight: 600;
   color: #2563eb;
+  -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   list-style: none;
 }
