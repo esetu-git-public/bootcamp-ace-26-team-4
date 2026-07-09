@@ -4,8 +4,8 @@ matplotlib
 seaborn
 fastapi
 
-langchain-groq
 langchain
+langchain-groq
 langchain-community
 langchain-google-genai
 
@@ -14,7 +14,7 @@ lxml
 sentence-transformers
 tqdm
 chromadb
-rank bm-25
+rank-bm25
 google-genai
 python-dotenv
 

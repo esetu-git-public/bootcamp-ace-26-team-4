@@ -1,9 +1,3 @@
-"""
-Gemini Client
-
-Uses the new google-genai SDK.
-"""
-
 import time
 
 from google import genai
