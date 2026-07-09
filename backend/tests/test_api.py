@@ -22,7 +22,7 @@ def test_root_endpoint():
         "message": "MRP RAG API is running"
     }
 
-
+# Test for checking endpoint missing question
 def test_ask_endpoint_missing_question():
     response = client.post("/api/ask", json={})
 
