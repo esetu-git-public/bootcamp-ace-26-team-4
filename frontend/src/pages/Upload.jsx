@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { uploadDocument } from "../services/api";
 import "../styles/Upload.css";
 
 function Upload() {
@@ -12,12 +13,14 @@ function Upload() {
 
     if (!file) return;
 
+    // Allow only PDF
     if (file.type !== "application/pdf") {
       setMessage("❌ Please upload only PDF files.");
       setSelectedFile(null);
       return;
     }
 
+    // Max 20 MB
     if (file.size > 20 * 1024 * 1024) {
       setMessage("❌ File size should be less than 20 MB.");
       setSelectedFile(null);
@@ -31,60 +34,60 @@ function Upload() {
 
   const removeFile = () => {
     setSelectedFile(null);
-    setMessage("");
-    setProgress(0);
 
     const input = document.getElementById("fileInput");
-    if (input) input.value = "";
+
+    if (input) {
+      input.value = "";
+    }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!selectedFile) {
       setMessage("⚠ Please choose a PDF first.");
       return;
     }
 
-    setUploading(true);
+    try {
+      setUploading(true);
+      setProgress(20);
+      setMessage("");
 
-    let value = 0;
+      const response = await uploadDocument(selectedFile);
 
-    const timer = setInterval(() => {
-      value += 10;
-      setProgress(value);
+      setProgress(100);
 
-      if (value >= 100) {
-        clearInterval(timer);
+      setMessage(`✅ ${response.message}`);
 
-        setUploading(false);
+      console.log("Upload Response:", response);
 
-        setMessage(
-          "✅ Upload completed successfully. Waiting for backend processing."
-        );
-      }
-    }, 250);
+      removeFile();
+    } catch (error) {
+      console.error(error);
+      setMessage(`❌ ${error.message}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
     <div className="upload-container">
 
       <div className="upload-header">
-
         <h1>Upload Medical Research Paper</h1>
 
         <p>
-          Upload your medical research papers in PDF format. These documents
-          will be processed and indexed for AI-powered Search and Chat.
+          Upload your medical research papers in PDF format.
+          These documents will be processed and indexed for
+          AI-powered Search and Chat.
         </p>
-
       </div>
 
       <div className="upload-card">
 
         <div className="drop-zone">
 
-          <div className="upload-icon">
-            📄
-          </div>
+          <div className="upload-icon">📄</div>
 
           <h2>Drag & Drop your PDF here</h2>
 
@@ -100,7 +103,10 @@ function Upload() {
             onChange={handleFileChange}
           />
 
-          <label htmlFor="fileInput" className="choose-btn">
+          <label
+            htmlFor="fileInput"
+            className="choose-btn"
+          >
             Browse Files
           </label>
 
@@ -112,14 +118,18 @@ function Upload() {
 
             <h3>Selected Document</h3>
 
-            <p><strong>Name:</strong> {selectedFile.name}</p>
+            <p>
+              <strong>Name:</strong> {selectedFile.name}
+            </p>
 
             <p>
               <strong>Size:</strong>{" "}
               {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
             </p>
 
-            <p><strong>Type:</strong> PDF Document</p>
+            <p>
+              <strong>Type:</strong> PDF Document
+            </p>
 
             <p>
               <strong>Last Modified:</strong>{" "}
@@ -155,7 +165,7 @@ function Upload() {
             </div>
 
             <p className="progress-text">
-              Uploading... {progress}%
+              Uploading...
             </p>
 
           </div>
@@ -183,17 +193,11 @@ function Upload() {
         <h2>Upload Guidelines</h2>
 
         <ul>
-
           <li>📄 Upload only Medical Research Papers.</li>
-
           <li>📑 Accepted format: PDF (.pdf).</li>
-
           <li>📦 Maximum upload size: 20 MB.</li>
-
           <li>🤖 Documents will be processed for AI Search & Chat.</li>
-
           <li>🔒 Uploaded files remain secure.</li>
-
         </ul>
 
       </div>
