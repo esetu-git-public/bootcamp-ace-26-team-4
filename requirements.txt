@@ -4,11 +4,6 @@ matplotlib
 seaborn
 fastapi
 
-langchain
-langchain-groq
-langchain-community
-langchain-google-genai
-
 pgvector
 lxml
 sentence-transformers
@@ -19,3 +14,7 @@ google-genai
 python-dotenv
 
 httpx2
+python-multipart
+
+pypdf
+python-docx

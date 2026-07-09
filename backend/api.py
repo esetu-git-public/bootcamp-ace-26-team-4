@@ -1,5 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+from fastapi import  UploadFile, File
+from pathlib import Path
+import shutil
 
 from rag.src.response.response_generator import ResponseGenerator
 
@@ -57,6 +60,37 @@ def ask(request: AskRequest):
             template=request.template
         )
         return result
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+UPLOAD_DIR = Path("rag/data/uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+
+@router.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    allowed_extensions = {".pdf", ".xml", ".txt"}
+
+    file_ext = Path(file.filename).suffix.lower()
+
+    if file_ext not in allowed_extensions:
+        raise HTTPException(
+            status_code=400,
+            detail="Only PDF, XML, and TXT files are supported"
+        )
+
+    save_path = UPLOAD_DIR / file.filename
+
+    try:
+        with save_path.open("wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        return {
+            "message": "File uploaded successfully",
+            "filename": file.filename,
+            "path": str(save_path)
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
