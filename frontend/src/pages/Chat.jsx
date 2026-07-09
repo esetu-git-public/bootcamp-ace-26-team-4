@@ -7,7 +7,7 @@ function Chat() {
   const [chatMessages, setChatMessages] = useState([
     {
       role: "bot",
-      text: "👋 Welcome! I'm your Medical Research Assistant. Upload research papers and ask questions to get AI-powered answers.",
+      text: "👋 Welcome! I'm your Medical Research Assistant.\nUpload research papers and ask questions to get AI-powered answers.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ function Chat() {
   const handleSend = async () => {
     if (!message.trim() || loading) return;
 
-    const userQuestion = message;
+    const userQuestion = message.trim();
     setMessage("");
 
     setChatMessages((prev) => [
@@ -32,9 +32,9 @@ function Chat() {
         ...prev,
         {
           role: "bot",
-          text: result.answer,
-          references: result.formatted_references,
-          metadata: result.metadata,
+          text: result.answer || "No answer generated.",
+          references: result.formatted_references || "",
+          metadata: result.metadata || null,
         },
       ]);
     } catch (error) {
@@ -60,7 +60,6 @@ function Chat() {
     <div className="chat-container">
       <div className="chat-header">
         <h1>AI Research Assistant</h1>
-
         <p>Ask questions about your uploaded medical research papers.</p>
       </div>
 
@@ -70,25 +69,23 @@ function Chat() {
             key={index}
             className={msg.role === "user" ? "user-message" : "bot-message"}
           >
-            <div>{msg.text}</div>
+            <div className="message-text">{msg.text}</div>
 
             {msg.references && (
-              <pre className="chat-references">
-                {msg.references}
-              </pre>
+              <pre className="chat-references">{msg.references}</pre>
             )}
 
             {msg.metadata && (
-              <small className="chat-confidence">
+              <div className="chat-confidence">
                 Confidence: {msg.metadata.retrieval_confidence_level}
-              </small>
+              </div>
             )}
           </div>
         ))}
 
         {loading && (
           <div className="bot-message">
-            Thinking...
+            <div className="message-text">Thinking...</div>
           </div>
         )}
       </div>
