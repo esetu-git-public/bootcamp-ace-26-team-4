@@ -52,6 +52,18 @@ class GeminiClient:
 
                 )
 
+                print("\n========== GEMINI DEBUG ==========")
+                print("Finish reason:", response.candidates[0].finish_reason)
+
+                if response.text:
+                    print("Answer length:", len(response.text))
+                    print("Last 500 characters:")
+                    print(response.text[-500:])
+                else:
+                    print("No text returned.")
+
+                print("==================================\n")
+
                 if response.text is None:
 
                     raise RuntimeError(

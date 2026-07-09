@@ -69,7 +69,8 @@ class ResponseGenerator:
 
         retrieved_chunks = self.retriever.retrieve(
 
-            query=question
+            query=question,
+            top_k= 3
 
         )
 
@@ -91,11 +92,17 @@ class ResponseGenerator:
         # Step 3 : Generate LLM Response
         # =====================================================
 
-        answer = self.llm.generate(
+        print("\n===== PROMPT LENGTH =====")
+        print(len(prompt))
+        print("=========================\n")
 
-            prompt
+        answer = self.llm.generate(prompt)
 
-        )
+        print("\n===== ANSWER LENGTH =====")
+        print(len(answer))
+        print("\n===== ANSWER END =====")
+        print(answer[-500:])
+        print("=========================\n")
 
         # =====================================================
         # Step 4 : Generate Citations
