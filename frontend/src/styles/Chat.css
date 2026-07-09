@@ -1,3 +1,26 @@
+.upload-button {
+  padding: 15px 18px;
+  border-radius: 10px;
+  background: #e8f0fe;
+  color: #1e3a8a;
+  cursor: pointer;
+  font-weight: 700;
+  border: 1px solid #bfdbfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-button:hover {
+  background: #dbeafe;
+}
+
+.upload-button.disabled {
+  background: #e5e7eb;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
 .chat-container {
   padding: 35px;
   background: #f4f7fb;

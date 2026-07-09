@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { askLLM } from "../services/api";
-import "../styles/Chat.css";
 import ReactMarkdown from "react-markdown";
+
+import "../styles/Chat.css";
+import { askLLM, uploadDocument } from "../services/api";
 
 function Chat() {
   const [message, setMessage] = useState("");
@@ -11,10 +12,12 @@ function Chat() {
       text: "👋 Welcome! I'm your Medical Research Assistant.\nUpload research papers and ask questions to get AI-powered answers.",
     },
   ]);
+
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const handleSend = async () => {
-    if (!message.trim() || loading) return;
+    if (!message.trim() || loading || uploading) return;
 
     const userQuestion = message.trim();
     setMessage("");
@@ -51,6 +54,45 @@ function Chat() {
     }
   };
 
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file || uploading) return;
+
+    try {
+      setUploading(true);
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `Uploading and indexing **${file.name}**...`,
+        },
+      ]);
+
+      const result = await uploadDocument(file);
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `✅ File uploaded and indexed successfully.\n\n**Filename:** ${result.filename}\n**Chunks added:** ${result.ingestion?.chunks_added ?? "N/A"}\n\nYou can now ask questions about this document.`,
+        },
+      ]);
+    } catch (error) {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `Upload error: ${error.message}`,
+        },
+      ]);
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSend();
@@ -77,10 +119,7 @@ function Chat() {
             {msg.references && (
               <details className="reference-dropdown">
                 <summary>📚 References</summary>
-
-                <pre className="chat-references">
-                  {msg.references}
-                </pre>
+                <pre className="chat-references">{msg.references}</pre>
               </details>
             )}
 
@@ -97,18 +136,36 @@ function Chat() {
             <div className="message-text">Thinking...</div>
           </div>
         )}
+
+        {uploading && (
+          <div className="bot-message">
+            <div className="message-text">Indexing document...</div>
+          </div>
+        )}
       </div>
 
       <div className="chat-input">
+        <label className={`upload-button ${uploading ? "disabled" : ""}`}>
+          {uploading ? "..." : "📎"}
+          <input
+            type="file"
+            accept=".pdf,.docx,.txt,.md,.csv,.xml"
+            onChange={handleFileUpload}
+            hidden
+            disabled={uploading}
+          />
+        </label>
+
         <input
           type="text"
           placeholder="Type your question..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
+          disabled={loading || uploading}
         />
 
-        <button onClick={handleSend} disabled={loading}>
+        <button onClick={handleSend} disabled={loading || uploading}>
           {loading ? "Sending..." : "Send"}
         </button>
       </div>
