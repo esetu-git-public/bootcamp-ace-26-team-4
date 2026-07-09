@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from backend.api import router
 
 app = FastAPI(
@@ -6,6 +7,7 @@ app = FastAPI(
 )
 
 app.include_router(router, prefix="/api")
+client = TestClient(app)
 
 
 @app.get("/")

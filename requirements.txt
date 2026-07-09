@@ -17,3 +17,5 @@ chromadb
 rank bm-25
 google-genai
 python-dotenv
+
+httpx2
