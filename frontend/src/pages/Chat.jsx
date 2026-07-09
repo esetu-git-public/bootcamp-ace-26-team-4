@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { askLLM } from "../services/api";
 import "../styles/Chat.css";
+import ReactMarkdown from "react-markdown";
 
 function Chat() {
   const [message, setMessage] = useState("");
@@ -69,10 +70,18 @@ function Chat() {
             key={index}
             className={msg.role === "user" ? "user-message" : "bot-message"}
           >
-            <div className="message-text">{msg.text}</div>
+            <div className="message-text">
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            </div>
 
             {msg.references && (
-              <pre className="chat-references">{msg.references}</pre>
+              <details className="reference-dropdown">
+                <summary>📚 References</summary>
+
+                <pre className="chat-references">
+                  {msg.references}
+                </pre>
+              </details>
             )}
 
             {msg.metadata && (
