@@ -41,6 +41,7 @@ def is_greeting(text: str) -> bool:
 
 @router.post("/ask")
 def ask(request: AskRequest):
+
     question = request.question.strip()
 
     if not question:
@@ -52,7 +53,10 @@ def ask(request: AskRequest):
     if is_greeting(question):
         return {
             "question": question,
-            "answer": "Hello! Ask me a specific question about the uploaded medical research papers.",
+            "answer": (
+                "Hello! Ask me a question about the medical knowledge base "
+                "or the uploaded document."
+            ),
             "references": [],
             "formatted_references": "",
             "metadata": {
@@ -65,13 +69,16 @@ def ask(request: AskRequest):
         }
 
     try:
+
         result = generator.generate_answer(
             question=question,
             template=request.template
         )
+
         return result
 
     except Exception as e:
+
         raise HTTPException(
             status_code=500,
             detail=str(e)
@@ -80,6 +87,7 @@ def ask(request: AskRequest):
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
+
     allowed_extensions = {
         ".pdf",
         ".docx",
@@ -97,25 +105,66 @@ async def upload_file(file: UploadFile = File(...)):
             detail="Supported files: PDF, DOCX, TXT, MD, CSV, XML"
         )
 
-    save_path = UPLOAD_DIR / file.filename
-
     try:
+
+        # ----------------------------------------------------
+        # Remove previous uploaded files
+        # ----------------------------------------------------
+
+        for existing_file in UPLOAD_DIR.iterdir():
+
+            if existing_file.is_file():
+
+                existing_file.unlink()
+
+        # ----------------------------------------------------
+        # Save new file
+        # ----------------------------------------------------
+
+        save_path = UPLOAD_DIR / file.filename
+
         with save_path.open("wb") as buffer:
+
             shutil.copyfileobj(file.file, buffer)
+
+        # ----------------------------------------------------
+        # Index into Chroma
+        # ----------------------------------------------------
 
         ingestion_result = upload_ingestor.ingest(
             str(save_path)
         )
 
+        # ----------------------------------------------------
+        # Response
+        # ----------------------------------------------------
+
         return {
+
             "message": "File uploaded and indexed successfully",
+
+            "current_document": file.filename,
+
             "filename": file.filename,
+
             "path": str(save_path),
+
             "ingestion": ingestion_result
+
         }
 
     except Exception as e:
+
         raise HTTPException(
             status_code=500,
             detail=str(e)
         )
+
+
+@router.get("/")
+def health():
+
+    return {
+        "status": "ok",
+        "message": "Medical RAG API running"
+    }

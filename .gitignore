@@ -1,93 +1,111 @@
-# Python environment
+# ==========================================================
+# Python Virtual Environments
+# ==========================================================
 .venv/
 venv/
 env/
 ENV/
 
-# Environment and secrets
+# ==========================================================
+# Environment Variables
+# ==========================================================
 .env
 .env.*
 *.env
 
-# Python bytecode and cache artifacts
+# ==========================================================
+# Python Cache
+# ==========================================================
 __pycache__/
 **/__pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.pdb
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-.coverage
-.coverage.*
-htmlcov/
-coverage.xml
-nosetests.xml
 
-# Packaging/build output
+# ==========================================================
+# Build / Distribution
+# ==========================================================
 build/
 dist/
-pip-wheel-metadata/
-__pypackages__/
 *.egg-info/
-*.eggs/
 *.egg
 *.whl
+pip-wheel-metadata/
 
-# Project data and generated artifacts
-/data/
-/data*/
+# ==========================================================
+# Project Data (Generated)
+# ==========================================================
 rag/data/
-/models/
-/model/
-/checkpoints/
-/artifacts/
-/runs/
-/mlruns/
+
+# ==========================================================
+# Models / ML Artifacts
+# ==========================================================
+models/
+model/
+checkpoints/
+artifacts/
+runs/
+mlruns/
 outputs/
 results/
+
+# ==========================================================
+# Databases
+# ==========================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ==========================================================
+# Model Files
+# ==========================================================
 *.pkl
 *.joblib
-*.h5
-*.hdf5
-*.onnx
 *.pt
 *.pth
+*.onnx
+*.h5
+*.hdf5
 *.bin
+
+# ==========================================================
+# Archives
+# ==========================================================
 *.zip
-*.tar.gz
 *.tar
+*.tar.gz
 *.gz
 
-# Jupyter / notebooks
+# ==========================================================
+# Jupyter
+# ==========================================================
 .ipynb_checkpoints/
-*.ipynb_checkpoints/
 
-# Databases
-*.db
-*.sqlite3
-*.sqlite
-
-# Logs and temporary files
+# ==========================================================
+# Logs
+# ==========================================================
 *.log
 *.tmp
 *.bak
 *.orig
-<<<<<<< HEAD
-.ipynb_checkpoints/
-.mypy_cache/
-
-# Node.js / React
-frontend/node_modules/
-frontend/dist/
-=======
 *.swp
 *.swo
 
-# Editor and OS files
+# ==========================================================
+# Frontend
+# ==========================================================
+frontend/node_modules/
+frontend/dist/
+
+# ==========================================================
+# IDE
+# ==========================================================
 .vscode/
 .idea/
+
+# ==========================================================
+# Operating System
+# ==========================================================
 .DS_Store
 Thumbs.db
->>>>>>> 44bcddc37fc2eec20c0d0f19a0dc5866311e0de9

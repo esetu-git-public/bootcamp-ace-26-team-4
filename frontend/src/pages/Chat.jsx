@@ -15,6 +15,7 @@ function Chat() {
 
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [currentDocument, setCurrentDocument] = useState(null);
 
   const handleSend = async () => {
     if (!message.trim() || loading || uploading) return;
@@ -72,6 +73,8 @@ function Chat() {
 
       const result = await uploadDocument(file);
 
+      setCurrentDocument(result.current_document);
+
       setChatMessages((prev) => [
         ...prev,
         {
@@ -101,10 +104,20 @@ function Chat() {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <h1>AI Research Assistant</h1>
-        <p>Ask questions about your uploaded medical research papers.</p>
-      </div>
+    <div className="chat-header">
+      <h1>AI Research Assistant</h1>
+
+      <p>
+        Ask questions about your uploaded medical research papers.
+      </p>
+
+      {currentDocument && (
+        <div className="current-document">
+          📄 Current document: <strong>{currentDocument}</strong>
+        </div>
+      )}
+
+    </div>
 
       <div className="chat-box">
         {chatMessages.map((msg, index) => (

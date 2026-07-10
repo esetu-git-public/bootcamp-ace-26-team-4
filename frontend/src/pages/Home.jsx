@@ -13,9 +13,9 @@ function Home() {
 
           <p className="hero-text">
             Welcome to the Medical Research Paper Assistant.
-            Upload medical research papers, search clinical literature,
-            and interact with an AI assistant to better understand
-            evidence-based medical knowledge.
+            Search clinical literature and interact with an AI assistant
+            to better understand evidence-based medical knowledge.
+            You can upload documents directly inside the AI Assistant.
           </p>
 
         </div>
@@ -28,19 +28,11 @@ function Home() {
 
         <div className="card-grid">
 
-          <Link to="/upload" className="quick-card">
-            <h3>📄 Upload Research</h3>
-
-            <p>
-              Upload PDF research papers securely for AI processing.
-            </p>
-          </Link>
-
           <Link to="/search" className="quick-card">
             <h3>🔍 Search Papers</h3>
 
             <p>
-              Search uploaded medical literature instantly.
+              Search medical literature instantly.
             </p>
           </Link>
 
@@ -48,7 +40,7 @@ function Home() {
             <h3>💬 AI Assistant</h3>
 
             <p>
-              Ask questions about uploaded medical documents.
+              Upload a document and ask questions using AI.
             </p>
           </Link>
 
