@@ -168,3 +168,22 @@ def health():
         "status": "ok",
         "message": "Medical RAG API running"
     }
+@router.get("/current-document")
+def current_document():
+
+    files = list(UPLOAD_DIR.glob("*"))
+
+    if not files:
+        return {
+            "document": None,
+            "message": "No document uploaded"
+        }
+
+    file = files[0]
+
+    return {
+        "filename": file.name,
+        "size": file.stat().st_size,
+        "last_modified": file.stat().st_mtime,
+        "status": "Indexed"
+    }
