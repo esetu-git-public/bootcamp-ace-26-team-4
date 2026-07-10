@@ -1,103 +1,102 @@
-from pathlib import Path
-import json
+from rag.src.vector_db.qdrant_connection import get_qdrant_client
 
-from rank_bm25 import BM25Okapi
-
-
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-
-CHUNKS_PATH = BASE_DIR / "data" / "chunks" / "chunks.jsonl"
 
 TOP_K = 5
 
 
 class BM25Retriever:
     """
-    BM25 Retriever using rank-bm25.
+    Keyword Retriever using Qdrant payload.
+
+    No local chunks.jsonl dependency.
+    Works with Railway deployment.
     """
 
     def __init__(self):
 
-        self.documents = []
-        self.corpus = []
+        print("Initializing Keyword Retriever...")
 
-        self.load_chunks()
+        self.client = get_qdrant_client()
 
-        self.bm25 = BM25Okapi(self.corpus)
+        self.collections = [
+            "medical_research_papers",
+            "user_uploads"
+        ]
 
 
-    def load_chunks(self):
+    def retrieve(
+        self,
+        query,
+        top_k=TOP_K
+    ):
 
-        if not CHUNKS_PATH.exists():
-            raise FileNotFoundError(
-                f"Chunks file not found: {CHUNKS_PATH}"
-            )
-
-        with open(CHUNKS_PATH, "r", encoding="utf-8") as f:
-
-            for line in f:
-
-                if not line.strip():
-                    continue
-
-                chunk = json.loads(line)
-
-                self.documents.append(chunk)
-
-                tokens = chunk["text"].lower().split()
-
-                self.corpus.append(tokens)
-
-    def retrieve(self, query, top_k=TOP_K):
-
-        query_tokens = query.lower().split()
-
-        scores = self.bm25.get_scores(query_tokens)
-
-        ranked = sorted(
-            zip(scores, self.documents),
-            key=lambda x: x[0],
-            reverse=True
-        )
+        query_words = query.lower().split()
 
         results = []
 
-        for score, chunk in ranked[:top_k]:
 
-            results.append({
+        for collection in self.collections:
 
-                "chunk_id": chunk["chunk_id"],
+            try:
 
-                "text": chunk["text"],
+                points, _ = self.client.scroll(
+                    collection_name=collection,
+                    limit=200,
+                    with_payload=True,
+                    with_vectors=False
+                )
 
-                "metadata": {
 
-                    "pmc_id": chunk.get("pmc_id", ""),
+                for point in points:
 
-                    "title": chunk.get("title", ""),
+                    payload = point.payload or {}
 
-                    "journal": chunk.get("journal", ""),
-
-                    "publication_year": chunk.get(
-                        "publication_year",
-                        ""
-                    ),
-
-                    "chunk_index": chunk.get(
-                        "chunk_index",
-                        ""
-                    ),
-
-                    "source_file": chunk.get(
-                        "source_file",
+                    text = payload.get(
+                        "text",
                         ""
                     )
 
-                },
 
-                "score": float(score)
+                    if not text:
+                        continue
 
-            })
 
-        return results
+                    text_lower = text.lower()
+
+
+                    matches = sum(
+                        1
+                        for word in query_words
+                        if word in text_lower
+                    )
+
+
+                    if matches > 0:
+
+                        results.append({
+
+                            "chunk_id": str(point.id),
+
+                            "text": text,
+
+                            "metadata": payload,
+
+                            "score": float(matches)
+
+                        })
+
+
+            except Exception as e:
+
+                print(
+                    f"Keyword retrieval failed for {collection}: {e}"
+                )
+
+
+        results.sort(
+            key=lambda x: x["score"],
+            reverse=True
+        )
+
+
+        return results[:top_k]
