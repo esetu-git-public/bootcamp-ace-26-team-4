@@ -1,228 +1,161 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FaSearch,
   FaFileMedical,
-  FaUserMd,
   FaCalendarAlt,
-  FaBookMedical,
+  FaTrash,
+  FaEye,
 } from "react-icons/fa";
+
 import "../styles/Search.css";
 
-const papers = [
-  {
-    id: 1,
-    title: "Diabetes Mellitus: Current Research",
-    journal: "The Lancet",
-    year: "2025",
-    author: "Dr. Smith",
-    description:
-      "Comprehensive review of diabetes treatment and diagnosis.",
-  },
-  {
-    id: 2,
-    title: "COVID-19 Vaccine Clinical Study",
-    journal: "Nature Medicine",
-    year: "2024",
-    author: "Dr. Williams",
-    description:
-      "Evaluation of vaccine effectiveness across multiple age groups.",
-  },
-  {
-    id: 3,
-    title: "Cancer Immunotherapy Advances",
-    journal: "JAMA",
-    year: "2025",
-    author: "Dr. Johnson",
-    description:
-      "Latest developments in immunotherapy treatment strategies.",
-  },
-];
-
 function Search() {
-  const [search, setSearch] = useState("");
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  const recentSearches = [
-    "Diabetes",
-    "COVID-19",
-    "Cancer",
-    "Hypertension",
+  const [search,setSearch]=useState("");
+
+  const papers=[
+
+    {
+      id:1,
+      title:"Heart Disease Prediction using Machine Learning",
+      date:"10 July 2026",
+      size:"2.4 MB"
+    },
+
+    {
+      id:2,
+      title:"Cancer Detection Research",
+      date:"09 July 2026",
+      size:"4.2 MB"
+    },
+
+    {
+      id:3,
+      title:"COVID Clinical Guidelines",
+      date:"08 July 2026",
+      size:"1.9 MB"
+    }
+
   ];
 
-  const handleSearch = () => {
-    setLoading(true);
+  const filtered=papers.filter((paper)=>
 
-    setTimeout(() => {
-      const filtered = papers.filter(
-        (paper) =>
-          paper.title.toLowerCase().includes(search.toLowerCase()) ||
-          paper.description.toLowerCase().includes(search.toLowerCase())
-      );
+    paper.title.toLowerCase().includes(search.toLowerCase())
 
-      setResults(filtered);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const handleRecentSearch = (term) => {
-    setSearch(term);
-
-    const filtered = papers.filter(
-      (paper) =>
-        paper.title.toLowerCase().includes(term.toLowerCase()) ||
-        paper.description.toLowerCase().includes(term.toLowerCase())
-    );
-
-    setResults(filtered);
-  };
+  );
 
   return (
-    <div className="search-page">
 
-      <div className="search-header">
-        <h1>Search Medical Research Papers</h1>
-        <p>
-          Find research papers using keywords, topics, authors or journals.
-        </p>
-      </div>
+<div className="search-page">
 
-      <div className="search-bar">
+<h1>📄 Research Papers</h1>
 
-        <input
-          type="text"
-          placeholder="Search papers..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+<p>
+Manage and search uploaded research papers.
+</p>
 
-        <button onClick={handleSearch}>
-          <FaSearch />
-          Search
-        </button>
+<div className="search-box">
 
-      </div>
+<FaSearch/>
 
-      <div className="filters">
+<input
 
-        <div className="filter-card">Publication Year</div>
+placeholder="Search papers..."
 
-        <div className="filter-card">Study Type</div>
+value={search}
 
-        <div className="filter-card">Journal</div>
+onChange={(e)=>setSearch(e.target.value)}
 
-        <div className="filter-card">Author</div>
+/>
 
-        <div className="filter-card">Sort By</div>
+</div>
 
-      </div>
+<div className="paper-grid">
 
-      <div className="recent">
+{
 
-        <h3>Recent Searches</h3>
+filtered.length===0 ?
 
-        <div className="recent-list">
+(
 
-          {recentSearches.map((item) => (
-            <button
-              key={item}
-              onClick={() => handleRecentSearch(item)}
-            >
-              {item}
-            </button>
-          ))}
+<div className="empty">
 
-        </div>
+No documents found.
 
-      </div>
+</div>
 
-      {loading && (
-        <div className="loading">
+)
 
-          <div className="skeleton"></div>
-          <div className="skeleton"></div>
-          <div className="skeleton"></div>
+:
 
-        </div>
-      )}
+filtered.map((paper)=>(
 
-      {!loading && results.length === 0 && search !== "" && (
-        <div className="empty">
+<div
 
-          <FaSearch size={45} />
+className="paper-card"
 
-          <h2>No matching papers found.</h2>
+key={paper.id}
 
-          <p>Try another keyword.</p>
+>
 
-        </div>
-      )}
+<div className="paper-top">
 
-      {!loading && results.length === 0 && search === "" && (
-        <div className="empty">
+<FaFileMedical className="paper-icon"/>
 
-          <FaFileMedical size={45} />
+<h3>{paper.title}</h3>
 
-          <h2>Search for Research Papers</h2>
+</div>
 
-          <p>Use keywords to search medical papers.</p>
+<div className="paper-info">
 
-        </div>
-      )}
+<p>
 
-      <div className="results">
+<FaCalendarAlt/>
 
-        {results.map((paper) => (
+{paper.date}
 
-          <div className="paper-card" key={paper.id}>
+</p>
 
-            <h2>{paper.title}</h2>
+<p>
 
-            <p>
-              <FaBookMedical />
-              {paper.journal}
-            </p>
+{paper.size}
 
-            <p>
-              <FaCalendarAlt />
-              {paper.year}
-            </p>
+</p>
 
-            <p>
-              <FaUserMd />
-              {paper.author}
-            </p>
+</div>
 
-            <p>{paper.description}</p>
+<div className="paper-buttons">
 
-            <button>View Details</button>
+<button>
 
-          </div>
+<FaEye/>
 
-        ))}
+View
 
-      </div>
+</button>
 
-      {results.length > 0 && (
+<button className="delete">
 
-        <div className="pagination">
+<FaTrash/>
 
-          <button>Previous</button>
+Delete
 
-          <button className="active">1</button>
+</button>
 
-          <button>2</button>
+</div>
 
-          <button>3</button>
+</div>
 
-          <button>Next</button>
+))
 
-        </div>
+}
 
-      )}
+</div>
 
-    </div>
-  );
+</div>
+
+);
+
 }
 
 export default Search;
