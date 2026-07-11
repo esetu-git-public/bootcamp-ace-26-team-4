@@ -272,6 +272,7 @@ function Chat() {
         },
       ]);
 
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
 
       toast.error("Unable to regenerate answer.");
