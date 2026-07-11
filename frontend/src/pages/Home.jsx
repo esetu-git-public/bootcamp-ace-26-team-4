@@ -1,146 +1,277 @@
 import {
-  FaFileMedical,
   FaRobot,
-  FaSearch,
+  FaFileMedical,
   FaComments,
+  FaSearch,
   FaArrowRight,
+  FaChartLine,
+  FaBrain,
+  FaDatabase,
+  FaClock,
 } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 
 import "../styles/Home.css";
 
 function Home() {
+
+  const activities = [
+    "📄 Upload your latest medical research paper.",
+    "🤖 Ask AI to summarize the uploaded paper.",
+    "📚 View references with confidence score.",
+    "🔍 Search indexed research documents.",
+  ];
+
   return (
+
     <div className="home-page">
 
-      {/* Header */}
+      {/* HERO */}
 
-      <div className="home-header">
+      <div className="hero-card">
 
         <div>
 
-          <h1>🩺 Medical Research AI Assistant</h1>
+          <span className="hero-badge">
+            🚀 AI Powered Research Assistant
+          </span>
+
+          <h1>
+
+            Medical Research Paper Assistant
+
+          </h1>
 
           <p>
-            Analyze research papers using AI-powered Retrieval
-            Augmented Generation.
+
+            Analyze, summarize and search medical research papers
+            using Retrieval-Augmented Generation (RAG) with
+            Gemini AI.
+
           </p>
+
+          <div className="hero-buttons">
+
+            <Link
+              to="/chat"
+              className="primary-btn"
+            >
+              Open AI Assistant
+            </Link>
+
+            <Link
+              to="/search"
+              className="secondary-btn"
+            >
+              Search Papers
+            </Link>
+
+          </div>
+
+        </div>
+
+        <div className="hero-icon">
+
+          <FaRobot />
 
         </div>
 
       </div>
 
-      {/* Statistics */}
+      {/* STATS */}
 
       <div className="stats-grid">
 
         <div className="stat-card">
 
-          <FaFileMedical className="stat-icon"/>
+          <FaFileMedical />
 
-          <div>
+          <h2>Documents</h2>
 
-            <h2>Documents</h2>
+          <h3>1</h3>
 
-            <h1>1</h1>
-
-            <span>Uploaded</span>
-
-          </div>
+          <p>Uploaded Paper</p>
 
         </div>
 
         <div className="stat-card">
 
-          <FaComments className="stat-icon"/>
+          <FaComments />
 
-          <div>
+          <h2>Questions</h2>
 
-            <h2>Questions</h2>
+          <h3>--</h3>
 
-            <h1>24</h1>
-
-            <span>Asked</span>
-
-          </div>
+          <p>Current Session</p>
 
         </div>
 
         <div className="stat-card">
 
-          <FaRobot className="stat-icon"/>
+          <FaBrain />
 
-          <div>
+          <h2>AI Model</h2>
 
-            <h2>AI Status</h2>
+          <h3>Gemini</h3>
 
-            <h1>Ready</h1>
+          <p>Connected</p>
 
-            <span>Online</span>
+        </div>
 
-          </div>
+        <div className="stat-card">
+
+          <FaDatabase />
+
+          <h2>Vector DB</h2>
+
+          <h3>Ready</h3>
+
+          <p>Indexed Successfully</p>
 
         </div>
 
       </div>
 
-      {/* Quick Actions */}
+      {/* QUICK ACTIONS */}
 
-      <div className="quick-section">
+      <div className="section-title">
 
         <h2>Quick Actions</h2>
 
-        <div className="action-grid">
+      </div>
 
-          <Link to="/chat" className="action-card">
+      <div className="action-grid">
 
-            <FaRobot />
+        <Link
+          to="/chat"
+          className="action-card"
+        >
 
-            <h3>AI Assistant</h3>
+          <FaRobot />
 
-            <p>
-              Upload a paper and ask questions.
-            </p>
+          <h3>AI Assistant</h3>
 
-            <FaArrowRight/>
+          <p>
 
-          </Link>
+            Chat with uploaded medical papers.
 
-          <Link to="/search" className="action-card">
+          </p>
 
-            <FaSearch />
+          <FaArrowRight className="arrow"/>
 
-            <h3>Search Papers</h3>
+        </Link>
 
-            <p>
-              Search indexed research papers.
-            </p>
+        <Link
+          to="/search"
+          className="action-card"
+        >
 
-            <FaArrowRight/>
+          <FaSearch />
 
-          </Link>
+          <h3>Search Papers</h3>
 
-        </div>
+          <p>
+
+            Search indexed medical documents.
+
+          </p>
+
+          <FaArrowRight className="arrow"/>
+
+        </Link>
 
       </div>
 
-      {/* Recent */}
+      {/* DASHBOARD */}
 
-      <div className="recent-card">
+      <div className="dashboard-grid">
 
-        <h2>Recent Activity</h2>
+        <div className="recent-card">
 
-        <div className="activity">
+          <h2>
 
-          <FaFileMedical/>
+            <FaClock />
 
-          <div>
+            Recent Activity
 
-            <h3>No documents uploaded</h3>
+          </h2>
 
-            <p>
-              Upload your first research paper from AI Assistant.
-            </p>
+          <ul>
+
+            {
+
+              activities.map((item,index)=>(
+
+                <li key={index}>
+
+                  {item}
+
+                </li>
+
+              ))
+
+            }
+
+          </ul>
+
+        </div>
+
+        <div className="status-card">
+
+          <h2>
+
+            <FaChartLine />
+
+            AI Status
+
+          </h2>
+
+          <div className="status-row">
+
+            <span>Backend</span>
+
+            <span className="online">
+
+              ● Online
+
+            </span>
+
+          </div>
+
+          <div className="status-row">
+
+            <span>Gemini API</span>
+
+            <span className="online">
+
+              ● Ready
+
+            </span>
+
+          </div>
+
+          <div className="status-row">
+
+            <span>Vector Store</span>
+
+            <span className="online">
+
+              ● Active
+
+            </span>
+
+          </div>
+
+          <div className="status-row">
+
+            <span>Retrieval</span>
+
+            <span className="online">
+
+              ● Working
+
+            </span>
 
           </div>
 
@@ -149,7 +280,9 @@ function Home() {
       </div>
 
     </div>
+
   );
+
 }
 
 export default Home;
