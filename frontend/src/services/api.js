@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://mrp-production-0f8f.up.railway.app/api";
+const API_BASE_URL = "https://mrp-production-0f8f.up.railway.app/api"; // http://localhost:8000/
 
 export async function askLLM(question, template = "chat") {
   const response = await fetch(`${API_BASE_URL}/ask`, {
