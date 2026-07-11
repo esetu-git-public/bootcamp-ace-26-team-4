@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import {
   FaHome,
-  FaUpload,
   FaSearch,
   FaComments,
   FaInfoCircle,
@@ -15,7 +14,6 @@ function Sidebar() {
   return (
     <div className="sidebar">
 
-      {/* Logo */}
       <div className="sidebar-logo">
         <div className="logo-icon">
           <FaStethoscope />
@@ -27,7 +25,6 @@ function Sidebar() {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="sidebar-nav">
 
         <NavLink
@@ -38,16 +35,6 @@ function Sidebar() {
         >
           <FaHome />
           <span>Dashboard</span>
-        </NavLink>
-
-        <NavLink
-          to="/upload"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaUpload />
-          <span>Upload Papers</span>
         </NavLink>
 
         <NavLink
@@ -82,10 +69,8 @@ function Sidebar() {
 
       </nav>
 
-      {/* Push Logout to Bottom */}
       <div className="sidebar-spacer"></div>
 
-      {/* Logout */}
       <div className="sidebar-bottom">
         <NavLink to="/" className="logout-btn">
           <FaSignOutAlt />

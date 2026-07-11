@@ -1,189 +1,489 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import {
+  FaPaperPlane,
+  FaPaperclip,
+  FaRobot,
+  FaFileMedical,
+  FaTrash,
+} from "react-icons/fa";
 
 import "../styles/Chat.css";
 import { askLLM, uploadDocument } from "../services/api";
 
 function Chat() {
   const [message, setMessage] = useState("");
+
   const [chatMessages, setChatMessages] = useState([
     {
       role: "bot",
-      text: "👋 Welcome! I'm your Medical Research Assistant.\nUpload research papers and ask questions to get AI-powered answers.",
+      text:
+        "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a research paper and ask me anything about it.",
     },
   ]);
 
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+
+  const [dragActive, setDragActive] = useState(false);
+
   const [currentDocument, setCurrentDocument] = useState(null);
+
+  const fileInputRef = useRef();
+
+  const chatEndRef = useRef();
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [chatMessages]);
+
+  const suggestedQuestions = [
+    "Summarize this paper",
+    "What is the objective?",
+    "Explain methodology",
+    "List key findings",
+    "What are the limitations?",
+    "Give conclusion",
+  ];
+    const handleSuggestion = (text) => {
+    setMessage(text);
+  };
 
   const handleSend = async () => {
     if (!message.trim() || loading || uploading) return;
 
-    const userQuestion = message.trim();
-    setMessage("");
+    const question = message;
 
     setChatMessages((prev) => [
       ...prev,
-      { role: "user", text: userQuestion },
+      {
+        role: "user",
+        text: question,
+      },
     ]);
+
+    setMessage("");
 
     try {
       setLoading(true);
 
-      const result = await askLLM(userQuestion);
+      const result = await askLLM(question);
 
       setChatMessages((prev) => [
         ...prev,
         {
           role: "bot",
           text: result.answer || "No answer generated.",
-          references: result.formatted_references || "",
-          metadata: result.metadata || null,
+          references: result.formatted_references,
+          metadata: result.metadata,
         },
       ]);
-    } catch (error) {
+    } catch (err) {
       setChatMessages((prev) => [
         ...prev,
         {
           role: "bot",
-          text: `Error: ${error.message}`,
+          text: err.message,
         },
       ]);
-    } finally {
+    }
+
+    finally {
       setLoading(false);
     }
   };
+const uploadFile = async (file) => {
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-
-    if (!file || uploading) return;
+    if (!file) return;
 
     try {
+
       setUploading(true);
 
-      setChatMessages((prev) => [
+      setCurrentDocument(file.name);
+
+      setChatMessages((prev)=>[
         ...prev,
         {
-          role: "bot",
-          text: `Uploading and indexing **${file.name}**...`,
-        },
+          role:"bot",
+          text:`📄 Uploading **${file.name}**...`
+        }
       ]);
 
-      const result = await uploadDocument(file);
+      const result=await uploadDocument(file);
 
-      setCurrentDocument(result.current_document);
-
-      setChatMessages((prev) => [
+      setChatMessages((prev)=>[
         ...prev,
         {
-          role: "bot",
-          text: `✅ File uploaded and indexed successfully.\n\n**Filename:** ${result.filename}\n**Chunks added:** ${result.ingestion?.chunks_added ?? "N/A"}\n\nYou can now ask questions about this document.`,
-        },
+          role:"bot",
+          text:`✅ **${result.filename}** indexed successfully.\n\nAsk me anything about this document.`
+        }
       ]);
-    } catch (error) {
-      setChatMessages((prev) => [
+
+    }
+
+    catch(error){
+
+      setChatMessages((prev)=>[
         ...prev,
         {
-          role: "bot",
-          text: `Upload error: ${error.message}`,
-        },
+          role:"bot",
+          text:error.message
+        }
       ]);
-    } finally {
+
+    }
+
+    finally{
+
       setUploading(false);
-      e.target.value = "";
+
     }
-  };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
-  };
+};
+const handleDrop = (e) => {
 
-  return (
-    <div className="chat-container">
-    <div className="chat-header">
-      <h1>AI Research Assistant</h1>
+e.preventDefault();
 
-      <p>
-        Ask questions about your uploaded medical research papers.
-      </p>
+setDragActive(false);
+
+const file=e.dataTransfer.files[0];
+
+uploadFile(file);
+
+};
+
+const handleDrag=(e)=>{
+
+e.preventDefault();
+
+setDragActive(true);
+
+};
+
+const handleLeave=(e)=>{
+
+e.preventDefault();
+
+setDragActive(false);
+
+};
+const handleKeyDown=(e)=>{
+
+if(e.key==="Enter" && !e.shiftKey){
+
+e.preventDefault();
+
+handleSend();
+
+}
+
+};
+return (
+  <div className="chat-page">
+
+    {/* Header */}
+
+    <div className="chat-top">
+
+      <div>
+
+        <h1>🩺 Medical Research AI Assistant</h1>
+
+        <p>
+          Upload research papers and ask questions using AI.
+        </p>
+
+      </div>
 
       {currentDocument && (
+
         <div className="current-document">
-          📄 Current document: <strong>{currentDocument}</strong>
+
+          <FaFileMedical />
+
+          <div>
+
+            <h4>Current Document</h4>
+
+            <p>{currentDocument}</p>
+
+          </div>
+
         </div>
+
       )}
 
     </div>
 
-      <div className="chat-box">
-        {chatMessages.map((msg, index) => (
-          <div
+    {/* Upload Area */}
+
+    <div
+
+      className={
+        dragActive
+          ? "upload-box active"
+          : "upload-box"
+      }
+
+      onDrop={handleDrop}
+
+      onDragOver={handleDrag}
+
+      onDragEnter={handleDrag}
+
+      onDragLeave={handleLeave}
+
+    >
+
+      <FaPaperclip className="upload-icon"/>
+
+      <h3>Drag & Drop Research Paper</h3>
+
+      <p>
+
+        PDF, DOCX, TXT, CSV, XML
+
+      </p>
+
+      <button
+
+        onClick={()=>
+
+          fileInputRef.current.click()
+
+        }
+
+      >
+
+        Browse File
+
+      </button>
+
+      <input
+
+        ref={fileInputRef}
+
+        hidden
+
+        type="file"
+
+        accept=".pdf,.docx,.txt,.csv,.xml,.md"
+
+        onChange={(e)=>uploadFile(e.target.files[0])}
+
+      />
+
+    </div>
+
+    {/* Suggested Questions */}
+
+    <div className="suggestions">
+
+      {
+
+        suggestedQuestions.map((item,index)=>(
+
+          <button
+
             key={index}
-            className={msg.role === "user" ? "user-message" : "bot-message"}
+
+            onClick={()=>handleSuggestion(item)}
+
           >
-            <div className="message-text">
-              <ReactMarkdown>{msg.text}</ReactMarkdown>
+
+            {item}
+
+          </button>
+
+        ))
+
+      }
+
+    </div>
+
+    {/* Chat Area */}
+
+    <div className="messages">
+
+      {
+
+        chatMessages.map((msg,index)=>(
+
+          <div
+
+            key={index}
+
+            className={
+
+              msg.role==="user"
+
+              ?
+
+              "message user"
+
+              :
+
+              "message bot"
+
+            }
+
+          >
+
+            {
+
+              msg.role==="bot"
+
+              &&
+
+              <FaRobot className="bot-icon"/>
+
+            }
+
+            <div className="bubble">
+
+              <ReactMarkdown>
+
+                {msg.text}
+
+              </ReactMarkdown>
+
+              {
+
+                msg.references && (
+
+                  <details>
+
+                    <summary>
+
+                      📚 References
+
+                    </summary>
+
+                    <pre>
+
+                      {msg.references}
+
+                    </pre>
+
+                  </details>
+
+                )
+
+              }
+
+              {
+
+                msg.metadata && (
+
+                  <small>
+
+                    Confidence :
+
+                    {
+
+                      msg.metadata
+
+                      .retrieval_confidence_level
+
+                    }
+
+                  </small>
+
+                )
+
+              }
+
             </div>
 
-            {msg.references && (
-              <details className="reference-dropdown">
-                <summary>📚 References</summary>
-                <pre className="chat-references">{msg.references}</pre>
-              </details>
-            )}
-
-            {msg.metadata && (
-              <div className="chat-confidence">
-                Confidence: {msg.metadata.retrieval_confidence_level}
-              </div>
-            )}
           </div>
-        ))}
 
-        {loading && (
-          <div className="bot-message">
-            <div className="message-text">Thinking...</div>
+        ))
+
+      }
+
+      {
+
+        loading && (
+
+          <div className="message bot">
+
+            <FaRobot className="bot-icon"/>
+
+            <div className="bubble">
+
+              Thinking...
+
+            </div>
+
           </div>
-        )}
 
-        {uploading && (
-          <div className="bot-message">
-            <div className="message-text">Indexing document...</div>
-          </div>
-        )}
-      </div>
+        )
 
-      <div className="chat-input">
-        <label className={`upload-button ${uploading ? "disabled" : ""}`}>
-          {uploading ? "..." : "📎"}
-          <input
-            type="file"
-            accept=".pdf,.docx,.txt,.md,.csv,.xml"
-            onChange={handleFileUpload}
-            hidden
-            disabled={uploading}
-          />
-        </label>
+      }
 
-        <input
-          type="text"
-          placeholder="Type your question..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          disabled={loading || uploading}
-        />
+      <div ref={chatEndRef}></div>
 
-        <button onClick={handleSend} disabled={loading || uploading}>
-          {loading ? "Sending..." : "Send"}
-        </button>
-      </div>
     </div>
-  );
+
+    {/* Bottom Input */}
+
+    <div className="bottom-bar">
+
+      <button
+
+        className="clip-btn"
+
+        onClick={()=>
+
+          fileInputRef.current.click()
+
+        }
+
+      >
+
+        <FaPaperclip/>
+
+      </button>
+
+      <textarea
+
+        rows={1}
+
+        placeholder="Ask anything about the uploaded paper..."
+
+        value={message}
+
+        onChange={(e)=>
+
+          setMessage(e.target.value)
+
+        }
+
+        onKeyDown={handleKeyDown}
+
+      />
+
+      <button
+
+        className="send-btn"
+
+        onClick={handleSend}
+
+      >
+
+        <FaPaperPlane/>
+
+      </button>
+
+    </div>
+
+  </div>
+
+);
+
 }
 
 export default Chat;

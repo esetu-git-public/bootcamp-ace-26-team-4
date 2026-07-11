@@ -1,229 +1,470 @@
-.upload-button {
-  padding: 15px 18px;
-  border-radius: 10px;
-  background: #e8f0fe;
-  color: #1e3a8a;
-  cursor: pointer;
-  font-weight: 700;
-  border: 1px solid #bfdbfe;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ===========================
+   Chat Page
+=========================== */
+
+.chat-page{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    background:#f5f8fc;
+    padding:30px;
+    overflow:hidden;
 }
 
-.upload-button:hover {
-  background: #dbeafe;
+/* ===========================
+   Header
+=========================== */
+
+.chat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
-.upload-button.disabled {
-  background: #e5e7eb;
-  color: #94a3b8;
-  cursor: not-allowed;
+.chat-top h1{
+    color:#0f172a;
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-.chat-container {
-  padding: 35px;
-  background: #f4f7fb;
-  min-height: 100vh;
+.chat-top p{
+    color:#64748b;
 }
 
-.chat-header {
-  margin-bottom: 25px;
+/* ===========================
+   Current Document
+=========================== */
+
+.current-document{
+
+    display:flex;
+    gap:15px;
+
+    align-items:center;
+
+    background:white;
+
+    padding:16px 22px;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
 }
 
-.chat-header h1 {
-  color: #1e3a8a;
-  margin-bottom: 10px;
-  font-size: 34px;
+.current-document svg{
+
+    font-size:30px;
+
+    color:#2563eb;
+
 }
 
-.chat-header p {
-  color: #64748b;
+.current-document h4{
+
+    margin:0;
+
 }
 
-/* Chat Box */
+.current-document p{
 
-.chat-box {
-  background: white;
-  border-radius: 15px;
-  height: 620px;
-  padding: 25px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+    margin:0;
+
+    color:#64748b;
+
 }
 
-/* Messages */
+/* ===========================
+Upload Area
+=========================== */
 
-.bot-message,
-.user-message {
-  width: fit-content;
-  max-width: 72%;
-  padding: 16px 18px;
-  border-radius: 14px;
-  line-height: 1.6;
-  font-size: 15px;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
+.upload-box{
+
+    border:2px dashed #93c5fd;
+
+    border-radius:20px;
+
+    background:white;
+
+    padding:35px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    margin-bottom:25px;
+
 }
 
-.bot-message {
-  align-self: flex-start;
-  background: #e8f0fe;
-  color: #1e3a8a;
+.upload-box.active{
+
+    border-color:#2563eb;
+
+    background:#eff6ff;
+
+    transform:scale(1.01);
+
 }
 
-.user-message {
-  align-self: flex-end;
-  background: #2563eb;
-  color: white;
+.upload-icon{
+
+    font-size:42px;
+
+    color:#2563eb;
+
+    margin-bottom:15px;
+
 }
 
-/* Markdown Fix */
+.upload-box h3{
 
-.message-text {
-  white-space: normal;
+    margin-bottom:10px;
+
 }
 
-.message-text p {
-  margin: 0 0 10px;
+.upload-box p{
+
+    color:#64748b;
+
+    margin-bottom:20px;
+
 }
 
-.message-text p:last-child {
-  margin-bottom: 0;
+.upload-box button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 28px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
 }
 
-.message-text strong {
-  font-weight: 700;
+.upload-box button:hover{
+
+    background:#1d4ed8;
+
 }
 
-.message-text ul,
-.message-text ol {
-  margin: 10px 0 10px 22px;
-  padding-left: 16px;
+/* ===========================
+Suggestions
+=========================== */
+
+.suggestions{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-bottom:20px;
+
 }
 
-.message-text li {
-  margin-bottom: 8px;
+.suggestions button{
+
+background:white;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+cursor:pointer;
+
+box-shadow:0 5px 12px rgba(0,0,0,.06);
+
+transition:.3s;
+
 }
 
-.message-text li p {
-  margin: 0;
+.suggestions button:hover{
+
+background:#2563eb;
+
+color:white;
+
 }
 
-/* References Dropdown */
+/* ===========================
+Messages
+=========================== */
 
-.reference-dropdown {
-  margin-top: 14px;
+.messages{
+
+flex:1;
+
+overflow-y:auto;
+
+padding-right:10px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
 }
 
-.reference-dropdown summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: #2563eb;
-  -webkit-user-select: none; /* Safari 3+, iOS 3+ */
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  list-style: none;
+/* ===========================
+Message
+=========================== */
+
+.message{
+
+display:flex;
+
+gap:12px;
+
+align-items:flex-start;
+
 }
 
-.reference-dropdown summary::-webkit-details-marker {
-  display: none;
+.message.user{
+
+justify-content:flex-end;
+
 }
 
-.reference-dropdown summary::before {
-  content: "▶ ";
+.bot-icon{
+
+font-size:26px;
+
+color:#2563eb;
+
+margin-top:5px;
+
 }
 
-.reference-dropdown[open] summary::before {
-  content: "▼ ";
+.bubble{
+
+max-width:75%;
+
+padding:16px 20px;
+
+border-radius:18px;
+
+line-height:1.7;
+
+font-size:15px;
+
+box-shadow:0 6px 15px rgba(0,0,0,.05);
+
 }
 
-.chat-references {
-  margin-top: 12px;
-  padding: 14px;
-  background: #f8fafc;
-  color: #334155;
-  border-radius: 10px;
-  border-left: 4px solid #2563eb;
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 300px;
-  overflow-y: auto;
-  font-size: 13px;
+.bot .bubble{
+
+background:white;
+
 }
 
-.chat-confidence {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #475569;
-  font-weight: 600;
+.user .bubble{
+
+background:#2563eb;
+
+color:white;
+
 }
 
-/* Input */
+.bubble details{
 
-.chat-input {
-  margin-top: 25px;
-  display: flex;
-  gap: 15px;
+margin-top:12px;
+
 }
 
-.chat-input input {
-  flex: 1;
-  padding: 15px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 15px;
+.bubble summary{
+
+cursor:pointer;
+
+color:#2563eb;
+
+font-weight:600;
+
 }
 
-.chat-input input:focus {
-  outline: none;
-  border-color: #2563eb;
+.user summary{
+
+color:white;
+
 }
 
-.chat-input button {
-  padding: 15px 30px;
-  border: none;
-  border-radius: 10px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
+.bubble pre{
+
+margin-top:10px;
+
+white-space:pre-wrap;
+
+font-size:13px;
+
+background:#f8fafc;
+
+padding:12px;
+
+border-radius:10px;
+
+overflow:auto;
+
 }
 
-.chat-input button:hover {
-  background: #1d4ed8;
+/* ===========================
+Bottom Bar
+=========================== */
+
+.bottom-bar{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-top:25px;
+
+background:white;
+
+padding:18px;
+
+border-radius:18px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
 }
 
-.chat-input button:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
+.bottom-bar textarea{
+
+flex:1;
+
+border:none;
+
+outline:none;
+
+resize:none;
+
+font-size:15px;
+
+background:transparent;
+
 }
 
-/* Responsive */
+.clip-btn,
 
-@media (max-width: 768px) {
-  .chat-container {
-    padding: 20px;
-  }
+.send-btn{
 
-  .chat-box {
-    height: 65vh;
-  }
+width:48px;
 
-  .chat-input {
-    flex-direction: column;
-  }
+height:48px;
 
-  .chat-input button {
-    width: 100%;
-  }
+border:none;
 
-  .bot-message,
-  .user-message {
-    max-width: 100%;
-  }
+border-radius:50%;
+
+cursor:pointer;
+
+font-size:18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.clip-btn{
+
+background:#eff6ff;
+
+color:#2563eb;
+
+}
+
+.send-btn{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.send-btn:hover{
+
+background:#1d4ed8;
+
+}
+
+/* ===========================
+Scrollbar
+=========================== */
+
+.messages::-webkit-scrollbar{
+
+width:7px;
+
+}
+
+.messages::-webkit-scrollbar-thumb{
+
+background:#cbd5e1;
+
+border-radius:20px;
+
+}
+
+/* ===========================
+Responsive
+=========================== */
+
+@media(max-width:900px){
+
+.chat-page{
+
+padding:15px;
+
+}
+
+.chat-top{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.current-document{
+
+width:100%;
+
+}
+
+.bubble{
+
+max-width:100%;
+
+}
+
+.upload-box{
+
+padding:25px;
+
+}
+
+.bottom-bar{
+
+padding:12px;
+
+}
+
 }
