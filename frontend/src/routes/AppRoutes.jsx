@@ -15,8 +15,8 @@ function AppRoutes() {
       <Route path="/register" element={<Register />} />
 
       <Route path="/home" element={<Home />} />
-      <Route path="/search" element={<Search />} />
       <Route path="/chat" element={<Chat />} />
+      <Route path="/search" element={<Search />} />
       <Route path="/about" element={<About />} />
 
       <Route path="*" element={<NotFound />} />

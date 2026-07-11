@@ -1,183 +1,189 @@
-/* ==========================================
-   SIDEBAR
-========================================== */
+.sidebar{
 
-.sidebar {
-  width: 260px;
-  height: 100vh;
-  background: #0f172a;
-  color: white;
+width:260px;
 
-  position: fixed;
-  top: 0;
-  left: 0;
+background:#0f172a;
 
-  display: flex;
-  flex-direction: column;
+color:white;
 
-  padding: 25px 20px;
+display:flex;
+
+flex-direction:column;
+
+padding:25px 18px;
+
+height:100vh;
+
+position:sticky;
+
+top:0;
+
 }
 
-/* ==========================================
-   LOGO
-========================================== */
+.sidebar-logo{
 
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 40px;
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-bottom:45px;
+
 }
 
-.logo-icon {
-  width: 50px;
-  height: 50px;
+.logo-circle{
 
-  background: #2563eb;
-  color: white;
+width:55px;
 
-  border-radius: 12px;
+height:55px;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+border-radius:50%;
 
-  font-size: 22px;
+background:#2563eb;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:24px;
+
 }
 
-.sidebar-logo h2 {
-  margin: 0;
-  font-size: 24px;
-  color: white;
+.sidebar-logo h2{
+
+margin:0;
+
+font-size:22px;
+
 }
 
-.sidebar-logo p {
-  margin-top: 4px;
-  color: #94a3b8;
-  font-size: 13px;
+.sidebar-logo span{
+
+font-size:13px;
+
+color:#cbd5e1;
+
 }
 
-/* ==========================================
-   NAVIGATION
-========================================== */
+.sidebar-nav{
 
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
 }
 
-.sidebar-link {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.sidebar-nav a{
 
-  text-decoration: none;
-  color: #cbd5e1;
+display:flex;
 
-  padding: 14px 16px;
-  border-radius: 10px;
+align-items:center;
 
-  transition: 0.3s ease;
+gap:14px;
 
-  font-size: 15px;
-  font-weight: 500;
+padding:14px 16px;
+
+text-decoration:none;
+
+color:#cbd5e1;
+
+border-radius:12px;
+
+transition:.25s;
+
+font-weight:500;
+
 }
 
-.sidebar-link svg {
-  font-size: 18px;
+.sidebar-nav a:hover{
+
+background:#1e293b;
+
+color:white;
+
 }
 
-.sidebar-link:hover {
-  background: #1e293b;
-  color: white;
+.sidebar-nav a.active{
+
+background:#2563eb;
+
+color:white;
+
 }
 
-.sidebar-link.active {
-  background: #2563eb;
-  color: white;
+.sidebar-bottom{
+
+margin-top:auto;
+
 }
 
-/* ==========================================
-   SPACER
-========================================== */
+.profile-card{
 
-.sidebar-spacer {
-  flex: 1;
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:15px;
+
+background:#1e293b;
+
+border-radius:12px;
+
+margin-bottom:18px;
+
 }
 
-/* ==========================================
-   LOGOUT
-========================================== */
+.profile-card svg{
 
-.sidebar-bottom {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+font-size:34px;
+
 }
 
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.profile-card h4{
 
-  text-decoration: none;
-  color: #f87171;
+margin:0;
 
-  padding: 14px 16px;
-  border-radius: 10px;
-
-  transition: 0.3s ease;
-
-  font-size: 15px;
-  font-weight: 500;
 }
 
-.logout-btn svg {
-  font-size: 18px;
+.profile-card span{
+
+font-size:12px;
+
+color:#22c55e;
+
 }
 
-.logout-btn:hover {
-  background: rgba(239,68,68,0.15);
-  color: white;
+.logout{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px;
+
+text-decoration:none;
+
+color:white;
+
+background:#dc2626;
+
+border-radius:12px;
+
+transition:.3s;
+
 }
 
-/* ==========================================
-   SCROLLBAR
-========================================== */
+.logout:hover{
 
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 10px;
-}
-
-/* ==========================================
-   RESPONSIVE
-========================================== */
-
-@media (max-width: 768px) {
-
-  .sidebar {
-    width: 220px;
-    padding: 20px 15px;
-  }
-
-  .sidebar-logo h2 {
-    font-size: 20px;
-  }
-
-  .sidebar-logo p {
-    font-size: 12px;
-  }
-
-  .sidebar-link,
-  .logout-btn {
-    font-size: 14px;
-    padding: 12px 14px;
-  }
+background:#b91c1c;
 
 }

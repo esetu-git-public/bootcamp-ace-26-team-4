@@ -1,84 +1,107 @@
 import { NavLink } from "react-router-dom";
 import {
   FaHome,
-  FaSearch,
   FaComments,
+  FaSearch,
   FaInfoCircle,
   FaSignOutAlt,
   FaStethoscope,
+  FaUserCircle,
 } from "react-icons/fa";
 
 import "./Sidebar.css";
 
 function Sidebar() {
   return (
-    <div className="sidebar">
+    <aside className="sidebar">
+
+      {/* Logo */}
 
       <div className="sidebar-logo">
-        <div className="logo-icon">
+
+        <div className="logo-circle">
+
           <FaStethoscope />
+
         </div>
 
         <div>
+
           <h2>MedAI</h2>
-          <p>Medical Research Assistant</p>
+
+          <span>Research Assistant</span>
+
         </div>
+
       </div>
+
+      {/* Navigation */}
 
       <nav className="sidebar-nav">
 
-        <NavLink
-          to="/home"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
+        <NavLink to="/home">
+
           <FaHome />
-          <span>Dashboard</span>
+
+          Dashboard
+
         </NavLink>
 
-        <NavLink
-          to="/search"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaSearch />
-          <span>Search Papers</span>
-        </NavLink>
+        <NavLink to="/chat">
 
-        <NavLink
-          to="/chat"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
           <FaComments />
-          <span>AI Assistant</span>
+
+          AI Assistant
+
         </NavLink>
 
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
+        <NavLink to="/search">
+
+          <FaSearch />
+
+          Documents
+
+        </NavLink>
+
+        <NavLink to="/about">
+
           <FaInfoCircle />
-          <span>About</span>
+
+          About
+
         </NavLink>
 
       </nav>
 
-      <div className="sidebar-spacer"></div>
+      {/* Bottom */}
 
       <div className="sidebar-bottom">
-        <NavLink to="/" className="logout-btn">
+
+        <div className="profile-card">
+
+          <FaUserCircle />
+
+          <div>
+
+            <h4>Research User</h4>
+
+            <span>Online</span>
+
+          </div>
+
+        </div>
+
+        <NavLink className="logout" to="/">
+
           <FaSignOutAlt />
-          <span>Logout</span>
+
+          Logout
+
         </NavLink>
+
       </div>
 
-    </div>
+    </aside>
   );
 }
 

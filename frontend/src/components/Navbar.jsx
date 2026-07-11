@@ -7,25 +7,21 @@ function Navbar() {
 
       <div className="logo">
         🩺
-        <span>Medical Research Paper Assistant</span>
+        <span>Medical Research AI Assistant</span>
       </div>
 
       <ul className="nav-links">
 
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/home">Dashboard</NavLink>
         </li>
 
         <li>
-          <NavLink to="/upload">Upload</NavLink>
+          <NavLink to="/chat">AI Assistant</NavLink>
         </li>
 
         <li>
-          <NavLink to="/search">Search</NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/chat">Chat</NavLink>
+          <NavLink to="/search">Documents</NavLink>
         </li>
 
         <li>
