@@ -1,160 +1,140 @@
 import { useState } from "react";
+
 import {
   FaSearch,
   FaFileMedical,
-  FaCalendarAlt,
-  FaTrash,
-  FaEye,
+  FaFilter,
+  FaFilePdf,
+  FaDownload,
 } from "react-icons/fa";
 
 import "../styles/Search.css";
 
 function Search() {
 
-  const [search,setSearch]=useState("");
+  const [query, setQuery] = useState("");
 
-  const papers=[
-
+  const papers = [
     {
-      id:1,
-      title:"Heart Disease Prediction using Machine Learning",
-      date:"10 July 2026",
-      size:"2.4 MB"
+      id: 1,
+      title: "Deep Learning for Medical Diagnosis",
+      type: "PDF",
+      year: "2025",
+      author: "John Smith",
     },
-
     {
-      id:2,
-      title:"Cancer Detection Research",
-      date:"09 July 2026",
-      size:"4.2 MB"
+      id: 2,
+      title: "Cancer Detection using AI",
+      type: "PDF",
+      year: "2024",
+      author: "Emily Brown",
     },
-
     {
-      id:3,
-      title:"COVID Clinical Guidelines",
-      date:"08 July 2026",
-      size:"1.9 MB"
-    }
-
+      id: 3,
+      title: "Clinical NLP Research",
+      type: "PDF",
+      year: "2023",
+      author: "David Lee",
+    },
   ];
 
-  const filtered=papers.filter((paper)=>
-
-    paper.title.toLowerCase().includes(search.toLowerCase())
-
+  const filtered = papers.filter((paper) =>
+    paper.title.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
+    <div className="search-page">
 
-<div className="search-page">
+      <div className="search-header">
 
-<h1>📄 Research Papers</h1>
+        <div>
 
-<p>
-Manage and search uploaded research papers.
-</p>
+          <h1>🔍 Search Medical Papers</h1>
 
-<div className="search-box">
+          <p>
+            Browse indexed research papers and documents.
+          </p>
 
-<FaSearch/>
+        </div>
 
-<input
+      </div>
 
-placeholder="Search papers..."
+      <div className="search-toolbar">
 
-value={search}
+        <div className="search-box">
 
-onChange={(e)=>setSearch(e.target.value)}
+          <FaSearch />
 
-/>
+          <input
+            type="text"
+            placeholder="Search papers..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
 
-</div>
+        </div>
 
-<div className="paper-grid">
+        <button className="filter-btn">
 
-{
+          <FaFilter />
 
-filtered.length===0 ?
+          Filters
 
-(
+        </button>
 
-<div className="empty">
+      </div>
 
-No documents found.
+      <div className="paper-grid">
 
-</div>
+        {filtered.map((paper) => (
 
-)
+          <div
+            key={paper.id}
+            className="paper-card"
+          >
 
-:
+            <FaFileMedical className="paper-icon" />
 
-filtered.map((paper)=>(
+            <h3>{paper.title}</h3>
 
-<div
+            <p>
 
-className="paper-card"
+              <strong>Author:</strong> {paper.author}
 
-key={paper.id}
+            </p>
 
->
+            <p>
 
-<div className="paper-top">
+              <strong>Year:</strong> {paper.year}
 
-<FaFileMedical className="paper-icon"/>
+            </p>
 
-<h3>{paper.title}</h3>
+            <div className="paper-footer">
 
-</div>
+              <span>
 
-<div className="paper-info">
+                <FaFilePdf />
 
-<p>
+                {paper.type}
 
-<FaCalendarAlt/>
+              </span>
 
-{paper.date}
+              <button>
 
-</p>
+                <FaDownload />
 
-<p>
+              </button>
 
-{paper.size}
+            </div>
 
-</p>
+          </div>
 
-</div>
+        ))}
 
-<div className="paper-buttons">
+      </div>
 
-<button>
-
-<FaEye/>
-
-View
-
-</button>
-
-<button className="delete">
-
-<FaTrash/>
-
-Delete
-
-</button>
-
-</div>
-
-</div>
-
-))
-
-}
-
-</div>
-
-</div>
-
-);
+    </div>
+  );
 
 }
 
