@@ -1,3 +1,4 @@
+import TypingMessage from "./TypingMessage";
 import ReactMarkdown from "react-markdown";
 import {
   FaRobot,
@@ -33,7 +34,9 @@ function ChatMessages({
           <div className="bubble">
 
             <ReactMarkdown>
-              {msg.text}
+              <TypingMessage
+                text={msg.text}
+              />
             </ReactMarkdown>
 
             {msg.references && (

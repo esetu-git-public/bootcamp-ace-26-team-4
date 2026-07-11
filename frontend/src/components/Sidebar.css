@@ -153,3 +153,20 @@ transform:translateX(-100%);
 }
 
 }
+body.dark .sidebar{
+
+background:#020617;
+
+}
+
+body.dark .sidebar-link:hover{
+
+background:#1e293b;
+
+}
+
+body.dark .logout-btn{
+
+background:#ef4444;
+
+}

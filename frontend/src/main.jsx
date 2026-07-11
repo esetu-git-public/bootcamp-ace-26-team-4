@@ -1,28 +1,29 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 
+import { ThemeProvider } from "./context/ThemeContext";
+
 import "./index.css";
 
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <React.StrictMode>
 
-    <App />
+    <ThemeProvider>
 
-    <ToastContainer
-      position="top-right"
-      autoClose={2500}
-      hideProgressBar={false}
-      newestOnTop
-      closeOnClick
-      pauseOnHover
-      draggable
-      theme="colored"
-    />
+      <BrowserRouter>
 
-  </BrowserRouter>
+        <App />
+
+      </BrowserRouter>
+
+    </ThemeProvider>
+
+  </React.StrictMode>
+
 );

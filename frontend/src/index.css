@@ -23,3 +23,146 @@ a {
   text-decoration: none;
   color: inherit;
 }
+body{
+
+margin:0;
+
+font-family:Inter,sans-serif;
+
+transition:.35s;
+
+}
+
+body.light{
+
+background:#f5f7fb;
+
+color:#111827;
+
+}
+
+body.dark{
+
+background:#0f172a;
+
+color:white;
+
+}
+
+body.dark .chat-page{
+
+background:#0f172a;
+
+}
+
+body.dark .messages{
+
+background:#1e293b;
+
+}
+
+body.dark .bubble{
+
+color:white;
+
+}
+
+body.dark .message.bot .bubble{
+
+background:#334155;
+
+}
+
+body.dark .message.user .bubble{
+
+background:#2563eb;
+
+}
+
+body.dark .bottom-bar{
+
+background:#1e293b;
+
+}
+
+body.dark textarea{
+
+background:transparent;
+
+color:white;
+
+}
+
+body.dark textarea::placeholder{
+
+color:#cbd5e1;
+
+}
+
+body.dark .upload-box{
+
+background:#1e293b;
+
+color:white;
+
+}
+
+body.dark .history-box{
+
+background:#1e293b;
+
+}
+
+body.dark .history-item{
+
+background:#334155;
+
+border:none;
+
+color:white;
+
+}
+
+body.dark .history-item h4{
+
+color:white;
+
+}
+
+body.dark .suggestions button{
+
+background:#1e293b;
+
+color:white;
+
+border:none;
+
+}
+
+body.dark .current-document{
+
+background:#1e293b;
+
+color:white;
+
+}
+
+body.dark .stat-card,
+
+body.dark .recent-card,
+
+body.dark .action-card{
+
+background:#1e293b;
+
+color:white;
+
+}
+
+body.dark .action-card p,
+
+body.dark .recent-card li{
+
+color:#cbd5e1;
+
+}

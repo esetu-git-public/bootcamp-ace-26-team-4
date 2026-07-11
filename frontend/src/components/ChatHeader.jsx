@@ -1,60 +1,73 @@
-import {
-  FaFileMedical,
-  FaTrash,
-  FaDownload,
-} from "react-icons/fa";
+import { useState } from "react";
+import "./ChatHistory.css";
 
-function ChatHeader({
-  currentDocument,
-  clearChat,
-  exportChat,
+function ChatHistory({
+  history,
+  onSelect,
 }) {
+
+  const [search, setSearch] = useState("");
+
+  const filteredHistory = history.filter((chat) =>
+    chat.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <div className="chat-top">
-      <div>
-        <h1>🩺 Medical Research AI Assistant</h1>
+    <div className="history-container">
 
-        <p>
-          Upload research papers and ask questions using AI.
-        </p>
-      </div>
+      <h3>💬 Chat History</h3>
 
-      <div className="header-actions">
+      <input
+        type="text"
+        className="history-search"
+        placeholder="Search chats..."
+        value={search}
+        onChange={(e) =>
+          setSearch(e.target.value)
+        }
+      />
 
-        {currentDocument && (
-          <div className="current-document">
+      {filteredHistory.length === 0 ? (
 
-            <FaFileMedical />
+        <div className="empty-history">
 
-            <div>
+          No chats found
 
-              <h4>Current Document</h4>
+        </div>
 
-              <p>{currentDocument}</p>
+      ) : (
+
+        filteredHistory.map((chat, index) => (
+
+          <div
+            key={index}
+            className="history-card"
+            onClick={() => onSelect(chat)}
+          >
+
+            <div className="history-title">
+
+              {chat.title}
+
+            </div>
+
+            <div className="history-time">
+
+              {chat.time}
 
             </div>
 
           </div>
-        )}
 
-        <button
-          className="icon-action-btn"
-          onClick={exportChat}
-        >
-          <FaDownload />
-        </button>
+        ))
 
-        <button
-          className="clear-btn"
-          onClick={clearChat}
-        >
-          <FaTrash />
-        </button>
-
-      </div>
+      )}
 
     </div>
   );
+
 }
 
-export default ChatHeader;
+export default ChatHistory;

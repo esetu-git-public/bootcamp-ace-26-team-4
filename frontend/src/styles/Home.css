@@ -208,3 +208,30 @@ justify-content:center;
 }
 
 }
+body.dark .hero-card{
+
+background:linear-gradient(135deg,#1d4ed8,#1e40af);
+
+}
+
+body.dark .stat-card{
+
+background:#1e293b;
+
+color:white;
+
+}
+
+body.dark .recent-card{
+
+background:#1e293b;
+
+}
+
+body.dark .action-card{
+
+background:#1e293b;
+
+color:white;
+
+}

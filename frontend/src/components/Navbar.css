@@ -43,3 +43,8 @@
   background: white;
   color: #0f766e;
 }
+body.dark .navbar{
+
+background:#020617;
+
+}
