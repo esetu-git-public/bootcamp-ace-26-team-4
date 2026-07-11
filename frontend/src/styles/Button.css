@@ -1,0 +1,29 @@
+.custom-btn{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.primary{
+    background:#0f766e;
+    color:white;
+}
+
+.primary:hover{
+    background:#115e59;
+}
+
+.secondary{
+    background:white;
+    border:2px solid #0f766e;
+    color:#0f766e;
+}
+
+.secondary:hover{
+    background:#0f766e;
+    color:white;
+}

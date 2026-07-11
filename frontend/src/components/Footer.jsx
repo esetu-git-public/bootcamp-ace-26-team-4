@@ -1,11 +1,22 @@
-import "./Footer.css";
+import React from "react";
+import "../styles/Footer.css";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
-      <p>© 2026 Medical Research Paper Assistant</p>
+
+      <h3>Medical Research Paper Assistant</h3>
+
+      <p>
+        Built using React • FastAPI • RAG Pipeline
+      </p>
+
+      <p>
+        © 2026 All Rights Reserved
+      </p>
+
     </footer>
   );
-}
+};
 
 export default Footer;
