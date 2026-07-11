@@ -6,6 +6,8 @@ import {
   FaRobot,
   FaFileMedical,
   FaTrash,
+  FaCopy,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 import "../styles/Chat.css";
@@ -18,7 +20,7 @@ function Chat() {
     {
       role: "bot",
       text:
-        "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a research paper and ask me anything about it.",
+        "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a medical research paper and ask me anything.",
     },
   ]);
 
@@ -29,9 +31,18 @@ function Chat() {
 
   const [currentDocument, setCurrentDocument] = useState(null);
 
-  const fileInputRef = useRef();
+  const fileInputRef = useRef(null);
 
-  const chatEndRef = useRef();
+  const chatEndRef = useRef(null);
+
+  const suggestions = [
+    "Summarize this paper",
+    "Explain methodology",
+    "What are the key findings?",
+    "Give conclusion",
+    "What are the limitations?",
+    "Explain in simple language",
+  ];
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({
@@ -39,22 +50,66 @@ function Chat() {
     });
   }, [chatMessages]);
 
-  const suggestedQuestions = [
-    "Summarize this paper",
-    "What is the objective?",
-    "Explain methodology",
-    "List key findings",
-    "What are the limitations?",
-    "Give conclusion",
-  ];
-    const handleSuggestion = (text) => {
-    setMessage(text);
+  const copyText = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const clearChat = () => {
+    setChatMessages([
+      {
+        role: "bot",
+        text:
+          "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a medical research paper and ask me anything.",
+      },
+    ]);
+  };
+
+  const uploadFile = async (file) => {
+    if (!file) return;
+
+    try {
+      setUploading(true);
+
+      setCurrentDocument(file.name);
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `📄 Uploading **${file.name}**...`,
+        },
+      ]);
+
+      const result = await uploadDocument(file);
+
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: `✅ **${result.filename}** indexed successfully.\n\nNow ask me anything about this paper.`,
+        },
+      ]);
+    } catch (err) {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          role: "bot",
+          text: err.message,
+        },
+      ]);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSend = async () => {
-    if (!message.trim() || loading || uploading) return;
+    if (!message.trim()) return;
+
+    if (loading || uploading) return;
 
     const question = message;
+
+    setMessage("");
 
     setChatMessages((prev) => [
       ...prev,
@@ -63,8 +118,6 @@ function Chat() {
         text: question,
       },
     ]);
-
-    setMessage("");
 
     try {
       setLoading(true);
@@ -75,7 +128,7 @@ function Chat() {
         ...prev,
         {
           role: "bot",
-          text: result.answer || "No answer generated.",
+          text: result.answer,
           references: result.formatted_references,
           metadata: result.metadata,
         },
@@ -88,203 +141,167 @@ function Chat() {
           text: err.message,
         },
       ]);
-    }
-
-    finally {
+    } finally {
       setLoading(false);
     }
   };
-const uploadFile = async (file) => {
 
-    if (!file) return;
+  const handleSuggestion = (text) => {
+    setMessage(text);
+  };
 
-    try {
-
-      setUploading(true);
-
-      setCurrentDocument(file.name);
-
-      setChatMessages((prev)=>[
-        ...prev,
-        {
-          role:"bot",
-          text:`📄 Uploading **${file.name}**...`
-        }
-      ]);
-
-      const result=await uploadDocument(file);
-
-      setChatMessages((prev)=>[
-        ...prev,
-        {
-          role:"bot",
-          text:`✅ **${result.filename}** indexed successfully.\n\nAsk me anything about this document.`
-        }
-      ]);
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
     }
+  };
 
-    catch(error){
+  const handleDrop = (e) => {
+    e.preventDefault();
 
-      setChatMessages((prev)=>[
-        ...prev,
-        {
-          role:"bot",
-          text:error.message
-        }
-      ]);
+    setDragActive(false);
 
-    }
+    uploadFile(e.dataTransfer.files[0]);
+  };
 
-    finally{
+  const handleDrag = (e) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
 
-      setUploading(false);
-
-    }
-
-};
-const handleDrop = (e) => {
-
-e.preventDefault();
-
-setDragActive(false);
-
-const file=e.dataTransfer.files[0];
-
-uploadFile(file);
-
-};
-
-const handleDrag=(e)=>{
-
-e.preventDefault();
-
-setDragActive(true);
-
-};
-
-const handleLeave=(e)=>{
-
-e.preventDefault();
-
-setDragActive(false);
-
-};
-const handleKeyDown=(e)=>{
-
-if(e.key==="Enter" && !e.shiftKey){
-
-e.preventDefault();
-
-handleSend();
-
-}
-
-};
+  const handleLeave = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+  };
 return (
   <div className="chat-page">
 
     {/* Header */}
 
-    <div className="chat-top">
+    <div className="chat-header">
 
       <div>
 
         <h1>🩺 Medical Research AI Assistant</h1>
 
         <p>
-          Upload research papers and ask questions using AI.
+          Upload medical research papers and chat with AI.
         </p>
 
       </div>
 
-      {currentDocument && (
+      <button
+        className="clear-btn"
+        onClick={clearChat}
+      >
+        <FaTrash />
+        Clear Chat
+      </button>
 
-        <div className="current-document">
+    </div>
 
-          <FaFileMedical />
+    {/* Current Document */}
+
+    {currentDocument ? (
+
+      <div className="document-card">
+
+        <div className="document-left">
+
+          <FaFileMedical className="document-icon"/>
 
           <div>
 
-            <h4>Current Document</h4>
+            <h3>{currentDocument}</h3>
 
-            <p>{currentDocument}</p>
+            <p>
+
+              <FaCheckCircle />
+
+              Indexed Successfully
+
+            </p>
 
           </div>
 
         </div>
 
-      )}
+        <button
+          className="change-file"
+          onClick={() => fileInputRef.current.click()}
+        >
+          Change File
+        </button>
 
-    </div>
+      </div>
 
-    {/* Upload Area */}
+    ) : (
 
-    <div
-
-      className={
-        dragActive
-          ? "upload-box active"
-          : "upload-box"
-      }
-
-      onDrop={handleDrop}
-
-      onDragOver={handleDrag}
-
-      onDragEnter={handleDrag}
-
-      onDragLeave={handleLeave}
-
-    >
-
-      <FaPaperclip className="upload-icon"/>
-
-      <h3>Drag & Drop Research Paper</h3>
-
-      <p>
-
-        PDF, DOCX, TXT, CSV, XML
-
-      </p>
-
-      <button
-
-        onClick={()=>
-
-          fileInputRef.current.click()
-
+      <div
+        className={
+          dragActive
+            ? "upload-card active"
+            : "upload-card"
         }
 
+        onDrop={handleDrop}
+        onDragEnter={handleDrag}
+        onDragOver={handleDrag}
+        onDragLeave={handleLeave}
       >
 
-        Browse File
+        <FaPaperclip className="upload-icon"/>
 
-      </button>
+        <h2>
 
-      <input
+          Drag & Drop Research Paper
 
-        ref={fileInputRef}
+        </h2>
 
-        hidden
+        <p>
 
-        type="file"
+          PDF • DOCX • TXT • XML • CSV
 
-        accept=".pdf,.docx,.txt,.csv,.xml,.md"
+        </p>
 
-        onChange={(e)=>uploadFile(e.target.files[0])}
+        <button
 
-      />
+          className="browse-btn"
 
-    </div>
+          onClick={() => fileInputRef.current.click()}
 
-    {/* Suggested Questions */}
+        >
+
+          Browse File
+
+        </button>
+
+      </div>
+
+    )}
+
+    <input
+
+      ref={fileInputRef}
+
+      hidden
+
+      type="file"
+
+      accept=".pdf,.docx,.txt,.csv,.xml,.md"
+
+      onChange={(e)=>uploadFile(e.target.files[0])}
+
+    />
+
+    {/* Suggestions */}
 
     <div className="suggestions">
 
       {
 
-        suggestedQuestions.map((item,index)=>(
+        suggestions.map((item,index)=>(
 
           <button
 
@@ -304,7 +321,7 @@ return (
 
     </div>
 
-    {/* Chat Area */}
+    {/* Messages */}
 
     <div className="messages">
 
@@ -338,7 +355,7 @@ return (
 
               &&
 
-              <FaRobot className="bot-icon"/>
+              <FaRobot className="bot-avatar"/>
 
             }
 
@@ -354,7 +371,7 @@ return (
 
                 msg.references && (
 
-                  <details>
+                  <details className="reference-box">
 
                     <summary>
 
@@ -378,21 +395,41 @@ return (
 
                 msg.metadata && (
 
-                  <small>
+                  <div className="confidence">
 
                     Confidence :
 
                     {
 
-                      msg.metadata
-
-                      .retrieval_confidence_level
+                      msg.metadata.retrieval_confidence_level
 
                     }
 
-                  </small>
+                  </div>
 
                 )
+
+              }
+
+              {
+
+                msg.role==="bot"
+
+                &&
+
+                <button
+
+                  className="copy-btn"
+
+                  onClick={()=>copyText(msg.text)}
+
+                >
+
+                  <FaCopy/>
+
+                  Copy
+
+                </button>
 
               }
 
@@ -410,11 +447,15 @@ return (
 
           <div className="message bot">
 
-            <FaRobot className="bot-icon"/>
+            <FaRobot className="bot-avatar"/>
 
-            <div className="bubble">
+            <div className="bubble typing">
 
-              Thinking...
+              <span></span>
+
+              <span></span>
+
+              <span></span>
 
             </div>
 
@@ -428,19 +469,15 @@ return (
 
     </div>
 
-    {/* Bottom Input */}
+    {/* Bottom */}
 
-    <div className="bottom-bar">
+    <div className="chat-input">
 
       <button
 
-        className="clip-btn"
+        className="attach-btn"
 
-        onClick={()=>
-
-          fileInputRef.current.click()
-
-        }
+        onClick={()=>fileInputRef.current.click()}
 
       >
 
@@ -450,17 +487,13 @@ return (
 
       <textarea
 
-        rows={1}
-
-        placeholder="Ask anything about the uploaded paper..."
+        placeholder="Ask anything about the uploaded research paper..."
 
         value={message}
 
-        onChange={(e)=>
+        rows={1}
 
-          setMessage(e.target.value)
-
-        }
+        onChange={(e)=>setMessage(e.target.value)}
 
         onKeyDown={handleKeyDown}
 
@@ -471,6 +504,8 @@ return (
         className="send-btn"
 
         onClick={handleSend}
+
+        disabled={loading}
 
       >
 
