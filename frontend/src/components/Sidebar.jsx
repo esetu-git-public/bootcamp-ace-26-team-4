@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
 import {
   FaHome,
-  FaComments,
   FaSearch,
+  FaComments,
   FaInfoCircle,
   FaSignOutAlt,
   FaStethoscope,
-  FaUserCircle,
 } from "react-icons/fa";
 
 import "./Sidebar.css";
@@ -15,88 +14,71 @@ function Sidebar() {
   return (
     <aside className="sidebar">
 
-      {/* Logo */}
-
       <div className="sidebar-logo">
-
-        <div className="logo-circle">
-
+        <div className="logo-icon">
           <FaStethoscope />
-
         </div>
 
         <div>
-
           <h2>MedAI</h2>
-
-          <span>Research Assistant</span>
-
+          <p>Medical Research Assistant</p>
         </div>
-
       </div>
-
-      {/* Navigation */}
 
       <nav className="sidebar-nav">
 
-        <NavLink to="/home">
-
+        <NavLink
+          to="/home"
+          className={({ isActive }) =>
+            isActive ? "sidebar-link active" : "sidebar-link"
+          }
+        >
           <FaHome />
-
-          Dashboard
-
+          <span>Dashboard</span>
         </NavLink>
 
-        <NavLink to="/chat">
-
+        <NavLink
+          to="/chat"
+          className={({ isActive }) =>
+            isActive ? "sidebar-link active" : "sidebar-link"
+          }
+        >
           <FaComments />
-
-          AI Assistant
-
+          <span>AI Assistant</span>
         </NavLink>
 
-        <NavLink to="/search">
-
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            isActive ? "sidebar-link active" : "sidebar-link"
+          }
+        >
           <FaSearch />
-
-          Documents
-
+          <span>Search Papers</span>
         </NavLink>
 
-        <NavLink to="/about">
-
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? "sidebar-link active" : "sidebar-link"
+          }
+        >
           <FaInfoCircle />
-
-          About
-
+          <span>About</span>
         </NavLink>
 
       </nav>
 
-      {/* Bottom */}
+      <div className="sidebar-spacer"></div>
 
       <div className="sidebar-bottom">
 
-        <div className="profile-card">
-
-          <FaUserCircle />
-
-          <div>
-
-            <h4>Research User</h4>
-
-            <span>Online</span>
-
-          </div>
-
-        </div>
-
-        <NavLink className="logout" to="/">
-
+        <NavLink
+          to="/"
+          className="logout-btn"
+        >
           <FaSignOutAlt />
-
-          Logout
-
+          <span>Logout</span>
         </NavLink>
 
       </div>
