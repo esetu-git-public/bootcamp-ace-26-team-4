@@ -1,6 +1,6 @@
 from qdrant_client.models import PayloadSchemaType
 
-from rag.src.vector_db.qdrant_connection import get_qdrant_client
+from backend.rag.src.vector_db.qdrant_connection import get_qdrant_client
 
 
 def create_indexes():

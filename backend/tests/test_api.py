@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from backend.api import router
+from api import router
 
 
 app = FastAPI(title="MRP Medical Research RAG API")

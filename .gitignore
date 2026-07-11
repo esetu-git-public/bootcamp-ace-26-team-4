@@ -109,3 +109,6 @@ frontend/dist/
 # ==========================================================
 .DS_Store
 Thumbs.db
+
+# RAG generated data
+services/data/
