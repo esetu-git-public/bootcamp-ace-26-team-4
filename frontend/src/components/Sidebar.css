@@ -1,273 +1,276 @@
+/* ==========================================
+   SIDEBAR
+========================================== */
+
 .sidebar{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:270px;
-
-height:100vh;
-
-background:linear-gradient(180deg,#1e3a8a,#2563eb);
-
-color:white;
-
-padding:28px;
-
-display:flex;
-
-flex-direction:column;
-
-z-index:1000;
-
-overflow-y:auto;
-
-box-shadow:12px 0 35px rgba(0,0,0,.15);
-
+    position:fixed;
+    top:0;
+    left:0;
+    width:270px;
+    height:100vh;
+    background:linear-gradient(180deg,#1e3a8a,#2563eb);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    padding:28px;
+    overflow-y:auto;
+    z-index:1000;
+    box-shadow:12px 0 35px rgba(0,0,0,.15);
+    transition:.35s;
 }
 
+/* ==========================================
+   LOGO
+========================================== */
+
 .sidebar-logo{
-
-display:flex;
-
-align-items:center;
-
-gap:16px;
-
-padding-bottom:28px;
-
-border-bottom:1px solid rgba(255,255,255,.15);
-
-margin-bottom:30px;
-
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding-bottom:28px;
+    margin-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,.15);
 }
 
 .logo-icon{
-
-width:58px;
-
-height:58px;
-
-background:white;
-
-color:#2563eb;
-
-border-radius:16px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-font-size:24px;
-
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    background:white;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    flex-shrink:0;
 }
 
 .sidebar-logo h2{
-
-margin:0;
-
-font-size:24px;
-
+    margin:0;
+    font-size:24px;
+    font-weight:700;
 }
 
 .sidebar-logo p{
-
-font-size:13px;
-
-opacity:.8;
-
-margin-top:4px;
-
+    margin-top:4px;
+    font-size:13px;
+    color:rgba(255,255,255,.82);
 }
 
+/* ==========================================
+   NAVIGATION
+========================================== */
+
 .sidebar-nav{
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 
 .sidebar-link{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:15px 18px;
-
-border-radius:14px;
-
-color:white;
-
-transition:.3s;
-
-}
-
-.link-left{
-
-display:flex;
-
-align-items:center;
-
-gap:14px;
-
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 18px;
+    border-radius:15px;
+    color:white;
+    transition:.3s;
 }
 
 .sidebar-link:hover{
-
-background:rgba(255,255,255,.15);
-
+    background:rgba(255,255,255,.14);
+    transform:translateX(4px);
 }
 
-.sidebar-link.active{
+.link-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
 
-background:white;
+.link-left svg{
+    font-size:18px;
+}
 
-color:#2563eb;
-
-font-weight:600;
-
+.link-left span{
+    font-weight:500;
 }
 
 .arrow-icon{
-
-opacity:0;
-
-transition:.3s;
-
+    opacity:0;
+    transition:.3s;
 }
 
-.sidebar-link:hover .arrow-icon,
+.sidebar-link:hover .arrow-icon{
+    opacity:1;
+    transform:translateX(5px);
+}
+
+/* ==========================================
+   ACTIVE
+========================================== */
+
+.sidebar-link.active{
+    background:white;
+    color:#2563eb;
+    font-weight:700;
+    box-shadow:0 10px 22px rgba(255,255,255,.22);
+}
 
 .sidebar-link.active .arrow-icon{
-
-opacity:1;
-
-transform:translateX(5px);
-
+    opacity:1;
 }
+
+.sidebar-link.active svg{
+    color:#2563eb;
+}
+
+.sidebar-link.active span{
+    color:#2563eb;
+}
+
+/* ==========================================
+   SPACER
+========================================== */
 
 .sidebar-spacer{
-
-flex:1;
-
+    flex:1;
 }
+
+/* ==========================================
+   FOOTER
+========================================== */
 
 .sidebar-footer{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-padding-top:20px;
-
-}
-
-.logout-btn{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:10px;
-
-padding:14px;
-
-background:#ef4444;
-
-border-radius:12px;
-
-color:white;
-
-font-weight:600;
-
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    padding-top:20px;
 }
 
 .version{
-
-text-align:center;
-
-font-size:13px;
-
-opacity:.7;
-
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,.7);
 }
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+.logout-btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    background:#ef4444;
+    color:white;
+    padding:14px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+    transform:translateY(-2px);
+}
+
+.logout-btn svg{
+    font-size:17px;
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.sidebar::-webkit-scrollbar{
+    width:7px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.3);
+    border-radius:30px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark .sidebar{
+    background:linear-gradient(180deg,#0f172a,#1e293b);
+}
+
+body.dark .sidebar-link{
+    color:#f8fafc;
+}
+
+body.dark .sidebar-link:hover{
+    background:rgba(255,255,255,.08);
+}
+
+body.dark .sidebar-link.active{
+    background:#2563eb;
+    color:white;
+}
+
+body.dark .sidebar-link.active span{
+    color:white;
+}
+
+body.dark .sidebar-link.active svg{
+    color:white;
+}
+
+body.dark .logout-btn{
+    background:#dc2626;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
 
 @media(max-width:900px){
 
 .sidebar{
-
-width:75px;
-
+width:78px;
 padding:18px 10px;
-
 }
 
 .sidebar-logo h2,
-
 .sidebar-logo p,
-
 .sidebar-link span,
-
 .arrow-icon,
-
 .version{
-
 display:none;
-
 }
 
 .logo-icon{
-
 margin:auto;
-
+width:52px;
+height:52px;
+font-size:22px;
 }
 
 .sidebar-link{
-
 justify-content:center;
-
 padding:16px;
-
-}
-
-.main-content{
-
-margin-left:75px;
-
-width:calc(100% - 75px);
-
 }
 
 }
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media(max-width:600px){
 
 .sidebar{
-
 display:none;
-
-}
-
-.main-content{
-
-margin-left:0;
-
-width:100%;
-
 }
 
 }

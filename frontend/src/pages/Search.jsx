@@ -1,55 +1,94 @@
-import { FaSearch } from "react-icons/fa";
+import { useState } from "react";
+import {
+  FaSearch,
+  FaFileMedical,
+} from "react-icons/fa";
 
 import "../styles/Search.css";
 
-function Search(){
+function Search() {
+  const [search, setSearch] = useState("");
 
-return(
+  const papers = [
+    {
+      title: "Diabetes Prediction using Machine Learning",
+      author: "John Smith",
+      year: "2024",
+    },
+    {
+      title: "Breast Cancer Detection with Deep Learning",
+      author: "Sarah Wilson",
+      year: "2023",
+    },
+    {
+      title: "COVID-19 Diagnosis using Chest X-rays",
+      author: "David Brown",
+      year: "2022",
+    },
+    {
+      title: "Heart Disease Prediction using AI",
+      author: "Emily Johnson",
+      year: "2024",
+    },
+  ];
 
-<div className="search-page fade-up">
+  const filtered = papers.filter((paper) =>
+    paper.title.toLowerCase().includes(search.toLowerCase())
+  );
 
-<h1>
+  return (
+    <div className="search-page fade-up">
 
-Search Research Papers
+      <div className="search-header">
 
-</h1>
+        <h1>Search Medical Papers</h1>
 
-<div className="search-box">
+        <p>
+          Browse indexed medical research documents.
+        </p>
 
-<FaSearch/>
+      </div>
 
-<input
+      <div className="search-box">
 
-placeholder="Search medical research papers..."
+        <FaSearch />
 
->
+        <input
+          type="text"
+          placeholder="Search research papers..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+        />
 
-</input>
+      </div>
 
-</div>
+      <div className="paper-grid">
 
-<div className="empty-search">
+        {filtered.map((paper, index) => (
 
-📄
+          <div
+            key={index}
+            className="paper-card"
+          >
 
-<h2>
+            <FaFileMedical />
 
-No Results
+            <h3>{paper.title}</h3>
 
-</h2>
+            <p>{paper.author}</p>
 
-<p>
+            <span>{paper.year}</span>
 
-Search papers by title, keywords or topics.
+          </div>
 
-</p>
+        ))}
 
-</div>
+      </div>
 
-</div>
-
-);
-
+    </div>
+  );
 }
 
 export default Search;

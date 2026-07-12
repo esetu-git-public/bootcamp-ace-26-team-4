@@ -1,71 +1,221 @@
+/* ==========================================
+   SEARCH PAGE
+========================================== */
+
 .search-page{
-
-padding:40px;
-
+    padding:35px;
+    min-height:100vh;
+    background:var(--background);
+    color:var(--text);
+    animation:fadeSearch .5s ease;
 }
 
-.search-page h1{
+/* ==========================================
+   HEADER
+========================================== */
 
-margin-bottom:30px;
-
+.search-header{
+    margin-bottom:30px;
 }
+
+.search-header h1{
+    font-size:38px;
+    color:var(--text);
+    margin-bottom:10px;
+}
+
+.search-header p{
+    color:var(--text-light);
+    line-height:1.7;
+}
+
+/* ==========================================
+   SEARCH BOX
+========================================== */
 
 .search-box{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:var(--surface);
+    padding:18px 22px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    margin-bottom:35px;
+    transition:.3s;
+}
 
-background:white;
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-padding:18px;
-
-border-radius:18px;
-
-box-shadow:0 10px 25px rgba(0,0,0,.08);
-
-margin-bottom:45px;
-
+.search-box:hover{
+    transform:translateY(-3px);
 }
 
 .search-box svg{
-
-font-size:22px;
-
-color:#2563eb;
-
+    font-size:22px;
+    color:#2563eb;
 }
 
 .search-box input{
+    width:100%;
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:17px;
+    color:var(--text);
+}
 
-border:none;
+.search-box input::placeholder{
+    color:var(--text-light);
+}
 
-width:100%;
+/* ==========================================
+   PAPERS GRID
+========================================== */
 
-font-size:17px;
+.paper-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
 
-outline:none;
+/* ==========================================
+   PAPER CARD
+========================================== */
+
+.paper-card{
+    background:var(--surface);
+    padding:30px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    transition:.35s;
+}
+
+.paper-card:hover{
+    transform:translateY(-8px);
+}
+
+.paper-card svg{
+    font-size:45px;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.paper-card h3{
+    font-size:20px;
+    margin-bottom:12px;
+    color:var(--text);
+}
+
+.paper-card p{
+    color:var(--text-light);
+    line-height:1.7;
+    margin-bottom:10px;
+}
+
+.paper-card span{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    background:#dbeafe;
+    color:#2563eb;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes fadeSearch{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 
 }
 
-.empty-search{
+/* ==========================================
+   RESPONSIVE
+========================================== */
 
-background:white;
+@media(max-width:900px){
 
-padding:70px;
+.search-page{
+padding:25px;
+}
 
-border-radius:20px;
-
-text-align:center;
-
-box-shadow:0 12px 30px rgba(0,0,0,.08);
+.search-header h1{
+font-size:32px;
+}
 
 }
 
-.empty-search h2{
+@media(max-width:600px){
 
-margin:15px 0;
+.search-page{
+padding:18px;
+}
 
+.search-box{
+padding:16px;
+}
+
+.paper-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+body.dark .search-page{
+    background:var(--background);
+}
+
+body.dark .search-header h1{
+    color:var(--text);
+}
+
+body.dark .search-header p{
+    color:var(--text-light);
+}
+
+body.dark .search-box{
+    background:var(--surface);
+    border-color:var(--border);
+}
+
+body.dark .search-box input{
+    color:var(--text);
+}
+
+body.dark .search-box input::placeholder{
+    color:var(--text-light);
+}
+
+body.dark .paper-card{
+    background:var(--surface);
+    border-color:var(--border);
+}
+
+body.dark .paper-card h3{
+    color:var(--text);
+}
+
+body.dark .paper-card p{
+    color:var(--text-light);
+}
+
+body.dark .paper-card span{
+    background:#1d4ed8;
+    color:white;
 }

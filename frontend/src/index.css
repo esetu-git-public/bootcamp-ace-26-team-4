@@ -1,168 +1,269 @@
-/* Global Reset */
+/* ==========================================
+   GLOBAL RESET
+========================================== */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html,
 body,
-#root {
-  width: 100%;
-  min-height: 100vh;
+#root{
+    width:100%;
+    min-height:100vh;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f8fafc;
-  overflow-x: hidden;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
 body{
+    font-family:Inter,sans-serif;
+    background:var(--background);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:.35s;
+}
 
-margin:0;
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-font-family:Inter,sans-serif;
+/* ==========================================
+   LIGHT THEME VARIABLES
+========================================== */
 
-transition:.35s;
+:root{
+
+    --background:#f5f7fb;
+
+    --surface:#ffffff;
+
+    --text:#111827;
+
+    --text-light:#64748b;
+
+    --border:#e2e8f0;
 
 }
 
-body.light{
-
-background:#f5f7fb;
-
-color:#111827;
-
-}
+/* ==========================================
+   DARK THEME VARIABLES
+========================================== */
 
 body.dark{
 
-background:#0f172a;
+    --background:#0f172a;
 
-color:white;
+    --surface:#1e293b;
 
-}
+    --text:#f8fafc;
 
-body.dark .chat-page{
+    --text-light:#cbd5e1;
 
-background:#0f172a;
-
-}
-
-body.dark .messages{
-
-background:#1e293b;
+    --border:#334155;
 
 }
 
-body.dark .bubble{
+/* ==========================================
+   GLOBAL PAGE COLORS
+========================================== */
 
-color:white;
+.home-page,
+.search-page,
+.about-page,
+.analytics-page,
+.chat-page{
 
-}
+    background:var(--background);
 
-body.dark .message.bot .bubble{
-
-background:#334155;
-
-}
-
-body.dark .message.user .bubble{
-
-background:#2563eb;
+    color:var(--text);
 
 }
 
-body.dark .bottom-bar{
+/* ==========================================
+   GLOBAL CARDS
+========================================== */
 
-background:#1e293b;
+.hero-card,
+.stat-card,
+.action-card,
+.recent-card,
+.status-card,
+.paper-card,
+.analytics-card,
+.tech-card,
+.workflow,
+.search-box{
 
-}
+    background:var(--surface);
 
-body.dark textarea{
+    color:var(--text);
 
-background:transparent;
-
-color:white;
-
-}
-
-body.dark textarea::placeholder{
-
-color:#cbd5e1;
-
-}
-
-body.dark .upload-box{
-
-background:#1e293b;
-
-color:white;
+    border:1px solid var(--border);
 
 }
 
-body.dark .history-box{
+/* ==========================================
+   HEADINGS
+========================================== */
 
-background:#1e293b;
+h1,
+h2,
+h3,
+h4{
 
-}
-
-body.dark .history-item{
-
-background:#334155;
-
-border:none;
-
-color:white;
+    color:var(--text);
 
 }
 
-body.dark .history-item h4{
+/* ==========================================
+   PARAGRAPHS
+========================================== */
 
-color:white;
+p,
+li{
 
-}
-
-body.dark .suggestions button{
-
-background:#1e293b;
-
-color:white;
-
-border:none;
+    color:var(--text-light);
 
 }
 
-body.dark .current-document{
+/* ==========================================
+   INPUTS
+========================================== */
 
-background:#1e293b;
+input,
+textarea{
 
-color:white;
+    background:transparent;
 
-}
-
-body.dark .stat-card,
-
-body.dark .recent-card,
-
-body.dark .action-card{
-
-background:#1e293b;
-
-color:white;
+    color:var(--text);
 
 }
 
-body.dark .action-card p,
+input::placeholder,
+textarea::placeholder{
 
-body.dark .recent-card li{
+    color:var(--text-light);
 
-color:#cbd5e1;
+}
+
+/* ==========================================
+   CHAT
+========================================== */
+
+.messages{
+
+    background:var(--surface);
+
+}
+
+.bubble{
+
+    color:var(--text);
+
+}
+
+.message.bot .bubble{
+
+    background:var(--surface);
+
+}
+
+.message.user .bubble{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.bottom-bar{
+
+    background:var(--surface);
+
+}
+
+.upload-box,
+.history-box{
+
+    background:var(--surface);
+
+}
+
+.history-item{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+}
+
+.history-item h4{
+
+    color:var(--text);
+
+}
+
+.suggestions button{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+
+    color:white;
+
+}
+
+.sidebar a{
+
+    color:white;
+
+}
+
+.sidebar-link{
+
+    color:white;
+
+}
+
+.sidebar-link span{
+
+    color:white;
+
+}
+
+.sidebar-link svg{
+
+    color:white;
+
+}
+
+.sidebar-link.active{
+
+    background:white;
+
+    color:#2563eb;
+
+}
+
+.sidebar-link.active span{
+
+    color:#2563eb;
+
+}
+
+.sidebar-link.active svg{
+
+    color:#2563eb;
 
 }

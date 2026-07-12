@@ -1,100 +1,51 @@
 import {
-
-FaFileMedical,
-FaRobot,
-FaComments,
-FaClock,
-
+  FaFileMedical,
+  FaComments,
+  FaRobot,
+  FaChartLine,
 } from "react-icons/fa";
 
 import "../styles/Analytics.css";
 
-function Analytics(){
+function Analytics() {
 
-const stats=[
+  return (
 
-{
-title:"Research Papers",
-value:"24",
-icon:<FaFileMedical/>,
-},
+    <div className="analytics-page fade-up">
 
-{
-title:"Questions Asked",
-value:"138",
-icon:<FaComments/>,
-},
+      <h1>Analytics Dashboard</h1>
 
-{
-title:"AI Accuracy",
-value:"97%",
-icon:<FaRobot/>,
-},
+      <div className="analytics-grid">
 
-{
-title:"Average Response",
-value:"1.2 sec",
-icon:<FaClock/>,
-},
+        <div className="analytics-card">
+          <FaFileMedical />
+          <h2>24</h2>
+          <p>Research Papers</p>
+        </div>
 
-];
+        <div className="analytics-card">
+          <FaComments />
+          <h2>138</h2>
+          <p>Questions Asked</p>
+        </div>
 
-return(
+        <div className="analytics-card">
+          <FaRobot />
+          <h2>97%</h2>
+          <p>AI Accuracy</p>
+        </div>
 
-<div className="analytics-page fade-up">
+        <div className="analytics-card">
+          <FaChartLine />
+          <h2>98%</h2>
+          <p>System Uptime</p>
+        </div>
 
-<h1>
+      </div>
 
-Analytics Dashboard
+    </div>
 
-</h1>
-
-<p>
-
-Monitor AI Assistant performance.
-
-</p>
-
-<div className="analytics-grid">
-
-{
-
-stats.map((item,index)=>(
-
-<div
-className="analytics-card"
-key={index}
->
-
-<div className="analytics-icon">
-
-{item.icon}
-
-</div>
-
-<h2>
-
-{item.value}
-
-</h2>
-
-<h4>
-
-{item.title}
-
-</h4>
-
-</div>
-
-))
-
-}
-
-</div>
-
-</div>
-
-);
+  );
 
 }
 
