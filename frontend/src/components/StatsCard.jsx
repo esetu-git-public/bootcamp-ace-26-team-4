@@ -1,86 +1,55 @@
 import { useEffect, useState } from "react";
 
 function StatsCard({
+  icon,
+  title,
+  value,
+  subtitle,
+}) {
+  const numeric = !isNaN(parseFloat(value));
 
-icon,
-title,
-value,
-subtitle,
+  const [count, setCount] = useState(0);
 
-}){
+  useEffect(() => {
+    if (!numeric) return;
 
-const[count,setCount]=useState(0);
+    let current = 0;
+    const target = parseInt(value);
 
-useEffect(()=>{
+    const timer = setInterval(() => {
+      current++;
 
-if(isNaN(value)) return;
+      setCount(current);
 
-let current=0;
+      if (current >= target) {
+        clearInterval(timer);
+      }
+    }, 25);
 
-const timer=setInterval(()=>{
+    return () => clearInterval(timer);
+  }, [value, numeric]);
 
-current++;
+  return (
+    <div className="stat-card">
+      <div className="stat-icon">
+        {icon}
+      </div>
 
-setCount(current);
+      <div className="stat-content">
+        <h2>
+          {numeric ? count : value}
+        </h2>
 
-if(current>=Number(value))
+        <h4>
+          {title}
+        </h4>
 
-clearInterval(timer);
-
-},30);
-
-return()=>clearInterval(timer);
-
-},[value]);
-
-return(
-
-<div className="stat-card">
-
-<div className="stat-icon">
-
-{icon}
-
-</div>
-
-<div>
-
-<h2>
-
-{
-
-isNaN(value)
-
-?
-
-value
-
-:
-
-count
-
-}
-
-</h2>
-
-<h4>
-
-{title}
-
-</h4>
-
-<p>
-
-{subtitle}
-
-</p>
-
-</div>
-
-</div>
-
-);
-
+        <p>
+          {subtitle}
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default StatsCard;

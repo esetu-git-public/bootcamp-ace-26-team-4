@@ -977,3 +977,44 @@ background:linear-gradient(
 );
 
 }
+/* ==========================================
+   HERO TEXT FIX
+========================================== */
+
+/* ==========================================
+   HERO COLORS
+========================================== */
+
+.hero-card{
+    color:#ffffff;
+}
+
+.hero-card h1,
+.hero-card p,
+.hero-card .hero-badge,
+.hero-card .secondary-btn,
+.hero-card .hero-icon{
+    color:#ffffff;
+}
+
+.hero-card .primary-btn{
+    background:#ffffff;
+    color:#2563eb;
+}
+
+body.dark .hero-card{
+    color:#ffffff;
+}
+
+body.dark .hero-card h1,
+body.dark .hero-card p,
+body.dark .hero-card .hero-badge,
+body.dark .hero-card .secondary-btn,
+body.dark .hero-card .hero-icon{
+    color:#ffffff;
+}
+
+body.dark .hero-card .primary-btn{
+    background:#ffffff;
+    color:#2563eb;
+}
