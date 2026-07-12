@@ -15,31 +15,12 @@ body,
     min-height:100vh;
 }
 
-body{
-    font-family:Inter,sans-serif;
-    background:var(--background);
-    color:var(--text);
-    overflow-x:hidden;
-    transition:.35s;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-/* ==========================================
-   LIGHT THEME VARIABLES
-========================================== */
-
 :root{
 
     --background:#f5f7fb;
-
     --surface:#ffffff;
 
     --text:#111827;
-
     --text-light:#64748b;
 
     --border:#e2e8f0;
@@ -47,7 +28,28 @@ a{
 }
 
 /* ==========================================
-   DARK THEME VARIABLES
+   BODY
+========================================== */
+
+body{
+
+    font-family:Inter,sans-serif;
+    background:var(--background);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:.35s;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:inherit;
+
+}
+
+/* ==========================================
+   DARK VARIABLES
 ========================================== */
 
 body.dark{
@@ -65,7 +67,7 @@ body.dark{
 }
 
 /* ==========================================
-   GLOBAL PAGE COLORS
+   PAGE BACKGROUND
 ========================================== */
 
 .home-page,
@@ -75,7 +77,6 @@ body.dark{
 .chat-page{
 
     background:var(--background);
-
     color:var(--text);
 
 }
@@ -84,7 +85,6 @@ body.dark{
    GLOBAL CARDS
 ========================================== */
 
-.hero-card,
 .stat-card,
 .action-card,
 .recent-card,
@@ -93,12 +93,12 @@ body.dark{
 .analytics-card,
 .tech-card,
 .workflow,
-.search-box{
+.search-box,
+.history-box,
+.upload-box{
 
     background:var(--surface);
-
     color:var(--text);
-
     border:1px solid var(--border);
 
 }
@@ -135,7 +135,6 @@ input,
 textarea{
 
     background:transparent;
-
     color:var(--text);
 
 }
@@ -172,7 +171,6 @@ textarea::placeholder{
 .message.user .bubble{
 
     background:#2563eb;
-
     color:white;
 
 }
@@ -183,17 +181,9 @@ textarea::placeholder{
 
 }
 
-.upload-box,
-.history-box{
-
-    background:var(--surface);
-
-}
-
 .history-item{
 
     background:var(--surface);
-
     color:var(--text);
 
 }
@@ -207,9 +197,7 @@ textarea::placeholder{
 .suggestions button{
 
     background:var(--surface);
-
     color:var(--text);
-
     border:1px solid var(--border);
 
 }
@@ -224,24 +212,9 @@ textarea::placeholder{
 
 }
 
-.sidebar a{
-
-    color:white;
-
-}
-
-.sidebar-link{
-
-    color:white;
-
-}
-
-.sidebar-link span{
-
-    color:white;
-
-}
-
+.sidebar a,
+.sidebar-link,
+.sidebar-link span,
 .sidebar-link svg{
 
     color:white;
@@ -251,19 +224,22 @@ textarea::placeholder{
 .sidebar-link.active{
 
     background:white;
-
     color:#2563eb;
 
 }
 
-.sidebar-link.active span{
-
-    color:#2563eb;
-
-}
-
+.sidebar-link.active span,
 .sidebar-link.active svg{
 
     color:#2563eb;
 
 }
+
+/* ==========================================
+   HERO FIX
+========================================== */
+
+/* IMPORTANT:
+   Do NOT style .hero-card here.
+   Home.css controls the hero background.
+*/
