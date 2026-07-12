@@ -1,33 +1,86 @@
-import "./ActivityCard.css";
+import {
+  FaClock,
+  FaFileMedical,
+  FaRobot,
+} from "react-icons/fa";
 
 function ActivityCard() {
 
-  const activities = [
-    "📄 Uploaded medical paper",
-    "🤖 Asked AI to summarize paper",
-    "📚 Viewed references",
-    "🔍 Searched indexed papers",
-  ];
-
   return (
 
-    <div className="activity-card">
+    <div className="recent-card">
 
-      <h3>Recent Activity</h3>
+      <h2>
 
-      <ul>
+        Recent Activity
 
-        {activities.map((item, index) => (
+      </h2>
 
-          <li key={index}>
+      <div className="activity-item">
 
-            {item}
+        <FaFileMedical />
 
-          </li>
+        <div>
 
-        ))}
+          <h4>
 
-      </ul>
+            Research Paper Uploaded
+
+          </h4>
+
+          <p>
+
+            AI indexed the document successfully.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="activity-item">
+
+        <FaRobot />
+
+        <div>
+
+          <h4>
+
+            AI Ready
+
+          </h4>
+
+          <p>
+
+            Ask questions using Gemini AI.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="activity-item">
+
+        <FaClock />
+
+        <div>
+
+          <h4>
+
+            Session Started
+
+          </h4>
+
+          <p>
+
+            Ready to analyze medical literature.
+
+          </p>
+
+        </div>
+
+      </div>
 
     </div>
 

@@ -1,140 +1,54 @@
-import { useState } from "react";
-
-import {
-  FaSearch,
-  FaFileMedical,
-  FaFilter,
-  FaFilePdf,
-  FaDownload,
-} from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
 import "../styles/Search.css";
 
-function Search() {
+function Search(){
 
-  const [query, setQuery] = useState("");
+return(
 
-  const papers = [
-    {
-      id: 1,
-      title: "Deep Learning for Medical Diagnosis",
-      type: "PDF",
-      year: "2025",
-      author: "John Smith",
-    },
-    {
-      id: 2,
-      title: "Cancer Detection using AI",
-      type: "PDF",
-      year: "2024",
-      author: "Emily Brown",
-    },
-    {
-      id: 3,
-      title: "Clinical NLP Research",
-      type: "PDF",
-      year: "2023",
-      author: "David Lee",
-    },
-  ];
+<div className="search-page fade-up">
 
-  const filtered = papers.filter((paper) =>
-    paper.title.toLowerCase().includes(query.toLowerCase())
-  );
+<h1>
 
-  return (
-    <div className="search-page">
+Search Research Papers
 
-      <div className="search-header">
+</h1>
 
-        <div>
+<div className="search-box">
 
-          <h1>🔍 Search Medical Papers</h1>
+<FaSearch/>
 
-          <p>
-            Browse indexed research papers and documents.
-          </p>
+<input
 
-        </div>
+placeholder="Search medical research papers..."
 
-      </div>
+>
 
-      <div className="search-toolbar">
+</input>
 
-        <div className="search-box">
+</div>
 
-          <FaSearch />
+<div className="empty-search">
 
-          <input
-            type="text"
-            placeholder="Search papers..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+📄
 
-        </div>
+<h2>
 
-        <button className="filter-btn">
+No Results
 
-          <FaFilter />
+</h2>
 
-          Filters
+<p>
 
-        </button>
+Search papers by title, keywords or topics.
 
-      </div>
+</p>
 
-      <div className="paper-grid">
+</div>
 
-        {filtered.map((paper) => (
+</div>
 
-          <div
-            key={paper.id}
-            className="paper-card"
-          >
-
-            <FaFileMedical className="paper-icon" />
-
-            <h3>{paper.title}</h3>
-
-            <p>
-
-              <strong>Author:</strong> {paper.author}
-
-            </p>
-
-            <p>
-
-              <strong>Year:</strong> {paper.year}
-
-            </p>
-
-            <div className="paper-footer">
-
-              <span>
-
-                <FaFilePdf />
-
-                {paper.type}
-
-              </span>
-
-              <button>
-
-                <FaDownload />
-
-              </button>
-
-            </div>
-
-          </div>
-
-        ))}
-
-      </div>
-
-    </div>
-  );
+);
 
 }
 

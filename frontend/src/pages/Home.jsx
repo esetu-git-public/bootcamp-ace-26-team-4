@@ -1,103 +1,131 @@
 import {
-  FaRobot,
-  FaFileMedical,
-  FaComments,
-  FaDatabase,
+
+FaRobot,
+FaFileMedical,
+FaComments,
+FaClock,
+
 } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
-import StatsCard from "../components/StatsCard";
-import StatusCard from "../components/StatusCard";
-import ActivityCard from "../components/ActivityCard";
-
 import "../styles/Home.css";
+
+import StatsCard from "../components/StatsCard";
+import ActivityCard from "../components/ActivityCard";
+import StatusCard from "../components/StatusCard";
+
+import { dashboardStats } from "../utils/dashboardData";
 
 function Home() {
 
-  return (
+const icons=[
 
-    <div className="home-page">
+<FaFileMedical/>,
 
-      <div className="hero-card">
+<FaComments/>,
 
-        <div>
+<FaRobot/>,
 
-          <span className="hero-badge">
-            🚀 AI Powered
-          </span>
+<FaClock/>,
 
-          <h1>
+];
 
-            Medical Research Paper Assistant
+return(
 
-          </h1>
+<div className="home-page fade-up">
 
-          <p>
+<div className="hero-card">
 
-            Analyze medical research papers using
-            RAG + Gemini AI.
+<div>
 
-          </p>
+<span className="hero-badge">
 
-          <Link
-            className="primary-btn"
-            to="/chat"
-          >
+🚀 AI Powered
 
-            Open AI Assistant
+</span>
 
-          </Link>
+<h1>
 
-        </div>
+Medical Research AI Assistant
 
-        <FaRobot className="hero-icon"/>
+</h1>
 
-      </div>
+<p>
 
-      <div className="stats-grid">
+Upload research papers, search using RAG,
+and get intelligent answers powered by
+Gemini AI.
 
-        <StatsCard
-          icon={<FaFileMedical/>}
-          title="Documents"
-          value="1"
-          subtitle="Uploaded"
-        />
+</p>
 
-        <StatsCard
-          icon={<FaComments/>}
-          title="Questions"
-          value="12"
-          subtitle="This Session"
-        />
+<div className="hero-buttons">
 
-        <StatsCard
-          icon={<FaRobot/>}
-          title="AI Model"
-          value="Gemini"
-          subtitle="Connected"
-        />
+<Link
+to="/chat"
+className="primary-btn"
+>
 
-        <StatsCard
-          icon={<FaDatabase/>}
-          title="Vector DB"
-          value="Ready"
-          subtitle="Indexed"
-        />
+Start Chat
 
-      </div>
+</Link>
 
-      <div className="dashboard-grid">
+<Link
+to="/about"
+className="secondary-btn"
+>
 
-        <ActivityCard/>
+Learn More
 
-        <StatusCard/>
+</Link>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-  );
+<FaRobot className="hero-icon"/>
+
+</div>
+
+<div className="stats-grid">
+
+{
+
+dashboardStats.map((item,index)=>(
+
+<StatsCard
+
+key={index}
+
+icon={icons[index]}
+
+title={item.title}
+
+value={item.value}
+
+subtitle={item.subtitle}
+
+color={item.color}
+
+/>
+
+))
+
+}
+
+</div>
+
+<div className="dashboard-grid">
+
+<ActivityCard/>
+
+<StatusCard/>
+
+</div>
+
+</div>
+
+);
 
 }
 

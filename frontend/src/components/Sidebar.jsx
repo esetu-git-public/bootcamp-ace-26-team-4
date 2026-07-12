@@ -1,90 +1,176 @@
 import { NavLink } from "react-router-dom";
+
 import {
-  FaHome,
-  FaSearch,
-  FaComments,
-  FaInfoCircle,
-  FaSignOutAlt,
-  FaStethoscope,
+
+FaHome,
+FaComments,
+FaSearch,
+FaChartBar,
+FaInfoCircle,
+FaSignOutAlt,
+FaChevronRight,
+FaStethoscope,
+
 } from "react-icons/fa";
+
+import ThemeToggle from "./ThemeToggle";
 
 import "./Sidebar.css";
 
-function Sidebar() {
-  return (
-    <aside className="sidebar">
+function Sidebar(){
 
-      <div className="sidebar-logo">
-        <div className="logo-icon">
-          <FaStethoscope />
-        </div>
+const menu=[
 
-        <div>
-          <h2>MedAI</h2>
-          <p>Medical Research Assistant</p>
-        </div>
-      </div>
+{
+title:"Dashboard",
+icon:<FaHome/>,
+path:"/home",
+},
 
-      <nav className="sidebar-nav">
+{
+title:"AI Assistant",
+icon:<FaComments/>,
+path:"/chat",
+},
 
-        <NavLink
-          to="/home"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaHome />
-          <span>Dashboard</span>
-        </NavLink>
+{
+title:"Search",
+icon:<FaSearch/>,
+path:"/search",
+},
 
-        <NavLink
-          to="/chat"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaComments />
-          <span>AI Assistant</span>
-        </NavLink>
+{
+title:"Analytics",
+icon:<FaChartBar/>,
+path:"/analytics",
+},
 
-        <NavLink
-          to="/search"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaSearch />
-          <span>Search Papers</span>
-        </NavLink>
+{
+title:"About",
+icon:<FaInfoCircle/>,
+path:"/about",
+},
 
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          <FaInfoCircle />
-          <span>About</span>
-        </NavLink>
+];
 
-      </nav>
+return(
 
-      <div className="sidebar-spacer"></div>
+<aside className="sidebar">
 
-      <div className="sidebar-bottom">
+<div>
 
-        <NavLink
-          to="/"
-          className="logout-btn"
-        >
-          <FaSignOutAlt />
-          <span>Logout</span>
-        </NavLink>
+<div className="sidebar-logo">
 
-      </div>
+<div className="logo-icon">
 
-    </aside>
-  );
+<FaStethoscope/>
+
+</div>
+
+<div>
+
+<h2>
+
+MedAI
+
+</h2>
+
+<p>
+
+Medical Research Assistant
+
+</p>
+
+</div>
+
+</div>
+
+<nav className="sidebar-nav">
+
+{
+
+menu.map((item)=>(
+
+<NavLink
+
+key={item.title}
+
+to={item.path}
+
+className={({isActive})=>
+
+isActive
+
+?
+
+"sidebar-link active"
+
+:
+
+"sidebar-link"
+
+}
+
+>
+
+<div className="link-left">
+
+{item.icon}
+
+<span>
+
+{item.title}
+
+</span>
+
+</div>
+
+<FaChevronRight className="arrow-icon"/>
+
+</NavLink>
+
+))
+
+}
+
+</nav>
+
+</div>
+
+<div className="sidebar-footer">
+
+<ThemeToggle/>
+
+<div className="version">
+
+Version 1.0
+
+</div>
+
+<NavLink
+
+to="/"
+
+className="logout-btn"
+
+>
+
+<FaSignOutAlt/>
+
+<span>
+
+Logout
+
+</span>
+
+</NavLink>
+
+</div>
+
+</aside>
+
+);
+
 }
 
 export default Sidebar;

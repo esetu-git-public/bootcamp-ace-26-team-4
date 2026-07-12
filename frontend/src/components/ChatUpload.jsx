@@ -1,4 +1,7 @@
-import { FaPaperclip } from "react-icons/fa";
+import {
+  FaCloudUploadAlt,
+  FaFilePdf,
+} from "react-icons/fa";
 
 function ChatUpload({
   dragActive,
@@ -8,43 +11,93 @@ function ChatUpload({
   fileInputRef,
   uploadFile,
 }) {
+
   return (
+
     <div
+
       className={
         dragActive
           ? "upload-box active"
           : "upload-box"
       }
+
       onDrop={handleDrop}
+
       onDragOver={handleDrag}
+
       onDragEnter={handleDrag}
+
       onDragLeave={handleLeave}
+
     >
-      <FaPaperclip className="upload-icon" />
 
-      <h3>Drag & Drop Research Paper</h3>
+      <div className="upload-circle">
 
-      <p>PDF, DOCX, TXT, CSV, XML</p>
+        <FaCloudUploadAlt />
+
+      </div>
+
+      <h2>
+
+        Upload Medical Research Paper
+
+      </h2>
+
+      <p>
+
+        Drag & Drop your PDF here
+
+      </p>
+
+      <span>
+
+        or
+
+      </span>
 
       <button
+
         onClick={() =>
           fileInputRef.current.click()
         }
+
       >
-        Browse File
+
+        Browse Files
+
       </button>
 
+      <div className="supported-files">
+
+        <FaFilePdf />
+
+        PDF • DOCX • TXT • CSV • XML
+
+      </div>
+
       <input
+
         hidden
+
         ref={fileInputRef}
+
         type="file"
+
         accept=".pdf,.docx,.txt,.csv,.xml,.md"
-        onChange={(e) =>
+
+        onChange={(e)=>
+
           uploadFile(e.target.files[0])
+
         }
+
       />
+
     </div>
+
   );
+
 }
 
 export default ChatUpload;

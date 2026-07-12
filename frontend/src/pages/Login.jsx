@@ -1,107 +1,86 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/Login.css";
+import { Link,useNavigate } from "react-router-dom";
+import "../styles/Auth.css";
 
-function Login() {
-  const navigate = useNavigate();
+function Login(){
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const navigate=useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const[email,setEmail]=useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+const[password,setPassword]=useState("");
 
-    setError("");
+const login=(e)=>{
 
-    if (!email.trim()) {
-      setError("Email is required.");
-      return;
-    }
+e.preventDefault();
 
-    if (!password.trim()) {
-      setError("Password is required.");
-      return;
-    }
+navigate("/home");
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
+};
 
-    setLoading(true);
+return(
 
-    // Temporary frontend login until backend is ready
-    setTimeout(() => {
-      setLoading(false);
-      navigate("/home");
-    }, 1500);
-  };
+<div className="auth-page">
 
-  return (
-    <div className="login-container">
+<form
+className="auth-card"
+onSubmit={login}
+>
 
-      <div className="login-card">
+<h1>
 
-        <h1>Medical Research Assistant</h1>
+MedAI
 
-        <p>Login to continue</p>
+</h1>
 
-        <form onSubmit={handleLogin}>
+<p>
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+Medical Research Assistant
 
-          <div className="password-box">
+</p>
 
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+<input
 
-            <button
-              type="button"
-              className="toggle-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+type="email"
 
-          </div>
+placeholder="Email"
 
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
+value={email}
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+onChange={(e)=>setEmail(e.target.value)}
 
-        </form>
+/>
 
-        <div className="login-link">
-          Don't have an account?{" "}
-          <Link to="/register">Register</Link>
-        </div>
+<input
 
-      </div>
+type="password"
 
-    </div>
-  );
+placeholder="Password"
+
+value={password}
+
+onChange={(e)=>setPassword(e.target.value)}
+
+/>
+
+<button>
+
+Login
+
+</button>
+
+<Link to="/register">
+
+Create Account
+
+</Link>
+
+</form>
+
+</div>
+
+);
+
 }
 
 export default Login;

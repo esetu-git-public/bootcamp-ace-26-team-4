@@ -317,72 +317,82 @@ function Chat() {
 
   };
 
-  return (
+return (
 
-    <div className="chat-page">
+<div className="chat-page">
 
-      <ChatHeader
+    <ChatHeader
         currentDocument={currentDocument}
         clearChat={clearChat}
         exportChat={exportChat}
-      />
+    />
 
-      {!currentDocument && (
+    <div className="chat-layout">
 
-        <ChatUpload
-          dragActive={dragActive}
-          handleDrop={handleDrop}
-          handleDrag={handleDrag}
-          handleLeave={handleLeave}
-          fileInputRef={fileInputRef}
-          uploadFile={uploadFile}
-        />
+        <aside className="history-panel">
 
-      )}
+            <ChatHistory
+                history={chatHistory}
+                onSelect={openHistory}
+            />
 
-      <div className="suggestions">
+        </aside>
 
-        {suggestedQuestions.map((item,index)=>(
+        <section className="chat-panel">
 
-          <button
-            key={index}
-            onClick={()=>
-              handleSuggestion(item)
-            }
-          >
-            {item}
-          </button>
+            {!currentDocument && (
 
-        ))}
+                <ChatUpload
+                    dragActive={dragActive}
+                    handleDrop={handleDrop}
+                    handleDrag={handleDrag}
+                    handleLeave={handleLeave}
+                    fileInputRef={fileInputRef}
+                    uploadFile={uploadFile}
+                />
 
-      </div>
+            )}
 
-      <ChatHistory
-        history={chatHistory}
-        onSelect={openHistory}
-      />
+            <div className="suggestions">
 
-      <ChatMessages
-        chatMessages={chatMessages}
-        loading={loading}
-        copyMessage={copyMessage}
-        regenerateAnswer={regenerateAnswer}
-        chatEndRef={chatEndRef}
-      />
+                {suggestedQuestions.map((item,index)=>(
 
-      <ChatInput
-        message={message}
-        setMessage={setMessage}
-        handleSend={handleSend}
-        loading={loading}
-        uploading={uploading}
-        textareaRef={textareaRef}
-        fileInputRef={fileInputRef}
-      />
+                    <button
+                        key={index}
+                        onClick={() => handleSuggestion(item)}
+                    >
+                        {item}
+                    </button>
+
+                ))}
+
+            </div>
+
+            <ChatMessages
+                chatMessages={chatMessages}
+                loading={loading}
+                copyMessage={copyMessage}
+                regenerateAnswer={regenerateAnswer}
+                chatEndRef={chatEndRef}
+            />
+
+            <ChatInput
+                message={message}
+                setMessage={setMessage}
+                handleSend={handleSend}
+                loading={loading}
+                uploading={uploading}
+                textareaRef={textareaRef}
+                fileInputRef={fileInputRef}
+            />
+
+        </section>
 
     </div>
 
-  );
+</div>
+
+);
 
 }
 

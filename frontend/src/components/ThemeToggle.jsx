@@ -1,33 +1,48 @@
 import {
-  FaMoon,
-  FaSun,
+
+FaMoon,
+FaSun,
+
 } from "react-icons/fa";
 
 import { useTheme } from "../context/ThemeContext";
 
-function ThemeToggle() {
+function ThemeToggle(){
 
-  const {
-    theme,
-    toggleTheme,
-  } = useTheme();
+const{
 
-  return (
+darkMode,
+setDarkMode,
 
-    <button
-      className="theme-btn"
-      onClick={toggleTheme}
-    >
+}=useTheme();
 
-      {
-        theme === "light"
-          ? <FaMoon />
-          : <FaSun />
-      }
+return(
 
-    </button>
+<button
 
-  );
+className="theme-btn"
+
+onClick={()=>setDarkMode(!darkMode)}
+
+>
+
+{
+
+darkMode
+
+?
+
+<FaSun/>
+
+:
+
+<FaMoon/>
+
+}
+
+</button>
+
+);
 
 }
 

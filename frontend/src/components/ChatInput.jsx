@@ -28,39 +28,28 @@ function ChatInput({
 
     if (!SpeechRecognition) return;
 
-    const recognition =
-      new SpeechRecognition();
+    const recognition = new SpeechRecognition();
 
     recognition.continuous = false;
-
     recognition.lang = "en-US";
-
     recognition.interimResults = false;
 
     recognition.onresult = (event) => {
 
-      const text =
-        event.results[0][0].transcript;
-
-      setMessage(text);
-
-    };
-
-    recognition.onerror = () => {
-
-      alert("Voice recognition failed.");
+      setMessage(
+        event.results[0][0].transcript
+      );
 
     };
 
-    recognitionRef.current =
-      recognition;
+    recognitionRef.current = recognition;
 
   }, [setMessage]);
 
   const startListening = () => {
 
     if (recognitionRef.current) {
-      alert("🎤 Listening... Speak now.");
+
       recognitionRef.current.start();
 
     }
@@ -68,7 +57,7 @@ function ChatInput({
     else {
 
       alert(
-        "Speech Recognition not supported in this browser."
+        "Speech Recognition is not supported."
       );
 
     }
@@ -77,7 +66,10 @@ function ChatInput({
 
   const handleKeyDown = (e) => {
 
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (
+      e.key === "Enter" &&
+      !e.shiftKey
+    ) {
 
       e.preventDefault();
 
@@ -89,11 +81,11 @@ function ChatInput({
 
   return (
 
-    <div className="bottom-bar">
+    <div className="chat-input-container">
 
       <button
 
-        className="clip-btn"
+        className="input-icon"
 
         onClick={() =>
           fileInputRef.current.click()
@@ -105,18 +97,6 @@ function ChatInput({
 
       </button>
 
-      <button
-
-        className="voice-btn"
-
-        onClick={startListening}
-
-      >
-
-        <FaMicrophone />
-
-      </button>
-
       <textarea
 
         ref={textareaRef}
@@ -125,9 +105,9 @@ function ChatInput({
 
         value={message}
 
-        placeholder="Ask anything..."
+        placeholder="Message Medical Research AI..."
 
-        onChange={(e) =>
+        onChange={(e)=>
           setMessage(e.target.value)
         }
 
@@ -137,7 +117,19 @@ function ChatInput({
 
       <button
 
-        className="send-btn"
+        className="input-icon voice"
+
+        onClick={startListening}
+
+      >
+
+        <FaMicrophone />
+
+      </button>
+
+      <button
+
+        className="send-button"
 
         disabled={loading || uploading}
 

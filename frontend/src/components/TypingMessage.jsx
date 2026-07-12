@@ -3,38 +3,46 @@ import ReactMarkdown from "react-markdown";
 
 function TypingMessage({ text }) {
 
-  const [displayText, setDisplayText] =
-    useState("");
+  const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
 
-    let index = 0;
+    if (!text) return;
 
-    setDisplayText("");
+    let index = 0;
 
     const timer = setInterval(() => {
 
       index++;
 
-      setDisplayText(
-        text.substring(0, index)
-      );
+      setDisplayText(text.slice(0, index));
 
       if (index >= text.length) {
+
         clearInterval(timer);
+
       }
 
-    }, 15);
+    }, 10);
 
     return () => clearInterval(timer);
 
   }, [text]);
 
   return (
-    <ReactMarkdown>
-      {displayText}
-    </ReactMarkdown>
+
+    <div className="markdown-body">
+
+      <ReactMarkdown>
+
+        {displayText}
+
+      </ReactMarkdown>
+
+    </div>
+
   );
+
 }
 
 export default TypingMessage;

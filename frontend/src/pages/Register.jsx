@@ -1,131 +1,92 @@
+import { Link,useNavigate } from "react-router-dom";
+
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/Register.css";
 
-function Register() {
-  const navigate = useNavigate();
+import "../styles/Auth.css";
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Register(){
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+const navigate=useNavigate();
 
-  const handleRegister = (e) => {
-    e.preventDefault();
+const[name,setName]=useState("");
 
-    setError("");
+const[email,setEmail]=useState("");
 
-    // Validation
-    if (!name.trim()) {
-      setError("Full Name is required.");
-      return;
-    }
+const[password,setPassword]=useState("");
 
-    if (!email.trim()) {
-      setError("Email is required.");
-      return;
-    }
+const register=(e)=>{
 
-    if (!password.trim()) {
-      setError("Password is required.");
-      return;
-    }
+e.preventDefault();
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
+navigate("/");
 
-    // Simulate API Call
-    setLoading(true);
+};
 
-    setTimeout(() => {
-      setLoading(false);
+return(
 
-      alert("Registration Successful!");
+<div className="auth-page">
 
-      // Redirect to Login Page
-      navigate("/");
-    }, 1500);
-  };
+<form
+className="auth-card"
+onSubmit={register}
+>
 
-  return (
-    <div className="register-container">
+<h1>
 
-      <div className="register-card">
+Create Account
 
-        <h1>Create Account</h1>
+</h1>
 
-        <p>Join the Medical Research Assistant</p>
+<input
 
-        <form onSubmit={handleRegister}>
+placeholder="Full Name"
 
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+value={name}
 
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+onChange={(e)=>setName(e.target.value)}
 
-          <div className="password-box">
+/>
 
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+<input
 
-            <button
-              type="button"
-              className="toggle-btn"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
+placeholder="Email"
 
-          </div>
+value={email}
 
-          <div className="password-hint">
-            <p>✔ Minimum 6 characters</p>
-            <p>✔ One uppercase letter (Recommended)</p>
-            <p>✔ One number (Recommended)</p>
-          </div>
+onChange={(e)=>setEmail(e.target.value)}
 
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
+/>
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Creating Account..." : "Register"}
-          </button>
+<input
 
-        </form>
+type="password"
 
-        <div className="register-link">
-          Already have an account?{" "}
-          <Link to="/">Login</Link>
-        </div>
+placeholder="Password"
 
-      </div>
+value={password}
 
-    </div>
-  );
+onChange={(e)=>setPassword(e.target.value)}
+
+/>
+
+<button>
+
+Register
+
+</button>
+
+<Link to="/">
+
+Already have an account?
+
+</Link>
+
+</form>
+
+</div>
+
+);
+
 }
 
 export default Register;

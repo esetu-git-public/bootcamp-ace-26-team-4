@@ -1,72 +1,104 @@
+import { useState } from "react";
+import {
+  FaHistory,
+  FaSearch,
+  FaComments,
+} from "react-icons/fa";
+
 import "./ChatHistory.css";
-import { FaHistory } from "react-icons/fa";
 
 function ChatHistory({
   history,
   onSelect,
 }) {
 
-  if (!history.length) {
+  const [search,setSearch]=useState("");
 
-    return (
-      <div className="history-box">
+  const filteredHistory = history.filter((chat)=>
 
-        <h3>
+    chat.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
 
-          <FaHistory />
+  );
 
-          Chat History
+  return(
 
-        </h3>
+    <div className="history-container">
 
-        <p className="history-empty">
+      <div className="history-header">
 
-          No previous conversations.
+        <FaHistory/>
 
-        </p>
+        <h3>Recent Chats</h3>
 
       </div>
-    );
 
-  }
+      <div className="history-search-box">
 
-  return (
+        <FaSearch/>
 
-    <div className="history-box">
+        <input
 
-      <h3>
+          type="text"
 
-        <FaHistory />
+          placeholder="Search chats..."
 
-        Chat History
+          value={search}
 
-      </h3>
+          onChange={(e)=>
+            setSearch(e.target.value)
+          }
+
+        />
+
+      </div>
 
       <div className="history-list">
 
-        {history.map((chat, index) => (
+        {filteredHistory.length===0 ? (
 
-          <div
-            key={index}
-            className="history-item"
-            onClick={() => onSelect(chat)}
-          >
+          <div className="empty-history">
 
-            <h4>
+            <FaComments/>
 
-              {chat.title}
-
-            </h4>
-
-            <span>
-
-              {chat.time}
-
-            </span>
+            <p>No conversations yet.</p>
 
           </div>
 
-        ))}
+        ) : (
+
+          filteredHistory.map((chat,index)=>(
+
+            <div
+
+              key={index}
+
+              className="history-card"
+
+              onClick={()=>
+                onSelect(chat)
+              }
+
+            >
+
+              <h4>
+
+                {chat.title}
+
+              </h4>
+
+              <span>
+
+                {chat.time}
+
+              </span>
+
+            </div>
+
+          ))
+
+        )}
 
       </div>
 

@@ -1,30 +1,68 @@
 import { useLocation } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar";
+import FloatingButton from "./components/FloatingButton";
+
 import AppRoutes from "./routes/AppRoutes";
+
 import "./App.css";
 
-function App() {
-  const location = useLocation();
+function App(){
 
-  const hideSidebar =
-    location.pathname === "/" ||
-    location.pathname === "/register";
+const location=useLocation();
 
-  return (
-    <div className="app">
-      {!hideSidebar && <Sidebar />}
+const hideSidebar=
 
-      <main
-        className={
-          hideSidebar
-            ? "main-content full-width"
-            : "main-content"
-        }
-      >
-        <AppRoutes />
-      </main>
-    </div>
-  );
+location.pathname==="/" ||
+
+location.pathname==="/register";
+
+return(
+
+<div className="app fade-up">
+
+{
+
+!hideSidebar &&
+
+<Sidebar/>
+
+}
+
+<main
+
+className={
+
+hideSidebar
+
+?
+
+"main-content full-width"
+
+:
+
+"main-content"
+
+}
+
+>
+
+<AppRoutes/>
+
+</main>
+
+{
+
+!hideSidebar &&
+
+<FloatingButton/>
+
+}
+
+</div>
+
+);
+
 }
 
 export default App;

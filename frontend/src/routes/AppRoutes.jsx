@@ -1,18 +1,26 @@
 import { Routes, Route } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Search from "../pages/Search";
-import Chat from "../pages/Chat";
-import About from "../pages/About";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+
+import Home from "../pages/Home";
+import Chat from "../pages/Chat";
+import Search from "../pages/Search";
+import About from "../pages/About";
+import Analytics from "../pages/Analytics";
+
 import NotFound from "../pages/NotFound";
 
 function AppRoutes() {
+
   return (
+
     <Routes>
 
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
       <Route
         path="/register"
@@ -35,6 +43,11 @@ function AppRoutes() {
       />
 
       <Route
+        path="/analytics"
+        element={<Analytics />}
+      />
+
+      <Route
         path="/about"
         element={<About />}
       />
@@ -45,7 +58,9 @@ function AppRoutes() {
       />
 
     </Routes>
+
   );
+
 }
 
 export default AppRoutes;

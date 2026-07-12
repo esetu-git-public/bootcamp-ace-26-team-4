@@ -1,50 +1,104 @@
 import {
   FaFileMedical,
   FaTrash,
+  FaDownload,
+  FaCircle,
 } from "react-icons/fa";
 
 function ChatHeader({
   currentDocument,
   clearChat,
+  exportChat,
 }) {
-  return (
-    <div className="chat-top">
-      <div>
-        <h1>🩺 Medical Research AI Assistant</h1>
 
-        <p>
-          Upload a research paper and ask
-          questions using AI.
-        </p>
+  return (
+
+    <header className="chat-header">
+
+      <div className="header-left">
+
+        <div className="assistant-logo">
+
+          🩺
+
+        </div>
+
+        <div>
+
+          <h1>
+
+            Medical Research AI Assistant
+
+          </h1>
+
+          <div className="assistant-status">
+
+            <FaCircle />
+
+            <span>
+
+              AI Online
+
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "12px",
-        }}
-      >
+      <div className="header-right">
+
         {currentDocument && (
-          <div className="current-document">
+
+          <div className="document-chip">
+
             <FaFileMedical />
 
-            <div>
-              <h4>Current Document</h4>
+            <span>
 
-              <p>{currentDocument}</p>
-            </div>
+              {currentDocument}
+
+            </span>
+
           </div>
+
         )}
 
         <button
-          className="clear-btn"
-          onClick={clearChat}
+
+          className="header-icon export"
+
+          onClick={exportChat}
+
+          title="Export Chat"
+
         >
-          <FaTrash />
+
+          <FaDownload />
+
         </button>
+
+        <button
+
+          className="header-icon delete"
+
+          onClick={clearChat}
+
+          title="Clear Chat"
+
+        >
+
+          <FaTrash />
+
+        </button>
+
       </div>
-    </div>
+
+    </header>
+
   );
+
 }
 
 export default ChatHeader;

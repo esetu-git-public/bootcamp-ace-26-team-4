@@ -1,104 +1,253 @@
 import {
   FaRobot,
-  FaDatabase,
   FaBrain,
+  FaDatabase,
   FaSearch,
-  FaGithub,
   FaServer,
+  FaGithub,
+  FaArrowRight,
 } from "react-icons/fa";
 
 import "../styles/About.css";
 
 function About() {
+
+  const technologies = [
+
+    {
+      icon: <FaRobot />,
+      title: "Gemini AI",
+      description:
+        "Uses Google's Gemini Large Language Model to generate accurate medical answers.",
+    },
+
+    {
+      icon: <FaSearch />,
+      title: "Hybrid Search",
+      description:
+        "Combines Vector Search and BM25 Retrieval for better document matching.",
+    },
+
+    {
+      icon: <FaDatabase />,
+      title: "Vector Database",
+      description:
+        "Stores document embeddings for semantic retrieval.",
+    },
+
+    {
+      icon: <FaServer />,
+      title: "FastAPI Backend",
+      description:
+        "Handles document upload, indexing and AI requests.",
+    },
+
+    {
+      icon: <FaBrain />,
+      title: "RAG Pipeline",
+      description:
+        "Retrieves relevant medical context before generating answers.",
+    },
+
+    {
+      icon: <FaGithub />,
+      title: "Git Collaboration",
+      description:
+        "Version control and collaborative development using GitHub.",
+    },
+
+  ];
+
   return (
-    <div className="about-page">
 
-      <div className="about-hero">
+    <div className="about-page fade-up">
 
-        <h1>🩺 Medical Research Paper Assistant</h1>
+      <section className="about-hero">
+
+        <span className="about-badge">
+
+          AI Powered Medical Platform
+
+        </span>
+
+        <h1>
+
+          Medical Research Paper Assistant
+
+        </h1>
 
         <p>
-          An AI-powered Medical Research Assistant that uses
-          Retrieval-Augmented Generation (RAG) with Gemini AI
-          to answer questions from medical research papers.
+
+          This application combines Retrieval-Augmented Generation (RAG),
+          Gemini AI, FastAPI and Vector Search to help doctors,
+          researchers and students obtain reliable answers from
+          medical research papers within seconds.
+
         </p>
 
-      </div>
+      </section>
 
-      <div className="tech-grid">
+      <section>
 
-        <div className="tech-card">
-          <FaRobot />
-          <h3>Gemini AI</h3>
-          <p>Generates intelligent responses.</p>
-        </div>
+        <h2 className="section-title">
 
-        <div className="tech-card">
-          <FaSearch />
-          <h3>Hybrid Search</h3>
-          <p>Vector Search + BM25 Retrieval.</p>
-        </div>
+          Technology Stack
 
-        <div className="tech-card">
-          <FaDatabase />
-          <h3>Vector Database</h3>
-          <p>Stores indexed document embeddings.</p>
-        </div>
+        </h2>
 
-        <div className="tech-card">
-          <FaServer />
-          <h3>FastAPI</h3>
-          <p>Backend API for AI services.</p>
-        </div>
+        <div className="tech-grid">
 
-        <div className="tech-card">
-          <FaBrain />
-          <h3>RAG Pipeline</h3>
-          <p>Context-aware medical question answering.</p>
-        </div>
+          {
 
-        <div className="tech-card">
-          <FaGithub />
-          <h3>GitHub</h3>
-          <p>Version control and collaboration.</p>
-        </div>
+            technologies.map((tech,index)=>(
 
-      </div>
+              <div
+                className="tech-card"
+                key={index}
+              >
 
-      <div className="workflow">
+                <div className="tech-icon">
 
-        <h2>System Workflow</h2>
+                  {tech.icon}
 
-        <div className="workflow-box">
+                </div>
 
-          Upload Paper
+                <h3>
 
-          <span>➜</span>
+                  {tech.title}
 
-          Preprocessing
+                </h3>
 
-          <span>➜</span>
+                <p>
 
-          Embeddings
+                  {tech.description}
 
-          <span>➜</span>
+                </p>
 
-          Vector Database
+              </div>
 
-          <span>➜</span>
+            ))
 
-          Gemini AI
-
-          <span>➜</span>
-
-          Response
+          }
 
         </div>
 
-      </div>
+      </section>
+
+      <section className="workflow-section">
+
+        <h2 className="section-title">
+
+          AI Workflow
+
+        </h2>
+
+        <div className="workflow">
+
+          <div className="workflow-step">
+
+            Upload Paper
+
+          </div>
+
+          <FaArrowRight />
+
+          <div className="workflow-step">
+
+            Text Extraction
+
+          </div>
+
+          <FaArrowRight />
+
+          <div className="workflow-step">
+
+            Embeddings
+
+          </div>
+
+          <FaArrowRight />
+
+          <div className="workflow-step">
+
+            Vector Search
+
+          </div>
+
+          <FaArrowRight />
+
+          <div className="workflow-step">
+
+            Gemini AI
+
+          </div>
+
+          <FaArrowRight />
+
+          <div className="workflow-step">
+
+            AI Response
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section className="features">
+
+        <h2 className="section-title">
+
+          Features
+
+        </h2>
+
+        <div className="feature-grid">
+
+          <div className="feature-card">
+
+            📄 Upload Medical Research Papers
+
+          </div>
+
+          <div className="feature-card">
+
+            🤖 AI Powered Question Answering
+
+          </div>
+
+          <div className="feature-card">
+
+            🔍 Semantic Search
+
+          </div>
+
+          <div className="feature-card">
+
+            📚 Citation & References
+
+          </div>
+
+          <div className="feature-card">
+
+            ⚡ FastAPI Backend
+
+          </div>
+
+          <div className="feature-card">
+
+            🧠 Retrieval Augmented Generation
+
+          </div>
+
+        </div>
+
+      </section>
 
     </div>
+
   );
+
 }
 
 export default About;

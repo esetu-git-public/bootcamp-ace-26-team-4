@@ -1,161 +1,176 @@
 import TypingMessage from "./TypingMessage";
-import ReactMarkdown from "react-markdown";
+
 import {
-  FaRobot,
-  FaCopy,
-  FaRedo,
+
+FaRobot,
+FaUser,
+FaCopy,
+FaRedo,
+
 } from "react-icons/fa";
 
 function ChatMessages({
-  chatMessages,
-  loading,
-  copyMessage,
-  regenerateAnswer,
-  chatEndRef,
+
+chatMessages,
+loading,
+copyMessage,
+regenerateAnswer,
+chatEndRef,
+
 }) {
 
-  return (
+return (
 
-    <div className="messages">
+<div className="messages">
 
-      {chatMessages.map((msg, index) => (
+{chatMessages.map((msg,index)=>(
 
-        <div
-          key={index}
-          className={
-            msg.role === "user"
-              ? "message user"
-              : "message bot"
-          }
-        >
+<div
+key={index}
+className={`message ${msg.role}`}
+>
 
-          {msg.role === "bot" && (
-            <FaRobot className="bot-icon" />
-          )}
+<div className="avatar">
 
-          <div className="bubble">
+{msg.role==="bot"
 
-            {msg.role === "bot" ? (
-              <TypingMessage
-                text={msg.text}
-              />
-            ) : (
-              <ReactMarkdown>
-                {msg.text}
-              </ReactMarkdown>
-            )}
+?<FaRobot/>
 
-            {msg.references && (
-              <details>
-                <summary>
-                  📚 References
-                </summary>
+:<FaUser/>
 
-                <pre>
-                  {msg.references}
-                </pre>
-              </details>
-            )}
+}
 
-            {msg.metadata && (
-              <small>
-                Confidence :
-                {" "}
-                {
-                  msg.metadata
-                    .retrieval_confidence_level
-                }
-              </small>
-            )}
+</div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent:
-                  "space-between",
-                alignItems:
-                  "center",
-                marginTop: "12px",
-              }}
-            >
+<div className="bubble">
 
-              <span
-                style={{
-                  fontSize: "12px",
-                  color: "#64748b",
-                }}
-              >
-                {msg.time}
-              </span>
+<TypingMessage
 
-              {msg.role === "bot" && (
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "10px",
-                  }}
-                >
+text={msg.text}
 
-                  <button
-                    className="icon-btn"
-                    onClick={() =>
-                      copyMessage(msg.text)
-                    }
-                  >
-                    <FaCopy />
-                  </button>
+/>
 
-                  {msg.question && (
-                    <button
-                      className="icon-btn"
-                      onClick={() =>
-                        regenerateAnswer(
-                          msg.question
-                        )
-                      }
-                    >
-                      <FaRedo />
-                    </button>
-                  )}
+{msg.references && (
 
-                </div>
-              )}
+<details className="reference-box">
 
-            </div>
+<summary>
 
-          </div>
+📚 References
 
-        </div>
+</summary>
 
-      ))}
+<pre>
 
-      {loading && (
+{msg.references}
 
-        <div className="message bot">
+</pre>
 
-          <FaRobot className="bot-icon" />
+</details>
 
-          <div className="bubble">
+)}
 
-            <div className="typing">
+{msg.metadata && (
 
-              <span></span>
-              <span></span>
-              <span></span>
+<div className="confidence">
 
-            </div>
+Confidence :
+<b>
 
-          </div>
+{" "}
+{msg.metadata.retrieval_confidence_level}
 
-        </div>
+</b>
 
-      )}
+</div>
 
-      <div ref={chatEndRef}></div>
+)}
 
-    </div>
+<div className="bubble-footer">
 
-  );
+<span>
+
+{msg.time}
+
+</span>
+
+{msg.role==="bot" && (
+
+<div className="bubble-actions">
+
+<button
+
+className="icon-btn"
+
+onClick={()=>copyMessage(msg.text)}
+
+>
+
+<FaCopy/>
+
+</button>
+
+{msg.question && (
+
+<button
+
+className="icon-btn"
+
+onClick={()=>regenerateAnswer(msg.question)}
+
+>
+
+<FaRedo/>
+
+</button>
+
+)}
+
+</div>
+
+)}
+
+</div>
+
+</div>
+
+</div>
+
+))}
+
+{loading && (
+
+<div className="message bot">
+
+<div className="avatar">
+
+<FaRobot/>
+
+</div>
+
+<div className="bubble typing-bubble">
+
+<div className="typing">
+
+<span></span>
+
+<span></span>
+
+<span></span>
+
+</div>
+
+</div>
+
+</div>
+
+)}
+
+<div ref={chatEndRef}></div>
+
+</div>
+
+);
 
 }
 
