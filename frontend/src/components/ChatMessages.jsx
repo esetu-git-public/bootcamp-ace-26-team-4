@@ -13,7 +13,9 @@ function ChatMessages({
   regenerateAnswer,
   chatEndRef,
 }) {
+
   return (
+
     <div className="messages">
 
       {chatMessages.map((msg, index) => (
@@ -33,15 +35,18 @@ function ChatMessages({
 
           <div className="bubble">
 
-            <ReactMarkdown>
+            {msg.role === "bot" ? (
               <TypingMessage
                 text={msg.text}
               />
-            </ReactMarkdown>
+            ) : (
+              <ReactMarkdown>
+                {msg.text}
+              </ReactMarkdown>
+            )}
 
             {msg.references && (
               <details>
-
                 <summary>
                   📚 References
                 </summary>
@@ -49,7 +54,6 @@ function ChatMessages({
                 <pre>
                   {msg.references}
                 </pre>
-
               </details>
             )}
 
@@ -67,8 +71,10 @@ function ChatMessages({
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                justifyContent:
+                  "space-between",
+                alignItems:
+                  "center",
                 marginTop: "12px",
               }}
             >
@@ -148,7 +154,9 @@ function ChatMessages({
       <div ref={chatEndRef}></div>
 
     </div>
+
   );
+
 }
 
 export default ChatMessages;

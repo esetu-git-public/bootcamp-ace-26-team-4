@@ -1,73 +1,50 @@
-import { useState } from "react";
-import "./ChatHistory.css";
+import {
+  FaFileMedical,
+  FaTrash,
+} from "react-icons/fa";
 
-function ChatHistory({
-  history,
-  onSelect,
+function ChatHeader({
+  currentDocument,
+  clearChat,
 }) {
-
-  const [search, setSearch] = useState("");
-
-  const filteredHistory = history.filter((chat) =>
-    chat.title
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
-
   return (
-    <div className="history-container">
+    <div className="chat-top">
+      <div>
+        <h1>🩺 Medical Research AI Assistant</h1>
 
-      <h3>💬 Chat History</h3>
+        <p>
+          Upload a research paper and ask
+          questions using AI.
+        </p>
+      </div>
 
-      <input
-        type="text"
-        className="history-search"
-        placeholder="Search chats..."
-        value={search}
-        onChange={(e) =>
-          setSearch(e.target.value)
-        }
-      />
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+        }}
+      >
+        {currentDocument && (
+          <div className="current-document">
+            <FaFileMedical />
 
-      {filteredHistory.length === 0 ? (
+            <div>
+              <h4>Current Document</h4>
 
-        <div className="empty-history">
-
-          No chats found
-
-        </div>
-
-      ) : (
-
-        filteredHistory.map((chat, index) => (
-
-          <div
-            key={index}
-            className="history-card"
-            onClick={() => onSelect(chat)}
-          >
-
-            <div className="history-title">
-
-              {chat.title}
-
+              <p>{currentDocument}</p>
             </div>
-
-            <div className="history-time">
-
-              {chat.time}
-
-            </div>
-
           </div>
+        )}
 
-        ))
-
-      )}
-
+        <button
+          className="clear-btn"
+          onClick={clearChat}
+        >
+          <FaTrash />
+        </button>
+      </div>
     </div>
   );
-
 }
 
-export default ChatHistory;
+export default ChatHeader;
