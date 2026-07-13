@@ -8,9 +8,6 @@ from app import app
 client = TestClient(app)
 
 
-# --------------------------------------------------
-# Health Endpoint
-# --------------------------------------------------
 
 def test_health_endpoint():
 
@@ -23,9 +20,6 @@ def test_health_endpoint():
     }
 
 
-# --------------------------------------------------
-# Greeting
-# --------------------------------------------------
 
 def test_greeting_returns_static_response():
 
@@ -46,9 +40,6 @@ def test_greeting_returns_static_response():
     assert body["metadata"]["retrieved_chunks"] == 0
 
 
-# --------------------------------------------------
-# Empty Question
-# --------------------------------------------------
 
 def test_empty_question_returns_400():
 
@@ -63,9 +54,6 @@ def test_empty_question_returns_400():
     assert response.json()["detail"] == "Question is required"
 
 
-# --------------------------------------------------
-# Ask Success
-# --------------------------------------------------
 
 @patch("api.generator.generate_answer")
 def test_ask_success(mock_generate):
@@ -91,9 +79,6 @@ def test_ask_success(mock_generate):
     mock_generate.assert_called_once()
 
 
-# --------------------------------------------------
-# Ask Exception
-# --------------------------------------------------
 
 @patch("api.generator.generate_answer")
 def test_ask_internal_error(mock_generate):
@@ -111,9 +96,6 @@ def test_ask_internal_error(mock_generate):
     assert response.json()["detail"] == "Generator Failed"
 
 
-# --------------------------------------------------
-# Upload Invalid Extension
-# --------------------------------------------------
 
 def test_upload_invalid_extension():
 
@@ -132,9 +114,6 @@ def test_upload_invalid_extension():
     assert "Supported files" in response.json()["detail"]
 
 
-# --------------------------------------------------
-# Upload Success
-# --------------------------------------------------
 
 @patch("api.upload_ingestor.ingest")
 def test_upload_success(mock_ingest):
@@ -164,9 +143,6 @@ def test_upload_success(mock_ingest):
     mock_ingest.assert_called_once()
 
 
-# --------------------------------------------------
-# Upload Exception
-# --------------------------------------------------
 
 @patch("api.upload_ingestor.ingest")
 def test_upload_internal_error(mock_ingest):
