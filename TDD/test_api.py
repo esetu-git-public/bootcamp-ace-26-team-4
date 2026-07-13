@@ -1,16 +1,9 @@
 import io
 from unittest.mock import patch
-
 from fastapi.testclient import TestClient
-
 from backend.app import app
-
 client = TestClient(app)
 
-
-# --------------------------------------------------
-# Health Endpoint
-# --------------------------------------------------
 
 def test_health_endpoint():
 
@@ -22,10 +15,6 @@ def test_health_endpoint():
         "message": "Medical RAG API running"
     }
 
-
-# --------------------------------------------------
-# Greeting
-# --------------------------------------------------
 
 def test_greeting_returns_static_response():
 
