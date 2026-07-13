@@ -114,6 +114,9 @@ def test_upload_invalid_extension():
     assert "Supported files" in response.json()["detail"]
 
 
+# --------------------------------------------------
+# Upload Success
+# --------------------------------------------------
 
 @patch("api.upload_ingestor.ingest")
 def test_upload_success(mock_ingest):
@@ -143,6 +146,9 @@ def test_upload_success(mock_ingest):
     mock_ingest.assert_called_once()
 
 
+# --------------------------------------------------
+# Upload Exception
+# --------------------------------------------------
 
 @patch("api.upload_ingestor.ingest")
 def test_upload_internal_error(mock_ingest):
