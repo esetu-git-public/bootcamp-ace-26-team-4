@@ -107,9 +107,6 @@ async def upload_file(file: UploadFile = File(...)):
 
     try:
 
-        # ----------------------------------------------------
-        # Remove previous uploaded files
-        # ----------------------------------------------------
 
         for existing_file in UPLOAD_DIR.iterdir():
 
@@ -117,9 +114,6 @@ async def upload_file(file: UploadFile = File(...)):
 
                 existing_file.unlink()
 
-        # ----------------------------------------------------
-        # Save new file
-        # ----------------------------------------------------
 
         save_path = UPLOAD_DIR / file.filename
 
@@ -127,17 +121,12 @@ async def upload_file(file: UploadFile = File(...)):
 
             shutil.copyfileobj(file.file, buffer)
 
-        # ----------------------------------------------------
-        # Index into Chroma
-        # ----------------------------------------------------
 
         ingestion_result = upload_ingestor.ingest(
             str(save_path)
         )
 
-        # ----------------------------------------------------
-        # Response
-        # ----------------------------------------------------
+
 
         return {
 
