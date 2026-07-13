@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import os
 
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel
@@ -176,3 +177,27 @@ def current_document():
         "last_modified": file.stat().st_mtime,
         "status": "Indexed"
     }
+
+@router.delete("/upload/{filename}")
+def delete_uploaded_file(filename: str):
+
+    file_path = UPLOAD_DIR / filename
+
+    if not file_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="File not found"
+        )
+
+    try:
+        os.remove(file_path)
+
+        return {
+            "message": "File deleted successfully"
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )

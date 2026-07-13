@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://mrp-production-0f8f.up.railway.app/api"; // http://localhost:8000/
+const API_BASE_URL = "http://localhost:8000/api"; // http://localhost:8000/
 
 export async function askLLM(question, template = "chat") {
   const response = await fetch(`${API_BASE_URL}/ask`, {
@@ -32,4 +32,24 @@ export async function uploadDocument(file) {
   }
 
   return response.json();
+}
+export async function deleteDocument(filename) {
+
+  const response = await fetch(
+    `${API_BASE_URL}/upload/${encodeURIComponent(filename)}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+
+    throw new Error(
+      error.detail || "Failed to delete document"
+    );
+  }
+
+  return response.json();
+
 }

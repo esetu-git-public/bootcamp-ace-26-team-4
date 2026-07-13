@@ -7,6 +7,7 @@ import "../styles/Chat.css";
 import {
   askLLM,
   uploadDocument,
+  deleteDocument,
 } from "../services/api";
 
 import ChatHeader from "../components/ChatHeader";
@@ -132,6 +133,25 @@ function Chat() {
     ]);
 
   };
+  const removeDocument = async () => {
+
+  if (!currentDocument) return;
+
+  try {
+
+    await deleteDocument(currentDocument);
+
+    setCurrentDocument(null);
+
+    toast.success("Document deleted successfully.");
+
+  } catch (err) {
+
+    toast.error(err.message);
+
+  }
+
+};
 
   const exportChat = () => {
 
@@ -297,10 +317,12 @@ function Chat() {
     >
 
       <ChatHeader
-        currentDocument={currentDocument}
-        clearChat={clearChat}
-        exportChat={exportChat}
-      />
+  currentDocument={currentDocument}
+  clearChat={clearChat}
+  removeDocument={removeDocument}
+  exportChat={exportChat}
+/>
+
 
       {/* ChatGPT-style Recent Chats button */}
       <button

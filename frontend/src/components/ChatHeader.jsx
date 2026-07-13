@@ -7,6 +7,7 @@ import {
 function ChatHeader({
   currentDocument,
   clearChat,
+  removeDocument,
   exportChat,
 }) {
   return (
@@ -44,8 +45,8 @@ function ChatHeader({
 
         <button
           className="header-icon delete"
-          onClick={clearChat}
-          title="Clear Chat"
+          onClick={removeDocument}
+          title="Remove Document"
         >
           <FaTrash />
         </button>
