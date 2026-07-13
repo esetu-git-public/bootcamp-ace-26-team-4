@@ -15,6 +15,7 @@ function ChatInput({
   uploading,
   textareaRef,
   fileInputRef,
+  uploadFile,
 
 }) {
 
@@ -52,9 +53,7 @@ function ChatInput({
 
       recognitionRef.current.start();
 
-    }
-
-    else {
+    } else {
 
       alert(
         "Speech Recognition is not supported."
@@ -72,7 +71,6 @@ function ChatInput({
     ) {
 
       e.preventDefault();
-
       handleSend();
 
     }
@@ -83,19 +81,47 @@ function ChatInput({
 
     <div className="chat-input-container">
 
+      {/* Hidden File Input */}
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept=".pdf,.doc,.docx,.txt,.csv,.xml"
+        style={{ display: "none" }}
+        onChange={(e) => {
+
+          const file = e.target.files[0];
+
+          if (file) {
+
+            uploadFile(file);
+
+          }
+
+          e.target.value = "";
+
+        }}
+      />
+
+      {/* Attachment Button */}
+
       <button
 
         className="input-icon"
 
         onClick={() =>
-          fileInputRef.current.click()
+          fileInputRef.current?.click()
         }
+
+        type="button"
 
       >
 
         <FaPaperclip />
 
       </button>
+
+      {/* Message Box */}
 
       <textarea
 
@@ -107,7 +133,7 @@ function ChatInput({
 
         placeholder="Message Medical Research AI..."
 
-        onChange={(e)=>
+        onChange={(e) =>
           setMessage(e.target.value)
         }
 
@@ -115,17 +141,23 @@ function ChatInput({
 
       />
 
+      {/* Voice Button */}
+
       <button
 
         className="input-icon voice"
 
         onClick={startListening}
 
+        type="button"
+
       >
 
         <FaMicrophone />
 
       </button>
+
+      {/* Send Button */}
 
       <button
 
@@ -134,6 +166,8 @@ function ChatInput({
         disabled={loading || uploading}
 
         onClick={handleSend}
+
+        type="button"
 
       >
 

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { useState, useRef, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
 
 import "../styles/Chat.css";
 
@@ -9,7 +10,6 @@ import {
 } from "../services/api";
 
 import ChatHeader from "../components/ChatHeader";
-import ChatUpload from "../components/ChatUpload";
 import ChatMessages from "../components/ChatMessages";
 import ChatInput from "../components/ChatInput";
 import ChatHistory from "../components/ChatHistory";
@@ -17,12 +17,12 @@ import ChatHistory from "../components/ChatHistory";
 function Chat() {
 
   const [message, setMessage] = useState("");
-
   const [loading, setLoading] = useState(false);
-
   const [uploading, setUploading] = useState(false);
-
   const [dragActive, setDragActive] = useState(false);
+
+  // ChatGPT-style history drawer
+  const [showHistory, setShowHistory] = useState(false);
 
   const [currentDocument, setCurrentDocument] = useState(null);
 
@@ -30,7 +30,7 @@ function Chat() {
     {
       role: "bot",
       text:
-        "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a medical research paper and ask me anything.",
+        "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a medical research paper using the attachment button below and ask me anything.",
       time: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -55,7 +55,8 @@ function Chat() {
     "Future work",
     "Conclusion",
   ];
-    useEffect(() => {
+
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({
       behavior: "smooth",
     });
@@ -69,14 +70,11 @@ function Chat() {
   }, [chatHistory]);
 
   useEffect(() => {
-
     if (!textareaRef.current) return;
 
     textareaRef.current.style.height = "0px";
-
     textareaRef.current.style.height =
       textareaRef.current.scrollHeight + "px";
-
   }, [message]);
 
   const handleSuggestion = (text) => {
@@ -92,6 +90,7 @@ function Chat() {
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     if (e.type === "dragenter" || e.type === "dragover") {
       setDragActive(true);
     }
@@ -106,9 +105,11 @@ function Chat() {
   const handleDrop = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     setDragActive(false);
 
     const file = e.dataTransfer?.files?.[0];
+
     if (file) {
       await uploadFile(file);
     }
@@ -122,7 +123,7 @@ function Chat() {
       {
         role: "bot",
         text:
-          "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a research paper and ask me anything.",
+          "👋 Welcome to **Medical Research AI Assistant**.\n\nUpload a medical research paper using the attachment button below and ask me anything.",
         time: new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -150,9 +151,7 @@ function Chat() {
     const a = document.createElement("a");
 
     a.href = url;
-
     a.download = "chat.txt";
-
     a.click();
 
     URL.revokeObjectURL(url);
@@ -160,8 +159,14 @@ function Chat() {
   };
 
   const openHistory = (chat) => {
+
     setChatMessages(chat.messages);
+
+    // Close history drawer after selecting a chat
+    setShowHistory(false);
+
   };
+
   const uploadFile = async (file) => {
 
     if (!file) return;
@@ -176,12 +181,11 @@ function Chat() {
 
       await uploadDocument(file);
 
-      setChatMessages(prev => [
+      setChatMessages((prev) => [
         ...prev,
         {
           role: "bot",
-          text:
-            `✅ **${file.name}** uploaded successfully.`,
+          text: `✅ **${file.name}** uploaded successfully.`,
           time: new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -189,15 +193,11 @@ function Chat() {
         },
       ]);
 
-    }
-
-    catch (err) {
+    } catch (err) {
 
       toast.error(err.message);
 
-    }
-
-    finally {
+    } finally {
 
       setUploading(false);
 
@@ -220,7 +220,7 @@ function Chat() {
       }),
     };
 
-    setChatMessages(prev => [...prev, user]);
+    setChatMessages((prev) => [...prev, user]);
 
     setMessage("");
 
@@ -231,168 +231,139 @@ function Chat() {
       const result = await askLLM(question);
 
       const bot = {
-
         role: "bot",
-
         text: result.answer,
-
-        references:
-          result.formatted_references,
-
-        metadata:
-          result.metadata,
-
+        references: result.formatted_references,
+        metadata: result.metadata,
         question,
-
-        time:
-          new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       };
 
-      setChatMessages(prev => [...prev, bot]);
+      setChatMessages((prev) => [...prev, bot]);
 
-      setChatHistory(prev => [
-
+      setChatHistory((prev) => [
         {
-          title:
-            question.substring(0, 35),
-          time:
-            new Date().toLocaleString(),
+          title: question.substring(0, 35),
+          time: new Date().toLocaleString(),
           messages: [user, bot],
         },
-
         ...prev,
-
       ]);
 
-    }
-
-    catch {
+    } catch {
 
       toast.error("Unable to generate response.");
 
-    }
-
-    finally {
+    } finally {
 
       setLoading(false);
 
     }
 
   };
-    const regenerateAnswer = async (question) => {
+
+  const regenerateAnswer = async (question) => {
 
     const result = await askLLM(question);
 
-    setChatMessages(prev => [
-
+    setChatMessages((prev) => [
       ...prev,
-
       {
-
         role: "bot",
-
         text: result.answer,
-
-        references:
-          result.formatted_references,
-
-        metadata:
-          result.metadata,
-
+        references: result.formatted_references,
+        metadata: result.metadata,
         question,
-
-        time:
-          new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       },
-
     ]);
 
   };
 
-return (
+  return (
 
-<div className="chat-page">
+    <div
+      className={`chat-page${dragActive ? " drag-active" : ""}`}
+      onDragEnter={handleDrag}
+      onDragOver={handleDrag}
+      onDragLeave={handleLeave}
+      onDrop={handleDrop}
+    >
 
-    <ChatHeader
+      <ChatHeader
         currentDocument={currentDocument}
         clearChat={clearChat}
         exportChat={exportChat}
-    />
+      />
 
-    <div className="chat-layout">
+      {/* ChatGPT-style Recent Chats button */}
+      <button
+        className="history-toggle"
+        onClick={() => setShowHistory(!showHistory)}
+      >
+        <FaBars />
+      </button>
 
-        <aside className="history-panel">
+      <div className="chat-layout">
 
+        {showHistory && (
+          <aside className="history-panel">
             <ChatHistory
-                history={chatHistory}
-                onSelect={openHistory}
+              history={chatHistory}
+              onSelect={openHistory}
             />
-
-        </aside>
+          </aside>
+        )}
 
         <section className="chat-panel">
 
-            {!currentDocument && (
+          <div className="suggestions">
 
-                <ChatUpload
-                    dragActive={dragActive}
-                    handleDrop={handleDrop}
-                    handleDrag={handleDrag}
-                    handleLeave={handleLeave}
-                    fileInputRef={fileInputRef}
-                    uploadFile={uploadFile}
-                />
+            {suggestedQuestions.map((item, index) => (
 
-            )}
+              <button
+                key={index}
+                onClick={() => handleSuggestion(item)}
+              >
+                {item}
+              </button>
 
-            <div className="suggestions">
+            ))}
 
-                {suggestedQuestions.map((item,index)=>(
+          </div>
 
-                    <button
-                        key={index}
-                        onClick={() => handleSuggestion(item)}
-                    >
-                        {item}
-                    </button>
+          <ChatMessages
+            chatMessages={chatMessages}
+            loading={loading}
+            copyMessage={copyMessage}
+            regenerateAnswer={regenerateAnswer}
+            chatEndRef={chatEndRef}
+          />
 
-                ))}
-
-            </div>
-
-            <ChatMessages
-                chatMessages={chatMessages}
-                loading={loading}
-                copyMessage={copyMessage}
-                regenerateAnswer={regenerateAnswer}
-                chatEndRef={chatEndRef}
-            />
-
-            <ChatInput
-                message={message}
-                setMessage={setMessage}
-                handleSend={handleSend}
-                loading={loading}
-                uploading={uploading}
-                textareaRef={textareaRef}
-                fileInputRef={fileInputRef}
-            />
+          <ChatInput
+            message={message}
+            setMessage={setMessage}
+            handleSend={handleSend}
+            loading={loading}
+            uploading={uploading}
+            textareaRef={textareaRef}
+            fileInputRef={fileInputRef}
+            uploadFile={uploadFile}
+         />
 
         </section>
 
+      </div>
+
     </div>
 
-</div>
-
-);
+  );
 
 }
 

@@ -1,8 +1,7 @@
 import {
   FaFileMedical,
-  FaTrash,
   FaDownload,
-  FaCircle,
+  FaTrash,
 } from "react-icons/fa";
 
 function ChatHeader({
@@ -10,39 +9,18 @@ function ChatHeader({
   clearChat,
   exportChat,
 }) {
-
   return (
-
-    <header className="chat-header">
+    <div className="chat-header">
 
       <div className="header-left">
 
-        <div className="assistant-logo">
-
-          🩺
-
-        </div>
-
         <div>
+          <h1>Medical Research AI Assistant</h1>
 
-          <h1>
-
-            Medical Research AI Assistant
-
-          </h1>
-
-          <div className="assistant-status">
-
-            <FaCircle />
-
-            <span>
-
-              AI Online
-
-            </span>
-
-          </div>
-
+          <p>
+            Ask questions over uploaded research papers using
+            Retrieval-Augmented Generation (RAG).
+          </p>
         </div>
 
       </div>
@@ -50,55 +28,32 @@ function ChatHeader({
       <div className="header-right">
 
         {currentDocument && (
-
           <div className="document-chip">
-
             <FaFileMedical />
-
-            <span>
-
-              {currentDocument}
-
-            </span>
-
+            <span>{currentDocument}</span>
           </div>
-
         )}
 
         <button
-
           className="header-icon export"
-
           onClick={exportChat}
-
           title="Export Chat"
-
         >
-
           <FaDownload />
-
         </button>
 
         <button
-
           className="header-icon delete"
-
           onClick={clearChat}
-
           title="Clear Chat"
-
         >
-
           <FaTrash />
-
         </button>
 
       </div>
 
-    </header>
-
+    </div>
   );
-
 }
 
 export default ChatHeader;

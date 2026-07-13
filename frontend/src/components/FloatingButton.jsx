@@ -1,27 +1,26 @@
 import { FaRobot } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./FloatingButton.css";
 
-function FloatingButton(){
+function FloatingButton() {
 
-const navigate=useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-return(
+  // Don't show floating button on Chat page
+  if (location.pathname === "/chat") {
+    return null;
+  }
 
-<button
-
-className="floating-ai"
-
-onClick={()=>navigate("/chat")}
-
->
-
-<FaRobot/>
-
-</button>
-
-);
+  return (
+    <button
+      className="floating-ai"
+      onClick={() => navigate("/chat")}
+    >
+      <FaRobot />
+    </button>
+  );
 
 }
 
