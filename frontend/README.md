@@ -18,19 +18,19 @@ A minimal React + Vite starter template with hot module replacement (HMR) and a 
 
 1. Install dependencies:
 
-	npm install
+ npm install
 
-2. Start development server:
+1. Start development server:
 
-	npm run dev
+ npm run dev
 
-3. Build for production:
+1. Build for production:
 
-	npm run build
+ npm run build
 
-4. Preview production build locally:
+1. Preview production build locally:
 
-	npm run preview
+ npm run preview
 
 Check package.json for exact script names if your project uses yarn or pnpm.
 
