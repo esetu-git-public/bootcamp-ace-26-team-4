@@ -12,7 +12,9 @@ TEMPERATURE = 0
 TOP_P = 0.95
 TOP_K = 40
 
-MAX_OUTPUT_TOKENS = 2048
+# The answer format has several evidence sections.  2048 tokens frequently
+# truncates an otherwise valid response before its conclusion.
+MAX_OUTPUT_TOKENS = 4096
 MAX_RETRIES = 3
 REQUEST_TIMEOUT = 60
 

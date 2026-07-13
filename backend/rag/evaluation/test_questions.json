@@ -1,0 +1,162 @@
+[
+  {
+    "id": "heart_attack_01",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What is the full title of this research study?",
+    "reference_answer": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia.",
+    "answer_keywords": ["Perception", "Heart Attack Risk Factors", "Eastern Region of Saudi Arabia"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_02",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "Who is the corresponding author of this study, and what is their email address?",
+    "reference_answer": "Abdullah M. AlKhudair Sr.; a.m.h.k22131@gmail.com.",
+    "answer_keywords": ["Abdullah M. AlKhudair", "a.m.h.k22131@gmail.com"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_03",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What was the final sample size, what age group was targeted, and what sampling technique was used?",
+    "reference_answer": "334 participants aged 18 to 45 years; convenience sampling.",
+    "answer_keywords": ["334", "18", "45", "convenience sampling"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_04",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What percentages of participants were male and female?",
+    "reference_answer": "46.4% (155) were male and 53.6% (179) were female.",
+    "answer_keywords": ["46.4%", "53.6%", "male", "female"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_05",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What percentage of participants reported no physical activity, and what percentage had a BMI of 25 or above?",
+    "reference_answer": "43.4% reported no physical activity, and 29.1% had a BMI of 25 or above.",
+    "answer_keywords": ["43.4%", "29.1%", "BMI"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_06",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What was the average overall knowledge score and maximum possible score, and what were the mean scores for risk factors and complications?",
+    "reference_answer": "Overall knowledge was 15.47 out of 28; risk factors were 12.79 out of 21; complications were 2.68 out of 7.",
+    "answer_keywords": ["15.47", "28", "12.79", "21", "2.68", "7"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_07",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "Which cardiovascular risk factors had the highest correct-response rates, and which had the lowest?",
+    "reference_answer": "The highest rates were stress reduction techniques (85%), smoking (84.4%), regular physical activity (82.6%), and weight (79.6%). The lowest were diabetes (41.6%), abdominal obesity (41.9%), and family history (46.4%).",
+    "answer_keywords": ["smoking", "stress", "physical activity", "diabetes", "abdominal obesity", "family history"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_08",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What percentage had a university degree or were studying at university, and what percentage had at least a high-school degree?",
+    "reference_answer": "45.5% had a university degree or were studying at university, and 53.6% had at least a high-school degree.",
+    "answer_keywords": ["45.5%", "53.6%", "university", "high school"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_09",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "How many participants reported cardiovascular disease, and what percentage of them were noncompliant with medications?",
+    "reference_answer": "16 participants (4.5%) reported cardiovascular disease; 5 of 16, or 31.25%, were noncompliant with medications.",
+    "answer_keywords": ["16", "4.5%", "5", "31.25%"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "heart_attack_10",
+    "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
+    "question": "What were the researchers' key recommendations for addressing the identified knowledge gaps?",
+    "reference_answer": "They recommended structured education in school curricula, broad health campaigns using reliable sources, reducing reliance on mass and social media misinformation, and further research into the causes of the knowledge gaps.",
+    "answer_keywords": ["school", "health campaigns", "reliable sources", "social media", "further research"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_01",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What is the full title of the review article, and who are its authors?",
+    "reference_answer": "Kidney Stone Disease: An Update on Current Concepts, by Tilahun Alelign and Beyene Petros.",
+    "answer_keywords": ["Kidney Stone Disease", "Tilahun Alelign", "Beyene Petros"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_02",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What percentage of the global population does urolithiasis affect, and what are the estimated recurrence rates without metaphylaxis?",
+    "reference_answer": "Urolithiasis affects about 12% of the global population. Recurrence is estimated at 10-23% per year, 50% within 5-10 years, and 75% within 20 years without metaphylaxis.",
+    "answer_keywords": ["12%", "10-23%", "50%", "75%", "metaphylaxis"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_03",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What are the five main types of kidney stones?",
+    "reference_answer": "Calcium, struvite (magnesium ammonium phosphate), uric acid or urate, cystine, and drug-induced stones.",
+    "answer_keywords": ["calcium", "struvite", "uric acid", "cystine", "drug-induced"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_04",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What is Randall's plaque, and what role does it play in kidney stone formation?",
+    "reference_answer": "Randall's plaque is an interstitial calcium phosphate (apatite) deposit that begins along basement membranes of thin loops of Henle and can extend toward the urothelium. It provides a papillary attachment site and precursor for many calcium oxalate stones.",
+    "answer_keywords": ["Randall", "apatite", "calcium phosphate", "loop of Henle", "calcium oxalate"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_05",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What are the four main events that trigger kidney stone formation?",
+    "reference_answer": "Nucleation, growth, aggregation, and retention.",
+    "answer_keywords": ["nucleation", "growth", "aggregation", "retention"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_06",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What role can p38 MAPK signalling play in kidney stone formation?",
+    "reference_answer": "Oxalate exposure can activate p38 MAPK, alter gene and cellular-protein expression, induce inflammation and apoptosis in renal tubular cells, and thereby promote calcium crystal aggregation and growth.",
+    "answer_keywords": ["oxalate", "p38 MAPK", "inflammation", "apoptosis", "aggregation"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_07",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "Name at least five urinary stone inhibitors and five promoters of crystallization discussed in the review.",
+    "reference_answer": "Inhibitors include citrate, pyrophosphates, magnesium, osteopontin, glycosaminoglycans, Tamm-Horsfall protein, urinary prothrombin fragment-1, and nephrocalcin. Promoters include membrane lipids, calcitriol-related hormonal effects, oxalate, calcium, sodium, cystine, and low urine volume.",
+    "answer_keywords": ["citrate", "magnesium", "osteopontin", "glycosaminoglycans", "Tamm-Horsfall", "oxalate", "calcium", "sodium", "cystine", "low urine volume"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_08",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What dietary and lifestyle recommendations are suggested to prevent kidney stones?",
+    "reference_answer": "Maintain urine output of at least 2 litres daily by drinking more water; limit sodium, animal protein, excess oxalate where relevant, and vitamin C supplements; eat fruits and vegetables; maintain normal dietary calcium unless intake is excessive; and tailor urine alkalinisation or acidification to stone type.",
+    "answer_keywords": ["2 litres", "water", "sodium", "animal protein", "fruits", "vegetables", "calcium", "vitamin C"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_09",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What is the composition and role of the organic matrix of urinary stones?",
+    "reference_answer": "The matrix contains glycosaminoglycans, lipids, carbohydrates, and proteins; its reported composition includes 64% proteins, 9.6% nonamino sugars, 5% hexosamine, 10% water, and 10.4% inorganic ash. It acts as a template that can promote or inhibit stone assembly; albumin is its major component across stone types.",
+    "answer_keywords": ["proteins", "glycosaminoglycans", "lipids", "carbohydrates", "template", "albumin"],
+    "relevant_chunks": []
+  },
+  {
+    "id": "kidney_stone_10",
+    "article": "Kidney Stone Disease: An Update on Current Concepts",
+    "question": "What are the key conclusions of the review regarding kidney stone disease?",
+    "reference_answer": "Urolithiasis is increasing worldwide despite therapeutic advances, and many mechanisms remain unclear. Renal cell injury, crystal retention, apoptosis, Randall's plaque, and stone inhibitors and promoters are important targets for better prevention and new drug development. Improved understanding of pathophysiology, molecular mechanisms, and genetics may enable better treatments.",
+    "answer_keywords": ["increasing", "renal cell injury", "crystal retention", "apoptosis", "Randall's plaque", "new drugs", "genetics"],
+    "relevant_chunks": []
+  }
+]

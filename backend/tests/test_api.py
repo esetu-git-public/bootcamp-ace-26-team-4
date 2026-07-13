@@ -8,6 +8,9 @@ from app import app
 client = TestClient(app)
 
 
+# --------------------------------------------------
+# Health Endpoint
+# --------------------------------------------------
 
 def test_health_endpoint():
 
@@ -20,6 +23,9 @@ def test_health_endpoint():
     }
 
 
+# --------------------------------------------------
+# Greeting
+# --------------------------------------------------
 
 def test_greeting_returns_static_response():
 
@@ -40,6 +46,9 @@ def test_greeting_returns_static_response():
     assert body["metadata"]["retrieved_chunks"] == 0
 
 
+# --------------------------------------------------
+# Empty Question
+# --------------------------------------------------
 
 def test_empty_question_returns_400():
 
@@ -54,6 +63,9 @@ def test_empty_question_returns_400():
     assert response.json()["detail"] == "Question is required"
 
 
+# --------------------------------------------------
+# Ask Success
+# --------------------------------------------------
 
 @patch("api.generator.generate_answer")
 def test_ask_success(mock_generate):
@@ -79,6 +91,9 @@ def test_ask_success(mock_generate):
     mock_generate.assert_called_once()
 
 
+# --------------------------------------------------
+# Ask Exception
+# --------------------------------------------------
 
 @patch("api.generator.generate_answer")
 def test_ask_internal_error(mock_generate):
@@ -96,6 +111,51 @@ def test_ask_internal_error(mock_generate):
     assert response.json()["detail"] == "Generator Failed"
 
 
+# --------------------------------------------------
+# Evaluation
+# --------------------------------------------------
+
+@patch("api._evaluation_report")
+def test_evaluation_results_returns_saved_report(mock_report):
+
+    mock_report.return_value = {
+        "completed_questions": 1,
+        "total_questions": 20,
+        "pending_questions": 19,
+        "summary": {"average_keyword_recall": 0.0},
+        "results": [],
+    }
+
+    response = client.get("/api/evaluation")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "in_progress"
+    assert response.json()["completed_questions"] == 1
+
+
+@patch("api._evaluation_report")
+@patch("api.Evaluator")
+def test_run_evaluation_returns_report(mock_evaluator, mock_report):
+
+    mock_report.return_value = {
+        "completed_questions": 20,
+        "total_questions": 20,
+        "pending_questions": 0,
+        "summary": {"average_keyword_recall": 0.8},
+        "results": [],
+    }
+
+    response = client.post("/api/evaluation/run")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "completed"
+    assert response.json()["summary"]["average_keyword_recall"] == 0.8
+    mock_evaluator.return_value.evaluate.assert_called_once()
+
+
+# --------------------------------------------------
+# Upload Invalid Extension
+# --------------------------------------------------
 
 def test_upload_invalid_extension():
 

@@ -1,3 +1,4 @@
+import re
 import time
 
 from google import genai
@@ -76,13 +77,51 @@ class GeminiClient:
 
                 last_exception = e
 
-                print(
-                    f"[Retry {attempt+1}/{MAX_RETRIES}] {e}"
-                )
+                if self._is_daily_quota_exhausted(e):
+                    # The free-tier daily request allowance does not recover
+                    # after the RetryInfo delay.  Retrying here only wastes
+                    # time, so let the evaluation checkpoint and resume later.
+                    raise RuntimeError(
+                        "Gemini's daily free-tier request quota is exhausted. "
+                        "Try again after the quota resets."
+                    ) from e
 
-                time.sleep(2)
+                if attempt == MAX_RETRIES - 1:
+                    break
+
+                delay = self._retry_delay_seconds(e, attempt)
+                print(
+                    f"[Retry {attempt+1}/{MAX_RETRIES}] {e}\n"
+                    f"Waiting {delay:.0f}s before retrying..."
+                )
+                time.sleep(delay)
 
         raise RuntimeError(last_exception)
+
+    @staticmethod
+    def _retry_delay_seconds(error: Exception, attempt: int) -> float:
+        """Use Gemini's suggested retry time when it is present.
+
+        Free-tier rate-limit responses often include a `retry in Ns` hint.
+        The fallback is exponential backoff, which prevents immediate retries
+        from consuming the remaining request-per-minute allowance.
+        """
+        message = str(error)
+        match = re.search(r"retry(?: in| after)?\s+([0-9.]+)s", message, re.I)
+        if match:
+            return min(float(match.group(1)) + 1, 120)
+
+        return min(5 * (2 ** attempt), 60)
+
+    @staticmethod
+    def _is_daily_quota_exhausted(error: Exception) -> bool:
+        """Return True only for Gemini's per-day request quota response."""
+        message = str(error).lower()
+        return (
+            "generaterequestsperday" in message
+            or "requestsperday" in message
+            or "requests per day" in message
+        )
 
     # ----------------------------------------------------------
 

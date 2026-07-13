@@ -52,7 +52,7 @@ class DenseRetriever:
 
             retrieved_chunks.append({
 
-                "chunk_id": point.id,
+                "chunk_id": str(point.id),
 
                 "text": point.payload.get("text"),
 

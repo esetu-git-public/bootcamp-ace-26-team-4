@@ -1,0 +1,22 @@
+[
+  {
+    "id": "heart_attack_01",
+    "question": "What is the full title of this research study?",
+    "reference_answer": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia.",
+    "keyword_recall": 0.0,
+    "precision": null,
+    "recall": null
+  },
+  {
+    "id": "heart_attack_02",
+    "question": "Who is the corresponding author of this study, and what is their email address?",
+    "reference_answer": "Abdullah M. AlKhudair Sr.; a.m.h.k22131@gmail.com.",
+    "keyword_recall": 0.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.5502142533659935,
+    "answer_score": 0.4126606900244951,
+    "final_score": 0.4126606900244951
+  }
+]

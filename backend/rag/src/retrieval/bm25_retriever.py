@@ -5,98 +5,59 @@ TOP_K = 5
 
 
 class BM25Retriever:
-    """
-    Keyword Retriever using Qdrant payload.
+    """Keyword retrieval over Qdrant payloads.
 
-    No local chunks.jsonl dependency.
-    Works with Railway deployment.
+    The name is retained for compatibility, but this is a simple keyword
+    overlap scorer rather than a true BM25 index.
     """
 
     def __init__(self):
-
         print("Initializing Keyword Retriever...")
-
         self.client = get_qdrant_client()
+        self.collections = ["medical_research_papers", "user_uploads"]
 
-        self.collections = [
-            "medical_research_papers",
-            "user_uploads"
-        ]
-
-
-    def retrieve(
-        self,
-        query,
-        top_k=TOP_K
-    ):
-
-        query_words = query.lower().split()
-
+    def retrieve(self, query, top_k=TOP_K, collections=None, filename=None):
+        query_words = [word for word in query.lower().split() if word]
         results = []
 
-
-        for collection in self.collections:
-
+        for collection in (collections if collections is not None else self.collections):
             try:
-
-                points, _ = self.client.scroll(
-                    collection_name=collection,
-                    limit=200,
-                    with_payload=True,
-                    with_vectors=False
-                )
-
-
-                for point in points:
-
-                    payload = point.payload or {}
-
-                    text = payload.get(
-                        "text",
-                        ""
+                offset = None
+                while True:
+                    points, offset = self.client.scroll(
+                        collection_name=collection,
+                        limit=200,
+                        offset=offset,
+                        with_payload=True,
+                        with_vectors=False,
                     )
 
+                    for point in points:
+                        payload = point.payload or {}
+                        if collection == "user_uploads" and filename:
+                            if payload.get("filename") != filename:
+                                continue
+                        text = payload.get("text", "")
+                        if not text:
+                            continue
 
-                    if not text:
-                        continue
+                        text_lower = text.lower()
+                        matches = sum(word in text_lower for word in query_words)
+                        if matches:
+                            results.append({
+                                "chunk_id": str(point.id),
+                                "text": text,
+                                "metadata": {
+                                    key: value for key, value in payload.items()
+                                    if key != "text"
+                                },
+                                "score": float(matches),
+                            })
 
+                    if offset is None:
+                        break
+            except Exception as exc:
+                print(f"Keyword retrieval failed for {collection}: {exc}")
 
-                    text_lower = text.lower()
-
-
-                    matches = sum(
-                        1
-                        for word in query_words
-                        if word in text_lower
-                    )
-
-
-                    if matches > 0:
-
-                        results.append({
-
-                            "chunk_id": str(point.id),
-
-                            "text": text,
-
-                            "metadata": payload,
-
-                            "score": float(matches)
-
-                        })
-
-
-            except Exception as e:
-
-                print(
-                    f"Keyword retrieval failed for {collection}: {e}"
-                )
-
-
-        results.sort(
-            key=lambda x: x["score"],
-            reverse=True
-        )
-
-
+        results.sort(key=lambda item: item["score"], reverse=True)
         return results[:top_k]
