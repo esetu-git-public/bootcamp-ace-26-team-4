@@ -1,16 +1,9 @@
 import io
 from unittest.mock import patch
-
 from fastapi.testclient import TestClient
-
 from backend.app import app
-
 client = TestClient(app)
 
-
-# --------------------------------------------------
-# Health Endpoint
-# --------------------------------------------------
 
 def test_health_endpoint():
 
@@ -22,10 +15,6 @@ def test_health_endpoint():
         "message": "Medical RAG API running"
     }
 
-
-# --------------------------------------------------
-# Greeting
-# --------------------------------------------------
 
 def test_greeting_returns_static_response():
 
@@ -46,10 +35,6 @@ def test_greeting_returns_static_response():
     assert body["metadata"]["retrieved_chunks"] == 0
 
 
-# --------------------------------------------------
-# Empty Question
-# --------------------------------------------------
-
 def test_empty_question_returns_400():
 
     response = client.post(
@@ -62,10 +47,6 @@ def test_empty_question_returns_400():
     assert response.status_code == 400
     assert response.json()["detail"] == "Question is required"
 
-
-# --------------------------------------------------
-# Ask Success
-# --------------------------------------------------
 
 @patch("api.generator.generate_answer")
 def test_ask_success(mock_generate):

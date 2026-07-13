@@ -218,30 +218,11 @@ Frontend Design               ✅ Completed
 
 ---
 
-# 🚀 Current Status
-
-**Project Phase:** Planning & Initial Setup ✅
-
-The project foundation has been established, and the team is ready to begin the implementation phase.
-
-**Project Phase:** Designing UI and Understanding the RAG ✅
-
-The UI design of the project is finalized and completed the RAG Pipeline till embeddings.
-
-**Project Phase:** Frontend Phase is completed and Retrivel pipeline is completed ✅
-
-Vector Database is completed and Prompt Building is completed
-
----
-
 # 📅 Upcoming Work
-• LLM Integration
-• Response Generation
-• Citation Generation
-• FastAPI Backend
-• Database Integration
+• testing and verification
+• Implementing the novality of the project
+• fixing bugs in frontend and backend
 • Deployment
-• Frontend-Backend Integration
 ---
 
 # 👥 Team Roles
