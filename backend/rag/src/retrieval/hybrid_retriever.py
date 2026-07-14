@@ -229,10 +229,17 @@ class HybridRetriever:
 
         print("Reranking with cross-encoder...")
         
+        # Limit to top 10 chunks before reranking to prevent RAM / CPU spikes
+        chunks_to_rerank = ranked_results[:10]
+        
         retrieved = self.reranker.rerank(
             query, 
-            ranked_results
+            chunks_to_rerank
         )
+        
+        # Explicit garbage collection to free memory after CPU intensive PyTorch inference
+        import gc
+        gc.collect()
 
         print(
             "Retrieved chunks (reranked):",

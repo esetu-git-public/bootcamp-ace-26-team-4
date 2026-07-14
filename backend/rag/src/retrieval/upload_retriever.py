@@ -16,6 +16,9 @@ TOP_K = 5
 
 
 
+from rag.src.llm.embedding_model import get_embedding_model
+
+
 class UploadRetriever:
 
     """
@@ -24,12 +27,7 @@ class UploadRetriever:
 
     def __init__(self):
 
-        print("Loading Upload Retriever...")
-
-
-        self.model = SentenceTransformer(
-            MODEL_NAME
-        )
+        self.model = get_embedding_model()
 
 
         print("Connecting to Qdrant...")

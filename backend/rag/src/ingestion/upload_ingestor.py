@@ -26,10 +26,6 @@ class UploadIngestor:
 
     def __init__(self):
 
-        print("Loading embedding model...")
-
-        self.model = SentenceTransformer(MODEL_NAME)
-
         print("Connecting to Qdrant...")
 
         self.client = QdrantClient(
@@ -108,7 +104,9 @@ class UploadIngestor:
         print("Creating embeddings...")
 
 
-        embeddings = self.model.encode(
+        from rag.src.llm.embedding_model import get_embedding_model
+        model = get_embedding_model()
+        embeddings = model.encode(
             documents,
             normalize_embeddings=True,
             show_progress_bar=False

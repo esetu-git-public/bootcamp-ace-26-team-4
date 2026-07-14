@@ -16,13 +16,14 @@ MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 TOP_K = 5
 
 
+from rag.src.llm.embedding_model import get_embedding_model
+
+
 class DenseRetriever:
 
     def __init__(self):
 
-        print("Loading embedding model...")
-
-        self.model = SentenceTransformer(MODEL_NAME)
+        self.model = get_embedding_model()
 
 
         print("Connecting to Qdrant...")

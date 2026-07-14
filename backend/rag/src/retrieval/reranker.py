@@ -1,13 +1,12 @@
 from sentence_transformers import CrossEncoder
+from rag.src.llm.reranker_model import get_reranker_model
 
 
 class Reranker:
 
     def __init__(self):
 
-        self.model = CrossEncoder(
-            "cross-encoder/ms-marco-MiniLM-L-6-v2"
-        )
+        self.model = get_reranker_model()
 
     def rerank(self, query, chunks):
 

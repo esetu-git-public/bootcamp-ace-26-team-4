@@ -61,11 +61,12 @@ class Metrics:
                 return None
 
             # Lazy import so the library is optional for basic evaluation runs
-            from sentence_transformers import SentenceTransformer, util
+            from sentence_transformers import util
+            from rag.src.llm.embedding_model import get_embedding_model
 
             # Use a small, fast model suited for semantic similarity. It will be
             # downloaded automatically the first time it runs.
-            model = model or SentenceTransformer("all-MiniLM-L6-v2")
+            model = model or get_embedding_model()
 
             emb1 = model.encode(answer, convert_to_tensor=True)
             emb2 = model.encode(reference, convert_to_tensor=True)
