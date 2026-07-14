@@ -30,7 +30,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     <aside className="sidebar glass-panel">
       <div className="sidebar-logo">
         <Database className="logo-icon" size={24} />
-        <span className="logo-text">MRP Medical RAG</span>
+        <span className="logo-text">MRP Medical AI</span>
       </div>
 
       <nav className="sidebar-nav">
