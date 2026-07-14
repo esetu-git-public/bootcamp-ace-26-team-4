@@ -292,7 +292,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
             <div className="welcome-logo">
               <Sparkles size={32} />
             </div>
-            <h1 className="welcome-title">MRP Medical RAG Assistant</h1>
+            <h1 className="welcome-title">Medical Research Paper Assistant</h1>
             <p className="welcome-subtitle">
               Upload medical papers or ask general biomedical research queries using custom retrieval templates.
             </p>
