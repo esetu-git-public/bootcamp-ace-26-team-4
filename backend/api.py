@@ -4,18 +4,26 @@ import os
 import shutil
 import threading
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Header, status
+
+from typing import Optional
+from pydantic import BaseModel, EmailStr, constr, validator
+
+import auth
+
 from pydantic import BaseModel
 
 from rag.evaluation.evaluator import EvaluationPausedError, Evaluator
 from rag.src.response.response_generator import ResponseGenerator
 from rag.src.ingestion.upload_ingestor import UploadIngestor
+from rag.src.ingestion.deletion_manager import UploadDeletionManager
 
 
 router = APIRouter()
 
 generator = ResponseGenerator()
 upload_ingestor = UploadIngestor()
+deletion_manager = UploadDeletionManager()
 evaluation_lock = threading.Lock()
 
 UPLOAD_DIR = Path("rag/data/uploads")
@@ -29,6 +37,29 @@ class AskRequest(BaseModel):
     template: str = "chat"
 
 
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: constr(min_length=8)
+    name: Optional[str] = None
+
+    @validator('email')
+    def must_be_gmail(cls, v):
+        if not v.lower().endswith('@gmail.com'):
+            raise ValueError('Only Gmail addresses are allowed')
+        return v
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: constr(min_length=1)
+
+    @validator('email')
+    def must_be_gmail_login(cls, v):
+        if not v.lower().endswith('@gmail.com'):
+            raise ValueError('Only Gmail addresses are allowed')
+        return v
+
+
 GREETINGS = {
     "hi",
     "hello",
@@ -39,6 +70,25 @@ GREETINGS = {
     "good afternoon",
     "good evening",
 }
+
+
+def get_current_user(authorization: str = Header(None)):
+    """Dependency to retrieve and validate the current user from Authorization header.
+
+    Expects header: Authorization: Bearer <token>
+    """
+    if not authorization:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Missing Authorization header")
+    parts = authorization.split()
+    if len(parts) != 2 or parts[0].lower() != "bearer":
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Authorization header")
+    token = parts[1]
+    payload = auth.decode_jwt(token)
+    email = payload.get("sub")
+    user = auth.get_user(email)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
 
 
 def is_greeting(text: str) -> bool:
@@ -120,6 +170,37 @@ def ask(request: AskRequest):
         )
 
 
+@router.post('/auth/register')
+def auth_register(req: RegisterRequest):
+    """Register a new user and return a JWT token."""
+    try:
+        user = auth.create_user(req.email, req.password, req.name)
+        token = auth.create_jwt_for_user(user)
+        return {"access_token": token, "token_type": "bearer", "user": {"email": user["email"], "name": user.get("name")}}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post('/auth/login')
+def auth_login(req: LoginRequest):
+    """Login a user and return a JWT token."""
+    try:
+        user = auth.verify_user(req.email, req.password)
+        token = auth.create_jwt_for_user(user)
+        return {"access_token": token, "token_type": "bearer", "user": {"email": user["email"], "name": user.get("name")}}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get('/auth/me')
+def auth_me(current_user: dict = Depends(get_current_user)):
+    return {"user": {"email": current_user["email"], "name": current_user.get("name")}}
+
+
 @router.get("/evaluation")
 def get_evaluation_results():
     """Show the latest saved RAG evaluation scores without calling Gemini."""
@@ -193,14 +274,9 @@ async def upload_file(file: UploadFile = File(...)):
     try:
 
         # ----------------------------------------------------
-        # Remove previous uploaded files
+        # Remove previous uploaded file if it has the same filename
         # ----------------------------------------------------
-
-        for existing_file in UPLOAD_DIR.iterdir():
-
-            if existing_file.is_file():
-
-                existing_file.unlink()
+        deletion_manager.delete_by_filename(safe_filename)
 
         # ----------------------------------------------------
         # Save new file
@@ -272,3 +348,67 @@ def current_document():
         "last_modified": file.stat().st_mtime,
         "status": "Indexed"
     }
+
+
+@router.get("/uploads")
+def list_uploads():
+    """List all uploaded files in the uploads directory."""
+    try:
+        files = deletion_manager.list_uploaded_files()
+        return {
+            "files": files,
+            "count": len(files)
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error listing uploads: {str(e)}"
+        )
+
+
+@router.delete("/uploads/{filename}")
+def delete_upload(filename: str):
+    """
+    Delete an uploaded PDF file and all its chunks from Qdrant.
+
+    Parameters:
+    - filename: The name of the file to delete (e.g., 'Heart_Attack.pdf')
+
+    Returns:
+    - Status of deletion from disk and Qdrant
+    """
+    # Security: prevent directory traversal
+    if ".." in filename or "/" in filename or "\\" in filename:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid filename. Directory traversal not allowed."
+        )
+
+    try:
+        result = deletion_manager.delete_by_filename(filename)
+
+        if not result["success"]:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Could not delete {filename}. {result['disk_message']} {result['qdrant_message']}"
+            )
+
+        return {
+            "status": "success",
+            "message": f"Successfully deleted {filename}",
+            "details": {
+                "filename": result["filename"],
+                "deleted_from_disk": result["deleted_from_disk"],
+                "disk_message": result["disk_message"],
+                "chunks_deleted_from_qdrant": result["chunks_deleted"],
+                "qdrant_message": result["qdrant_message"]
+            }
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error deleting upload: {str(e)}"
+        )

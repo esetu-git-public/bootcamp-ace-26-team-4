@@ -1,0 +1,9 @@
+{
+  "sunny@gmail.com": {
+    "email": "sunny@gmail.com",
+    "name": "sunny",
+    "salt": "2365995e38bae042fd091b88451b6bb8",
+    "password_hash": "c96d486f81d2c4c518ca32544e69debc08a97c7adb0683cc0f719a3672505213",
+    "created_at": 1784025956
+  }
+}

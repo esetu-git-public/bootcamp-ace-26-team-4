@@ -1,57 +1,32 @@
-# React + Vite (Minimal Template)
+# React + TypeScript + Vite
 
-A minimal React + Vite starter template with hot module replacement (HMR) and a basic ESLint setup. This README provides quick instructions to get started, recommended workflows, and links to useful plugins.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- Fast development with Vite and HMR
-- React support (JSX/TSX ready)
-- Basic ESLint configuration
-- Compatibility with official React plugins for improved compilation
-
-## Prerequisites
-
-- Node.js >= 16
-- npm or yarn
-
-## Quick start
-
-1. Install dependencies:
-
- npm install
-
-1. Start development server:
-
- npm run dev
-
-1. Build for production:
-
- npm run build
-
-1. Preview production build locally:
-
- npm run preview
-
-Check package.json for exact script names if your project uses yarn or pnpm.
-
-## Official React plugins
-
-- @vitejs/plugin-react — uses Oxc for compilation: https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react
-- @vitejs/plugin-react-swc — uses SWC for compilation: https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc
-
-Choose the plugin that fits your needs (Oxc vs SWC) depending on performance and compatibility requirements.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
 ## React Compiler
 
-The React Compiler is not enabled in this template due to potential impact on dev and build performance. To enable it, see: https://react.dev/learn/react-compiler/installation
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding ESLint (optional)
+## Expanding the Oxlint configuration
 
-For production apps we recommend TypeScript with type-aware lint rules. See the TypeScript template for guidance on integrating types and `@typescript-eslint`: https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
 
-## Contributing
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+```
 
-Feel free to open issues or pull requests to improve this template.
-
----
-_This README was expanded to provide clearer setup and usage instructions._
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

@@ -1,59 +1,30 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
+# Node.js dependencies
+node_modules/
 
-# Virtual Environments
-venv/
-.venv/
-env/
-ENV/
-
-# Environment Variables
+# Environment variables
 .env
 .env.*
 
-# VS Code
-.vscode/
-
-# PyCharm
-.idea/
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-
-# Test & Coverage
-.pytest_cache/
-.coverage
-htmlcov/
-
 # Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
 *.log
 
-# Build files
-build/
+# Build output
 dist/
-*.egg-info/
+build/
+coverage/
 
-# Python cache
-*.pyo
-*.pyd
+# OS files
+.DS_Store
+Thumbs.db
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Local uploaded files (if any)
-uploads/
-
-# Local vector databases (if ever created)
-chroma_db/
-qdrant_data/
-
-# Temporary files
-tmp/
-temp/
-
-backend/rag/data/
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
