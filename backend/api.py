@@ -3,11 +3,12 @@ import json
 import os
 import shutil
 import threading
+import time
 
 from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Header, status
 
-from typing import Optional
-from pydantic import BaseModel, EmailStr, constr, validator
+from typing import Optional, Literal
+from pydantic import BaseModel, EmailStr, validator
 
 import auth
 
@@ -30,6 +31,8 @@ UPLOAD_DIR = Path("rag/data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 EVALUATION_TEST_FILE = Path("rag/evaluation/test_questions.json")
 EVALUATION_RESULTS_FILE = Path("rag/evaluation/evaluation_results.json")
+FEEDBACK_FILE = Path("rag/data/feedback.json")
+feedback_lock = threading.Lock()
 
 
 class AskRequest(BaseModel):
@@ -37,9 +40,18 @@ class AskRequest(BaseModel):
     template: str = "chat"
 
 
+class FeedbackItem(BaseModel):
+    messageId: str
+    question: str = ""
+    answer: str
+    rating: Literal["up", "down"]
+    comment: Optional[str] = None
+    timestamp: str
+
+
 class RegisterRequest(BaseModel):
     email: EmailStr
-    password: constr(min_length=8)
+    password: str
     name: Optional[str] = None
 
     @validator('email')
@@ -48,15 +60,27 @@ class RegisterRequest(BaseModel):
             raise ValueError('Only Gmail addresses are allowed')
         return v
 
+    @validator('password')
+    def password_min_length(cls, v):
+        if len(v) < 8:
+            raise ValueError('Password must be at least 8 characters long')
+        return v
+
 
 class LoginRequest(BaseModel):
     email: EmailStr
-    password: constr(min_length=1)
+    password: str
 
     @validator('email')
     def must_be_gmail_login(cls, v):
         if not v.lower().endswith('@gmail.com'):
             raise ValueError('Only Gmail addresses are allowed')
+        return v
+
+    @validator('password')
+    def password_not_empty(cls, v):
+        if len(v) < 1:
+            raise ValueError('Password is required')
         return v
 
 
@@ -94,6 +118,23 @@ def get_current_user(authorization: str = Header(None)):
 def is_greeting(text: str) -> bool:
     cleaned = text.strip().lower()
     return cleaned in GREETINGS
+
+
+def get_current_user_optional(authorization: str = Header(None)):
+    """Like get_current_user, but returns None instead of raising when the
+    caller has no or an invalid/expired token. Used for feedback submission
+    so logged-out or expired sessions can still leave feedback anonymously.
+    """
+    if not authorization:
+        return None
+    try:
+        parts = authorization.split()
+        if len(parts) != 2 or parts[0].lower() != "bearer":
+            return None
+        payload = auth.decode_jwt(parts[1])
+        return auth.get_user(payload.get("sub"))
+    except Exception:
+        return None
 
 
 def _evaluation_report():
@@ -245,6 +286,53 @@ def run_evaluation():
         raise HTTPException(status_code=500, detail=str(exc))
     finally:
         evaluation_lock.release()
+
+
+@router.post("/feedback")
+def submit_feedback(item: FeedbackItem, current_user: dict = Depends(get_current_user_optional)):
+    """Save a thumbs up/down rating (with optional comment) for a chat answer."""
+    entry = item.dict()
+    entry["user_email"] = current_user["email"] if current_user else None
+    entry["received_at"] = time.time()
+
+    with feedback_lock:
+        FEEDBACK_FILE.parent.mkdir(parents=True, exist_ok=True)
+        if FEEDBACK_FILE.exists():
+            try:
+                with FEEDBACK_FILE.open("r", encoding="utf-8") as f:
+                    feedback_log = json.load(f)
+            except (OSError, json.JSONDecodeError):
+                feedback_log = []
+        else:
+            feedback_log = []
+
+        feedback_log.append(entry)
+
+        with FEEDBACK_FILE.open("w", encoding="utf-8") as f:
+            json.dump(feedback_log, f, indent=2)
+
+    return {"status": "success", "message": "Feedback recorded"}
+
+
+@router.get("/feedback")
+def list_feedback(current_user: dict = Depends(get_current_user)):
+    """Return all submitted feedback. Requires a logged-in user; the
+    frontend additionally restricts which users can see this page via
+    frontend/src/adminConfig.ts.
+    """
+    if not FEEDBACK_FILE.exists():
+        return {"feedback": [], "count": 0}
+
+    try:
+        with FEEDBACK_FILE.open("r", encoding="utf-8") as f:
+            feedback_log = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        feedback_log = []
+
+    # Most recent first
+    feedback_log = sorted(feedback_log, key=lambda x: x.get("received_at", 0), reverse=True)
+
+    return {"feedback": feedback_log, "count": len(feedback_log)}
 
 
 @router.post("/upload")
