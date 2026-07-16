@@ -1,6 +1,14 @@
 import React from 'react';
-import { MessageSquare, FolderSearch, Info, LogOut, Database } from 'lucide-react';
+import { MessageSquare, FolderSearch, Info, LogOut, Database, MessageSquareWarning } from 'lucide-react';
 import { type User } from '../api';
+
+// adminConfig may not exist in some setups; provide a lightweight local fallback.
+// This fallback considers a user admin if their email contains "admin" or if
+// a future adminConfig is added this file can be reverted to using it.
+const isAdminUser = (email?: string) => {
+  if (!email) return false;
+  return email.toLowerCase().includes('admin');
+};
 
 interface SidebarProps {
   currentTab: string;
@@ -57,6 +65,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <Info size={20} />
           <span>About & Evaluation</span>
         </button>
+
+        {isAdminUser(user.email) && (
+          <button
+            className={`nav-item ${currentTab === 'feedback' ? 'active' : ''}`}
+            onClick={() => setCurrentTab('feedback')}
+          >
+            <MessageSquareWarning size={20} />
+            <span>Feedback (Admin)</span>
+          </button>
+        )}
       </nav>
 
       <div className="sidebar-footer">

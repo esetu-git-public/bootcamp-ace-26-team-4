@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Upload, Sparkles, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
+import { Send, Upload, Sparkles, AlertCircle, FileText, CheckCircle2, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { api, type AskResult } from '../api';
 
 interface Message {
@@ -10,6 +10,7 @@ interface Message {
   metadata?: AskResult['metadata'];
   references?: AskResult['references'];
   claim_mapping?: any;
+  feedback?: 'up' | 'down' | null;
 }
 
 interface ChatInterfaceProps {
@@ -176,6 +177,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [feedbackCommentOpen, setFeedbackCommentOpen] = useState<string | null>(null);
+  const [feedbackComment, setFeedbackComment] = useState('');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -263,6 +266,29 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
 
   const handleCardClick = (question: string) => {
     handleSend(question);
+  };
+
+  const handleFeedback = (msg: Message, rating: 'up' | 'down', comment?: string) => {
+    const msgIndex = messages.findIndex((m) => m.id === msg.id);
+    const precedingUserMessage = [...messages.slice(0, msgIndex)]
+      .reverse()
+      .find((m) => m.sender === 'user');
+
+    setMessages((prev) =>
+      prev.map((m) => (m.id === msg.id ? { ...m, feedback: rating } : m))
+    );
+
+    api.submitFeedback({
+      messageId: msg.id,
+      question: precedingUserMessage?.text || '',
+      answer: msg.text,
+      rating,
+      comment,
+      timestamp: new Date().toISOString(),
+    });
+
+    setFeedbackCommentOpen(null);
+    setFeedbackComment('');
   };
 
   return (
@@ -377,6 +403,72 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
                       <span className="meta-badge" style={{ color: 'var(--color-primary)' }}>
                         Score: <strong>{msg.metadata.final_score}</strong>
                       </span>
+                    )}
+                  </div>
+                )}
+
+                {/* Feedback */}
+                {msg.sender === 'assistant' && msg.metadata && (
+                  <div className="feedback-row">
+                    {msg.feedback ? (
+                      <span className="feedback-thanks">
+                        <CheckCircle2 size={14} />
+                        Thanks for your feedback!
+                      </span>
+                    ) : (
+                      <>
+                        <span className="feedback-label">Was this helpful?</span>
+                        <button
+                          type="button"
+                          className="feedback-btn"
+                          onClick={() => handleFeedback(msg, 'up')}
+                          title="Helpful"
+                        >
+                          <ThumbsUp size={14} />
+                        </button>
+                        <button
+                          type="button"
+                          className="feedback-btn"
+                          onClick={() =>
+                            setFeedbackCommentOpen(
+                              feedbackCommentOpen === msg.id ? null : msg.id
+                            )
+                          }
+                          title="Not helpful"
+                        >
+                          <ThumbsDown size={14} />
+                        </button>
+                      </>
+                    )}
+
+                    {feedbackCommentOpen === msg.id && (
+                      <div className="feedback-comment-box">
+                        <textarea
+                          className="feedback-comment-input"
+                          placeholder="What went wrong? (optional)"
+                          value={feedbackComment}
+                          onChange={(e) => setFeedbackComment(e.target.value)}
+                        />
+                        <div className="feedback-comment-actions">
+                          <button
+                            type="button"
+                            className="feedback-comment-submit"
+                            onClick={() => handleFeedback(msg, 'down', feedbackComment)}
+                          >
+                            Submit
+                          </button>
+                          <button
+                            type="button"
+                            className="feedback-comment-cancel"
+                            onClick={() => {
+                              setFeedbackCommentOpen(null);
+                              setFeedbackComment('');
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
                     )}
                   </div>
                 )}

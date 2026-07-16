@@ -87,6 +87,15 @@ export interface EvaluationReport {
   results: EvaluationResult[];
 }
 
+export interface FeedbackPayload {
+  messageId: string;
+  question: string;
+  answer: string;
+  rating: 'up' | 'down';
+  comment?: string;
+  timestamp: string;
+}
+
 const parseError = async (res: Response, defaultMessage: string): Promise<string> => {
   try {
     const err = await res.json();
@@ -278,5 +287,47 @@ export const api = {
     }
     
     return res.json();
+  },
+
+  // Feedback
+  async submitFeedback(payload: FeedbackPayload): Promise<void> {
+    // Save locally first so feedback is never lost, even if the backend
+    // route below isn't available yet.
+    try {
+      const key = 'mrp_feedback_log';
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.push(payload);
+      localStorage.setItem(key, JSON.stringify(existing));
+    } catch (_) {
+      // localStorage unavailable — ignore
+    }
+
+    // Best-effort call to the backend. If /api/feedback isn't implemented
+    // yet, fail silently so the UI experience isn't affected.
+    try {
+      await fetch(`${API_BASE}/feedback`, {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify(payload),
+      });
+    } catch (_) {
+      // Backend endpoint not implemented yet — feedback is still saved locally above.
+    }
+  },
+
+  // Best-effort fetch of feedback stored on the backend (if that route exists).
+  // Returns [] instead of throwing so callers can safely merge with local data.
+  async getFeedback(): Promise<FeedbackPayload[]> {
+    try {
+      const res = await fetch(`${API_BASE}/feedback`, {
+        method: 'GET',
+        headers: getHeaders(),
+      });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : data.feedback || [];
+    } catch (_) {
+      return [];
+    }
   }
 };
