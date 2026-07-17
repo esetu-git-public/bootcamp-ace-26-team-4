@@ -1,14 +1,7 @@
 import React from 'react';
 import { MessageSquare, FolderSearch, Info, LogOut, Database, MessageSquareWarning } from 'lucide-react';
 import { type User } from '../api';
-
-// adminConfig may not exist in some setups; provide a lightweight local fallback.
-// This fallback considers a user admin if their email contains "admin" or if
-// a future adminConfig is added this file can be reverted to using it.
-const isAdminUser = (email?: string) => {
-  if (!email) return false;
-  return email.toLowerCase().includes('admin');
-};
+import { isAdminUser } from '../adminConfig';
 
 interface SidebarProps {
   currentTab: string;

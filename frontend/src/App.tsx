@@ -4,11 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { ChatInterface } from './components/ChatInterface';
 import { FileManager } from './components/FileManager';
 import { AboutUs } from './components/AboutUs';
-// FeedbackAdmin component not available in components directory.
-// Provide a lightweight local fallback to avoid import errors.
-const FeedbackAdmin = () => (
-  <div style={{ padding: 20, color: '#cbd5e1' }}>Admin feedback panel is unavailable.</div>
-);
+import { FeedbackAdmin } from './components/FeedbackAdmin';
 import { api, type User } from './api';
 
 function App() {

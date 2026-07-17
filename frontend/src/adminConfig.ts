@@ -1,3 +1,4 @@
+
 // Temporary frontend-only admin allowlist.
 //
 // The backend's user model (see backend/auth.py / backend/users.json) has no
