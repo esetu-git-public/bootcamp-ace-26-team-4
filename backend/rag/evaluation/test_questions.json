@@ -2,7 +2,7 @@
   {
     "id": "heart_attack_01",
     "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
-    "question": "What is the full title of this research study?",
+    "question": "What is the full title of Heart_Attack.pdf research study?",
     "reference_answer": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia.",
     "answer_keywords": ["Perception", "Heart Attack Risk Factors", "Eastern Region of Saudi Arabia"],
     "relevant_chunks": []
@@ -10,7 +10,7 @@
   {
     "id": "heart_attack_02",
     "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
-    "question": "Who is the corresponding author of this study, and what is their email address?",
+    "question": "Who is the corresponding author of Heart_Attack.pdf study, and what is their email address?",
     "reference_answer": "Abdullah M. AlKhudair Sr.; a.m.h.k22131@gmail.com.",
     "answer_keywords": ["Abdullah M. AlKhudair", "a.m.h.k22131@gmail.com"],
     "relevant_chunks": []
@@ -18,7 +18,7 @@
   {
     "id": "heart_attack_03",
     "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
-    "question": "What was the final sample size, what age group was targeted, and what sampling technique was used?",
+    "question": "What was the final sample size, what age group was targeted, and what sampling technique was used in Heart_Attack.pdf study?",
     "reference_answer": "334 participants aged 18 to 45 years; convenience sampling.",
     "answer_keywords": ["334", "18", "45", "convenience sampling"],
     "relevant_chunks": []
@@ -26,7 +26,7 @@
   {
     "id": "heart_attack_04",
     "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
-    "question": "What percentages of participants were male and female?",
+    "question": "What percentages of participants were male and female in Heart_Attack.pdf study?",
     "reference_answer": "46.4% (155) were male and 53.6% (179) were female.",
     "answer_keywords": ["46.4%", "53.6%", "male", "female"],
     "relevant_chunks": []
@@ -34,7 +34,7 @@
   {
     "id": "heart_attack_05",
     "article": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia",
-    "question": "What percentage of participants reported no physical activity, and what percentage had a BMI of 25 or above?",
+    "question": "What percentage of participants reported no physical activity, and what percentage had a BMI of 25 or above in Heart_Attack.pdf study?",
     "reference_answer": "43.4% reported no physical activity, and 29.1% had a BMI of 25 or above.",
     "answer_keywords": ["43.4%", "29.1%", "BMI"],
     "relevant_chunks": []
@@ -42,7 +42,7 @@
   {
     "id": "kidney_stone_01",
     "article": "Kidney Stone Disease: An Update on Current Concepts",
-    "question": "What is the full title of the review article, and who are its authors?",
+    "question": "What is the full title of the Kidney_stones.pdf review article, and who are its authors?",
     "reference_answer": "Kidney Stone Disease: An Update on Current Concepts, by Tilahun Alelign and Beyene Petros.",
     "answer_keywords": ["Kidney Stone Disease", "Tilahun Alelign", "Beyene Petros"],
     "relevant_chunks": []
@@ -50,7 +50,7 @@
   {
     "id": "kidney_stone_02",
     "article": "Kidney Stone Disease: An Update on Current Concepts",
-    "question": "What percentage of the global population does urolithiasis affect, and what are the estimated recurrence rates without metaphylaxis?",
+    "question": "What percentage of the global population does urolithiasis affect, and what are the estimated recurrence rates without metaphylaxis in Kidney_stones.pdf?",
     "reference_answer": "Urolithiasis affects about 12% of the global population. Recurrence is estimated at 10-23% per year, 50% within 5-10 years, and 75% within 20 years without metaphylaxis.",
     "answer_keywords": ["12%", "10-23%", "50%", "75%", "metaphylaxis"],
     "relevant_chunks": []
@@ -58,7 +58,7 @@
   {
     "id": "kidney_stone_03",
     "article": "Kidney Stone Disease: An Update on Current Concepts",
-    "question": "What are the five main types of kidney stones?",
+    "question": "What are the five main types of kidney stones in Kidney_stones.pdf?",
     "reference_answer": "Calcium, struvite (magnesium ammonium phosphate), uric acid or urate, cystine, and drug-induced stones.",
     "answer_keywords": ["calcium", "struvite", "uric acid", "cystine", "drug-induced"],
     "relevant_chunks": []
@@ -66,7 +66,7 @@
   {
     "id": "kidney_stone_04",
     "article": "Kidney Stone Disease: An Update on Current Concepts",
-    "question": "What is Randall's plaque, and what role does it play in kidney stone formation?",
+    "question": "What is Randall's plaque, and what role does it play in kidney stone formation in Kidney_stones.pdf?",
     "reference_answer": "Randall's plaque is an interstitial calcium phosphate (apatite) deposit that begins along basement membranes of thin loops of Henle and can extend toward the urothelium. It provides a papillary attachment site and precursor for many calcium oxalate stones.",
     "answer_keywords": ["Randall", "apatite", "calcium phosphate", "loop of Henle", "calcium oxalate"],
     "relevant_chunks": []
@@ -74,7 +74,7 @@
   {
     "id": "kidney_stone_05",
     "article": "Kidney Stone Disease: An Update on Current Concepts",
-    "question": "What are the four main events that trigger kidney stone formation?",
+    "question": "What are the four main events that trigger kidney stone formation in Kidney_stones.pdf?",
     "reference_answer": "Nucleation, growth, aggregation, and retention.",
     "answer_keywords": ["nucleation", "growth", "aggregation", "retention"],
     "relevant_chunks": []

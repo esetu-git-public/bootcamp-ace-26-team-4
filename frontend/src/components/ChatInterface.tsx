@@ -170,6 +170,73 @@ const parseMarkdown = (text: string) => {
   return elements;
 };
 
+const GeminiLoadingProcess: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  const steps = [
+    "Understanding medical query...",
+    "Scanning research paper database...",
+    "Retrieving relevant clinical contexts...",
+    "Synthesizing information and mapping claims...",
+    "Constructing biomedical answer..."
+  ];
+
+  useEffect(() => {
+    const intervals = [2000, 2500, 2500, 2000]; // 2s, 2.5s, 2.5s, 2s -> total 9s. Remaining time stays on last step.
+    let timerId: any;
+    
+    const runNext = (index: number) => {
+      if (index >= steps.length - 1) return;
+      timerId = setTimeout(() => {
+        setCurrentStep(index + 1);
+        runNext(index + 1);
+      }, intervals[index]);
+    };
+    
+    runNext(0);
+    
+    return () => {
+      if (timerId) clearTimeout(timerId);
+    };
+  }, []);
+
+  return (
+    <div className="gemini-loader-container">
+      <div className="gemini-shimmer-lines">
+        <div className="gemini-shimmer-line gemini-line-1"></div>
+        <div className="gemini-shimmer-line gemini-line-2"></div>
+        <div className="gemini-shimmer-line gemini-line-3"></div>
+      </div>
+      <div className="gemini-status-row">
+        <span className="gemini-status-pulse"></span>
+        <span key={currentStep} className="gemini-status-text animate-fade-in">
+          {steps[currentStep]}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const preprocessQuery = (query: string, activeDoc: string | null): string => {
+  if (!activeDoc) return query;
+  
+  let processed = query;
+  const terms = [
+    { regex: /\bthis paper\b/gi, replacement: activeDoc },
+    { regex: /\blast paper\b/gi, replacement: activeDoc },
+    { regex: /\bthe paper\b/gi, replacement: activeDoc },
+    { regex: /\bthis document\b/gi, replacement: activeDoc },
+    { regex: /\blast document\b/gi, replacement: activeDoc },
+    { regex: /\bthe document\b/gi, replacement: activeDoc }
+  ];
+  
+  terms.forEach(({ regex, replacement }) => {
+    processed = processed.replace(regex, replacement);
+  });
+  
+  return processed;
+};
+
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocChange }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -194,10 +261,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
   const handleSend = async (textToSend = input) => {
     if (!textToSend.trim() || loading) return;
 
+    const processedText = preprocessQuery(textToSend, activeDoc);
+
     const userMessage: Message = {
       id: Date.now().toString(),
       sender: 'user',
-      text: textToSend,
+      text: processedText,
       timestamp: new Date()
     };
 
@@ -207,7 +276,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
     setError(null);
 
     try {
-      const response = await api.ask(textToSend, template);
+      const response = await api.ask(processedText, template);
       
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -324,28 +393,28 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
             </p>
             
             <div className="welcome-grid">
-              <div className="glass-card welcome-card" onClick={() => handleCardClick("What percentages of participants were male and female in the Eastern Region study?")}>
+              <div className="glass-card welcome-card" onClick={() => handleCardClick("What percentages of participants were male and female in Heart_Attack.pdf study?")}>
                 <h3>
                   <Sparkles size={16} color="var(--color-primary)" />
                   Participant Stats
                 </h3>
-                <p>"What percentages of participants were male and female?"</p>
+                <p>"What percentages of participants were male and female in Heart_Attack.pdf study?"</p>
               </div>
 
-              <div className="glass-card welcome-card" onClick={() => handleCardClick("What was the average overall knowledge score and maximum possible score in the heart attack risk factor study?")}>
+              <div className="glass-card welcome-card" onClick={() => handleCardClick("What percentage of the global population does urolithiasis affect in Kidney_stones.pdf?")}>
                 <h3>
                   <Sparkles size={16} color="var(--color-primary)" />
-                  Research Scores
+                  Disease Prevalence
                 </h3>
-                <p>"What was the average overall knowledge score and maximum possible score?"</p>
+                <p>"What percentage of the global population does urolithiasis affect in Kidney_stones.pdf?"</p>
               </div>
 
-              <div className="glass-card welcome-card" onClick={() => handleCardClick("What was the final sample size, targeted age group, and sampling technique used?")}>
+              <div className="glass-card welcome-card" onClick={() => handleCardClick("What was the final sample size, targeted age group, and sampling technique used in Heart_Attack.pdf study?")}>
                 <h3>
                   <Sparkles size={16} color="var(--color-primary)" />
                   Methodology
                 </h3>
-                <p>"What was the final sample size, targeted age group, and sampling technique?"</p>
+                <p>"What was the final sample size, targeted age group, and sampling technique used in Heart_Attack.pdf study?"</p>
               </div>
             </div>
           </div>
@@ -482,12 +551,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ activeDoc, onDocCh
             <div className="message-avatar">
               <Sparkles size={18} />
             </div>
-            <div className="message-content-wrapper">
-              <div className="typing-loader">
-                <div className="typing-dot"></div>
-                <div className="typing-dot"></div>
-                <div className="typing-dot"></div>
-              </div>
+            <div className="message-content-wrapper" style={{ width: '100%' }}>
+              <GeminiLoadingProcess />
             </div>
           </div>
         )}

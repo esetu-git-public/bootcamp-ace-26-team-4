@@ -14,7 +14,7 @@ client = TestClient(app)
 
 def test_health_endpoint():
 
-    response = client.get("/")
+    response = client.get("/api/")
 
     assert response.status_code == 200
     assert response.json() == {
@@ -30,7 +30,7 @@ def test_health_endpoint():
 def test_greeting_returns_static_response():
 
     response = client.post(
-        "/ask",
+        "/api/ask",
         json={
             "question": "hello"
         }
@@ -53,7 +53,7 @@ def test_greeting_returns_static_response():
 def test_empty_question_returns_400():
 
     response = client.post(
-        "/ask",
+        "/api/ask",
         json={
             "question": "   "
         }
@@ -79,7 +79,7 @@ def test_ask_success(mock_generate):
     }
 
     response = client.post(
-        "/ask",
+        "/api/ask",
         json={
             "question": "What is diabetes?"
         }
@@ -101,7 +101,7 @@ def test_ask_internal_error(mock_generate):
     mock_generate.side_effect = Exception("Generator Failed")
 
     response = client.post(
-        "/ask",
+        "/api/ask",
         json={
             "question": "Cancer"
         }
@@ -160,7 +160,7 @@ def test_run_evaluation_returns_report(mock_evaluator, mock_report):
 def test_upload_invalid_extension():
 
     response = client.post(
-        "/upload",
+        "/api/upload",
         files={
             "file": (
                 "virus.exe",
@@ -186,7 +186,7 @@ def test_upload_success(mock_ingest):
     }
 
     response = client.post(
-        "/upload",
+        "/api/upload",
         files={
             "file": (
                 "paper.txt",
@@ -216,7 +216,7 @@ def test_upload_internal_error(mock_ingest):
     mock_ingest.side_effect = Exception("Index failed")
 
     response = client.post(
-        "/upload",
+        "/api/upload",
         files={
             "file": (
                 "paper.txt",

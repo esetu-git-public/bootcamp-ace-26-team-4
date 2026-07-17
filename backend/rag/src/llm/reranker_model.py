@@ -1,5 +1,13 @@
 import threading
+import torch
 from sentence_transformers import CrossEncoder
+
+# Limit PyTorch CPU threads globally to prevent memory bloat on multi-core server hosts
+try:
+    torch.set_num_threads(1)
+    torch.set_num_interop_threads(1)
+except RuntimeError:
+    pass
 
 MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 

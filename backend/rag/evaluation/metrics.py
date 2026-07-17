@@ -63,15 +63,16 @@ class Metrics:
             # Lazy import so the library is optional for basic evaluation runs
             from sentence_transformers import util
             from rag.src.llm.embedding_model import get_embedding_model
+            import torch
 
             # Use a small, fast model suited for semantic similarity. It will be
             # downloaded automatically the first time it runs.
             model = model or get_embedding_model()
 
-            emb1 = model.encode(answer, convert_to_tensor=True)
-            emb2 = model.encode(reference, convert_to_tensor=True)
-
-            score = util.pytorch_cos_sim(emb1, emb2).item()
+            with torch.no_grad():
+                emb1 = model.encode(answer, convert_to_tensor=True)
+                emb2 = model.encode(reference, convert_to_tensor=True)
+                score = util.pytorch_cos_sim(emb1, emb2).item()
 
             # Cosine similarity may be in [-1, 1]. Normalize to [0, 1].
             normalized = max(0.0, (score + 1.0) / 2.0)

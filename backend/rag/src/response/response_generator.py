@@ -13,6 +13,73 @@ from rag.src.evidence.claim_mapper import ClaimMapper  # NEW
 from rag.evaluation.metrics import Metrics
 
 
+def log_memory(stage: str):
+    # 1. Try psutil first (cross-platform)
+    try:
+        import psutil
+        import os
+        process = psutil.Process(os.getpid())
+        mem = process.memory_info().rss / (1024 * 1024)
+        print(f"=== [MEM] {stage}: {mem:.2f} MB ===")
+        return
+    except Exception:
+        pass
+
+    # 2. Try Linux native /proc/self/status (zero dependencies, works on Railway)
+    try:
+        with open("/proc/self/status", "r") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    parts = line.split()
+                    if len(parts) >= 2:
+                        mem_kb = float(parts[1])
+                        mem_mb = mem_kb / 1024.0
+                        print(f"=== [MEM] {stage}: {mem_mb:.2f} MB ===")
+                        return
+    except Exception:
+        pass
+
+    # 3. Try Windows ctypes fallback
+    try:
+        import os
+        import ctypes
+        from ctypes import wintypes
+        class PROCESS_MEMORY_COUNTERS(ctypes.Structure):
+            _fields_ = [
+                ("cb", wintypes.DWORD),
+                ("PageFaultCount", wintypes.DWORD),
+                ("PeakWorkingSetSize", ctypes.c_size_t),
+                ("WorkingSetSize", ctypes.c_size_t),
+                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                ("PagefileUsage", ctypes.c_size_t),
+                ("PeakPagefileUsage", ctypes.c_size_t),
+            ]
+        kernel32 = ctypes.windll.kernel32
+        kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        kernel32.GetCurrentProcess.argtypes = []
+        process = kernel32.GetCurrentProcess()
+        counters = PROCESS_MEMORY_COUNTERS()
+        counters.cb = ctypes.sizeof(PROCESS_MEMORY_COUNTERS)
+        if hasattr(kernel32, "K32GetProcessMemoryInfo"):
+            func = kernel32.K32GetProcessMemoryInfo
+        else:
+            func = ctypes.windll.psapi.GetProcessMemoryInfo
+        func.argtypes = [wintypes.HANDLE, ctypes.POINTER(PROCESS_MEMORY_COUNTERS), wintypes.DWORD]
+        func.restype = wintypes.BOOL
+        if func(process, ctypes.byref(counters), counters.cb):
+            mem = counters.WorkingSetSize / (1024 * 1024)
+            print(f"=== [MEM] {stage}: {mem:.2f} MB ===")
+            return
+    except Exception:
+        pass
+
+    # If all fail, print notice
+    print(f"=== [MEM] {stage}: [Could not query memory] ===")
+
+
 class ResponseGenerator:
 
     def __init__(self):
@@ -44,6 +111,7 @@ class ResponseGenerator:
         question: str,
         template: str = "chat"
     ):
+        log_memory("Start of generate_answer")
 
         if not isinstance(question, str):
 
@@ -62,6 +130,7 @@ class ResponseGenerator:
         # =====================================================
 
         route = self.router.route(question)
+        log_memory("After route query")
 
         print("\n===== QUERY ROUTER =====")
         print(route)
@@ -84,6 +153,7 @@ class ResponseGenerator:
             include_uploads=route.get("needs_uploaded_docs", False),
 
         )
+        log_memory("After retrieval & reranking")
 
         print("\n===== RETRIEVED CHUNKS =====")
         print(len(retrieved_chunks))
@@ -96,6 +166,7 @@ class ResponseGenerator:
         grouped_papers = self.paper_grouper.group(
             retrieved_chunks
         )
+        log_memory("After group papers")
 
         print("\n===== GROUPED PAPERS =====")
         print(len(grouped_papers))
@@ -118,6 +189,7 @@ class ResponseGenerator:
         )
 
         evidence["contradictions"] = contradictions
+        log_memory("After aggregate evidence")
 
         # =====================================================
         # Step 3 : Build Prompt
@@ -132,6 +204,7 @@ class ResponseGenerator:
             template=template
 
         )
+        log_memory("After build prompt")
 
         print("\n===== PROMPT LENGTH =====")
         print(len(prompt))
@@ -144,6 +217,7 @@ class ResponseGenerator:
         answer = self.llm.generate(
             prompt
         )
+        log_memory("After LLM generate")
 
         print("\n===== ANSWER LENGTH =====")
         print(len(answer))
@@ -160,6 +234,7 @@ class ResponseGenerator:
             answer,
             grouped_papers
         )
+        log_memory("After claim mapping")
 
         # =====================================================
         # Step 5 : Citations
@@ -186,6 +261,7 @@ class ResponseGenerator:
             retrieved_chunks=retrieved_chunks
 
         )
+        log_memory("After validation")
 
         # =====================================================
         # Additional runtime evaluation signals
@@ -204,6 +280,7 @@ class ResponseGenerator:
                 answer,
                 top_evidence_text,
             )
+            log_memory("After evaluation metrics")
         except Exception:
             evidence_semantic_similarity = None
 
@@ -229,6 +306,11 @@ class ResponseGenerator:
             final_score = round(answer_score, 4)
         elif retrieval_score_normalized is not None:
             final_score = round(retrieval_score_normalized, 4)
+
+        # Force garbage collection and log final memory state (trimming heap on Linux)
+        from rag.src.llm.embedding_model import optimize_memory
+        optimize_memory()
+        log_memory("After final GC")
 
         # --------------------------------------------------
         # Step 7 : Return

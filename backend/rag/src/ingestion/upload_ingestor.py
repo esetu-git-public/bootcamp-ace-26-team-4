@@ -25,14 +25,8 @@ CHUNK_OVERLAP_WORDS = 100
 class UploadIngestor:
 
     def __init__(self):
-
-        print("Connecting to Qdrant...")
-
-        self.client = QdrantClient(
-            url=os.getenv("QDRANT_URL"),
-            api_key=os.getenv("QDRANT_API_KEY")
-        )
-
+        from rag.src.vector_db.qdrant_connection import get_qdrant_client
+        self.client = get_qdrant_client()
         self.collection_name = COLLECTION_NAME
 
 
@@ -101,16 +95,25 @@ class UploadIngestor:
             })
 
 
-        print("Creating embeddings...")
+        print("Creating embeddings in batches...")
 
-
-        from rag.src.llm.embedding_model import get_embedding_model
+        from rag.src.llm.embedding_model import get_embedding_model, optimize_memory
+        import torch
         model = get_embedding_model()
-        embeddings = model.encode(
-            documents,
-            normalize_embeddings=True,
-            show_progress_bar=False
-        ).tolist()
+        
+        embeddings = []
+        batch_size = 8
+        
+        for idx in range(0, len(documents), batch_size):
+            batch_docs = documents[idx : idx + batch_size]
+            with torch.no_grad():
+                batch_embeddings = model.encode(
+                    batch_docs,
+                    normalize_embeddings=True,
+                    show_progress_bar=False
+                ).tolist()
+            embeddings.extend(batch_embeddings)
+            optimize_memory()
 
 
         points = []

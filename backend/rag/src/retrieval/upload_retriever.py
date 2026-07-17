@@ -30,16 +30,8 @@ class UploadRetriever:
         self.model = get_embedding_model()
 
 
-        print("Connecting to Qdrant...")
-
-
-        self.client = QdrantClient(
-
-            url=os.getenv("QDRANT_URL"),
-
-            api_key=os.getenv("QDRANT_API_KEY")
-
-        )
+        from rag.src.vector_db.qdrant_connection import get_qdrant_client
+        self.client = get_qdrant_client()
 
 
         self.collection_name = COLLECTION_NAME
@@ -54,13 +46,15 @@ class UploadRetriever:
     ):
 
 
-        embedding = self.model.encode(
+        import torch
+        with torch.no_grad():
+            embedding = self.model.encode(
 
-            query,
+                query,
 
-            normalize_embeddings=True
+                normalize_embeddings=True
 
-        ).tolist()
+            ).tolist()
 
 
 

@@ -14,10 +14,8 @@ class UploadDeletionManager:
     COLLECTION_NAME = "user_uploads"
 
     def __init__(self):
-        self.client = QdrantClient(
-            url=os.getenv("QDRANT_URL"),
-            api_key=os.getenv("QDRANT_API_KEY")
-        )
+        from rag.src.vector_db.qdrant_connection import get_qdrant_client
+        self.client = get_qdrant_client()
         self.collection_name = self.COLLECTION_NAME
 
     def delete_by_filename(self, filename: str) -> dict:

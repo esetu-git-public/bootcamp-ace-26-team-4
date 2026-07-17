@@ -26,12 +26,8 @@ class DenseRetriever:
         self.model = get_embedding_model()
 
 
-        print("Connecting to Qdrant...")
-
-        self.client = QdrantClient(
-            url=os.getenv("QDRANT_URL"),
-            api_key=os.getenv("QDRANT_API_KEY")
-        )
+        from rag.src.vector_db.qdrant_connection import get_qdrant_client
+        self.client = get_qdrant_client()
 
 
         self.collection_name = MAIN_COLLECTION_NAME
@@ -75,10 +71,12 @@ class DenseRetriever:
 
     def retrieve(self, query, top_k=TOP_K):
 
-        query_embedding = self.model.encode(
-            query,
-            normalize_embeddings=True
-        ).tolist()
+        import torch
+        with torch.no_grad():
+            query_embedding = self.model.encode(
+                query,
+                normalize_embeddings=True
+            ).tolist()
 
 
         results = self._query_collection(

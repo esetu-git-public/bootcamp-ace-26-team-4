@@ -33,7 +33,7 @@ def _save_users(users: dict):
 
 
 def _hash_password(password: str, salt: Optional[str] = None) -> tuple[str, str]:
-    # Return (salt, hashed)
+    """Return (salt, hashed)"""
     if salt is None:
         salt = secrets.token_hex(16)
     hashed = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt.encode("utf-8"), 100_000)

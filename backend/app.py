@@ -1,7 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from api import router
+from rag.src.llm.embedding_model import optimize_memory
 
 app = FastAPI(
     title="MRP Medical Research RAG API"
@@ -24,6 +25,14 @@ app.add_middleware(
 )
 
 app.include_router(router, prefix="/api")
+
+@app.middleware("http")
+async def memory_cleanup_middleware(request: Request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    finally:
+        optimize_memory()
 
 @app.get("/")
 def root():

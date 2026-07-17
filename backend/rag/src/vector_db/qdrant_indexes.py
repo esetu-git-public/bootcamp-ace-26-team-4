@@ -28,9 +28,14 @@ def create_indexes():
                 field_name="filename",
                 field_schema=PayloadSchemaType.KEYWORD
             )
+            client.create_payload_index(
+                collection_name=collection,
+                field_name="text",
+                field_schema=PayloadSchemaType.TEXT
+            )
 
             print(
-                "Index created successfully"
+                "Indexes created successfully"
             )
 
         except Exception as e:

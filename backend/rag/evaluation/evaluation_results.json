@@ -1,7 +1,7 @@
 [
   {
     "id": "heart_attack_01",
-    "question": "What is the full title of this research study?",
+    "question": "What is the full title of Heart_attack research study?",
     "reference_answer": "Perception of Heart Attack Risk Factors and Their Complications Among the Adult Population in the Eastern Region of Saudi Arabia.",
     "keyword_recall": 0.0,
     "precision": null,
@@ -9,7 +9,7 @@
   },
   {
     "id": "heart_attack_02",
-    "question": "Who is the corresponding author of this study, and what is their email address?",
+    "question": "Who is the corresponding author of heart_attack study, and what is their email address?",
     "reference_answer": "Abdullah M. AlKhudair Sr.; a.m.h.k22131@gmail.com.",
     "keyword_recall": 0.0,
     "precision": null,
@@ -18,5 +18,89 @@
     "semantic_similarity": 0.5502142533659935,
     "answer_score": 0.4126606900244951,
     "final_score": 0.4126606900244951
+  },
+  {
+    "id": "heart_attack_03",
+    "question": "What was the final sample size, what age group was targeted, and what sampling technique was used in Heart_Attack.pdf study?",
+    "reference_answer": "334 participants aged 18 to 45 years; convenience sampling.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.8037256002426147,
+    "answer_score": 0.8527942001819611,
+    "final_score": 0.8527942001819611
+  },
+  {
+    "id": "heart_attack_04",
+    "question": "What percentages of participants were male and female in Heart_Attack.pdf study?",
+    "reference_answer": "46.4% (155) were male and 53.6% (179) were female.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.7335874438285828,
+    "answer_score": 0.8001905828714371,
+    "final_score": 0.8001905828714371
+  },
+  {
+    "id": "heart_attack_05",
+    "question": "What percentage of participants reported no physical activity, and what percentage had a BMI of 25 or above in Heart_Attack.pdf study?",
+    "reference_answer": "43.4% reported no physical activity, and 29.1% had a BMI of 25 or above.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.8664082884788513,
+    "answer_score": 0.8998062163591385,
+    "final_score": 0.8998062163591385
+  },
+  {
+    "id": "kidney_stone_01",
+    "question": "What is the full title of the Kidney_stones.pdf review article, and who are its authors?",
+    "reference_answer": "Kidney Stone Disease: An Update on Current Concepts, by Tilahun Alelign and Beyene Petros.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.8572718799114227,
+    "answer_score": 0.892953909933567,
+    "final_score": 0.892953909933567
+  },
+  {
+    "id": "kidney_stone_02",
+    "question": "What percentage of the global population does urolithiasis affect, and what are the estimated recurrence rates without metaphylaxis in Kidney_stones.pdf?",
+    "reference_answer": "Urolithiasis affects about 12% of the global population. Recurrence is estimated at 10-23% per year, 50% within 5-10 years, and 75% within 20 years without metaphylaxis.",
+    "keyword_recall": 0.2,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.8927648663520813,
+    "answer_score": 0.719573649764061,
+    "final_score": 0.719573649764061
+  },
+  {
+    "id": "kidney_stone_03",
+    "question": "What are the five main types of kidney stones in Kidney_stones.pdf?",
+    "reference_answer": "Calcium, struvite (magnesium ammonium phosphate), uric acid or urate, cystine, and drug-induced stones.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.8532683849334717,
+    "answer_score": 0.8899512887001038,
+    "final_score": 0.8899512887001038
+  },
+  {
+    "id": "kidney_stone_04",
+    "question": "What is Randall's plaque, and what role does it play in kidney stone formation in Kidney_stones.pdf?",
+    "reference_answer": "Randall's plaque is an interstitial calcium phosphate (apatite) deposit that begins along basement membranes of thin loops of Henle and can extend toward the urothelium. It provides a papillary attachment site and precursor for many calcium oxalate stones.",
+    "keyword_recall": 1.0,
+    "precision": null,
+    "recall": null,
+    "retrieval_score": null,
+    "semantic_similarity": 0.893849104642868,
+    "answer_score": 0.920386828482151,
+    "final_score": 0.920386828482151
   }
 ]

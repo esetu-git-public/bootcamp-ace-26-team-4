@@ -18,7 +18,9 @@ class Reranker:
             for chunk in chunks
         ]
 
-        scores = self.model.predict(pairs)
+        import torch
+        with torch.no_grad():
+            scores = self.model.predict(pairs, batch_size=2, show_progress_bar=False)
 
         for chunk, score in zip(chunks, scores):
             chunk["rerank_score"] = float(score)
